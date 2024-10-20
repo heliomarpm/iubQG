@@ -1,0 +1,23 @@
+#content {
+	background-color: var(--aside-bg-color);
+	padding: .7rem .7rem .7rem 0;
+}
+
+#main {
+	width: calc(100% - var(--aside-width));
+	height: calc(100vh - 1.4rem);
+	margin-left: var(--aside-width);
+	z-index: 0;
+	position: relative;
+	top: 0;
+	transition: all 0.5s ease;
+	background: var(--background-linear);
+	padding: 3rem;
+	border-radius: 18px; //0 0 18px;
+
+	&.expanded {
+		width: calc(100% - var(--aside-min-width));
+		margin-left: var(--aside-min-width)
+	}
+
+}

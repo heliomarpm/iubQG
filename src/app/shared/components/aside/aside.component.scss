@@ -1,0 +1,145 @@
+.sidenav {
+	background: var(--aside-bg-color);
+	transition: all 0.5s ease;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	width: var(--aside-width);
+	height: 100vh;
+	// box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+
+	&.collapsed {
+		width: var(--aside-min-width);
+	}
+
+	.logo-container {
+		display: flex;
+		align-items: center;
+		padding: 0.938rem 0.938rem 0 0.938rem;
+		width: 100%;
+		height: 60px;
+
+		.logo-text {
+			margin-left: 1.5rem;
+			font-size: 24px;
+			font-weight: 700;
+			color: var(--sidebar-text-color);
+		}
+	}
+}
+
+nav {
+	list-style: none;
+	padding: 0.938rem;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: calc(100% - 3.65rem);
+
+	.nav-separator {
+		height: .2px;
+		width: 100%;
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 0.625rem 0;
+	}
+
+	.nav-space {
+		flex-grow: 1;
+	}
+
+	.nav-item {
+		cursor: pointer;
+		width: 100%;
+		margin-bottom: 0.625rem;
+
+		&:hover .nav-item-link {
+			background-color: var(--sidebar-nav-item-color-hover);
+			color: #000;
+		}
+
+		.nav-item-link {
+			display: flex;
+			align-items: center;
+			height: 3rem;
+			color: var(--sidebar-text-color);
+			text-decoration: none;
+			border-radius: 0.625rem;
+			transition: all 0.3s ease;
+
+			.nav-item-link-icon {
+				font-size: 1.35rem;
+				width: 2rem;
+				min-width: 2rem;
+				text-align: center;
+				align-items: center;
+				justify-content: center;
+
+				padding: .8rem;
+			}
+
+			.nav-item-link-text {
+				margin-left: 1.5rem;
+			}
+		}
+	}
+}
+
+.active {
+	background-color: var(--sidebar-nav-item-color-active);
+
+	.nav-item-link-icon,
+	.nav-item-link-text {
+		color: #000;
+	}
+}
+
+/* BOTÃO DO MENU ANIMADO */
+.menu-animation {
+	// margin: 2px 20px;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
+	width: 20px;
+	background-color: transparent;
+
+	&.active {
+		margin-right: 4px;
+		transition-delay: 0.2s;
+		transform: rotate(-225deg);
+	}
+}
+
+.menu-animation>span {
+	display: block;
+	width: 20px;
+	height: 2px;
+	border-radius: 8px;
+	background-color: var(--sidebar-text-color);
+}
+
+.menu-animation>span:not(:last-child) {
+	margin-bottom: 4px;
+}
+
+.menu-animation,
+.menu-animation>span {
+	transition: all 0.5s ease-in-out;
+}
+
+.menu-animation.active>span:nth-child(2) {
+	opacity: 0;
+}
+
+.menu-animation.active>span:nth-child(1),
+.menu-animation.active>span:nth-child(3) {
+	transition-delay: 0.2s;
+}
+
+.menu-animation.active>span:nth-child(1) {
+	transform: translateY(6px);
+}
+
+.menu-animation.active>span:nth-child(3) {
+	transform: translateY(-6px) rotate(-90deg);
+}

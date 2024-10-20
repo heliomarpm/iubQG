@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+	--aside-width: 16.5625rem;
+	--aside-min-width: 5rem;
+	--aside-height: 100%;
+	--aside-bg-color: #22232e;
+	--sidebar-text-color: #f4f7fa;
+	--sidebar-close-btn-color: #f4f7fa;
+	--sidebar-nav-item-color-hover: #b1d77b;
+	--sidebar-nav-item-color-active: #adec55;
+
+	--content-bg-color: #f4f7fa;
+
+	--background-color-1: #d0d1d2;
+	--background-color-2: #878788;
+	--background-linear: linear-gradient(var(--background-color-1), var(--background-color-2));
+
+	--footer-height: 0px;
+	--main-height: calc(100vh - var(--footer-height));
+
+	--primary-color: #f5f5f5;
+	--grey: #f5f5f5;
+	--dark-grey: #333;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	box-sizing: border-box;
+	// color-scheme: light dark;
+
+	font-size: .9rem;
+	font-family: Poppins, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol";
+
+
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+
+	scroll-behavior: smooth;
+
+	::-webkit-scrollbar {
+		width: 10px;
+		background: #35344d;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #212030ec;
+		border-radius: 8px;
+		border: #333;
+	}
+}
+
+body {
+	overflow: hidden;
+	position: relative;
+	background: var(--content-bg-color)
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 600;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+h4 {
+	font-size: 1rem;
+}
+
+h5 {
+	font-size: .875rem;
+}
+
+h6 {
+	font-size: .75rem;
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
