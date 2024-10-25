@@ -3,28 +3,28 @@ import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-import { AsideComponent } from './shared/components/aside/aside.component';
-import { AsideService } from './shared/components/aside/aside.service';
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { SidenavService } from './shared/components/sidenav/sidenav.service';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, CommonModule, AsideComponent],
+	imports: [RouterOutlet, CommonModule, SidenavComponent],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-	public asideExpanded = this.asideService.expanded;
+	public asideExpanded = this.sidenavService.expanded;
 	public screenWidth = signal<number>(window.innerWidth);
 
-	constructor(private asideService: AsideService) {}
+	constructor(private sidenavService: SidenavService) {}
 
 	@HostListener('window:resize')
 	onResize() {
-		this.asideService.sizeScreen();
+		this.sidenavService.sizeScreen();
 	}
 
 	ngOnInit(): void {
-		this.asideService.initialize();
+		this.sidenavService.initialize();
 	}
 }

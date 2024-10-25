@@ -3,21 +3,21 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
 	providedIn: 'root',
 })
-export class AsideService {
+export class SidenavService {
 	public expanded = signal(this.localExpanded);
 	public screenWidth = signal<number>(window.innerWidth);
 
 	constructor() {
 		// effect(() => {
-		//   console.log("Sidebar Expanded: ", this.expanded());
+		//   console.log("Sidenav Expanded: ", this.expanded());
 		// })
 	}
 	private get localExpanded() {
-		return localStorage.getItem('sidebarExpanded') !== 'false';
+		return localStorage.getItem('sidenavExpanded') !== 'false';
 	}
 
 	private set localExpanded(value) {
-		localStorage.setItem('sidebarExpanded', String(value));
+		localStorage.setItem('sidenavExpanded', String(value));
 	}
 
 	public toggleExpand() {

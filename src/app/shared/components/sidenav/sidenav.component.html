@@ -1,0 +1,39 @@
+<aside id="sidenav" [ngClass]="expanded() ? '' : 'collapsed'">
+	<section class="sidenav-header">
+		@if (expanded()) {
+			<div class="sidenav-header-app">iubQG</div>
+		}
+
+		<div
+			class="menu-animation"
+			aria-hidden="true"
+			(click)="toggleExpand()"
+			(keyup.enter)="toggleExpand()"
+			[ngClass]="expanded() ? 'active' : ''">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</section>
+
+	<nav>
+		<ul>
+			@for (item of items; track $index) {
+				@if (item.type === 'separator') {
+					<li class="separator"></li>
+				} @else if (item.type === 'space') {
+					<li class="space"></li>
+				} @else {
+					<li class="item">
+						<a [routerLink]="item.routeLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+							<i [class]="item.icon"></i>
+							@if (expanded()) {
+								<span>{{ item.label }}</span>
+							}
+						</a>
+					</li>
+				}
+			}
+		</ul>
+	</nav>
+</aside>

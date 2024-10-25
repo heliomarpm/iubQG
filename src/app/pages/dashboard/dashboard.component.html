@@ -1,0 +1,35 @@
+<div class="grid-container">
+  <div class="cell1 box">
+
+		<table style="width: 100%;">
+			<caption>Estratégia de distribuição</caption>
+			<tr>
+				<th>Jornada</th>
+				<th>Pilot</th>
+				<th>Publish</th>
+			</tr>
+			<tr *ngFor="let activity of activities">
+				<td>{{activity.name}}</td>
+				<td>{{activity.id}}</td>
+				<td>{{activity.type}}</td>
+			</tr>
+		</table>
+
+	</div>
+  <div class="cell2 box">
+		<table style="width: 100%;">
+			<caption>Versões</caption>
+			<tr>
+				<th>Jornada</th>
+				<th>Pilot</th>
+				<th>Publish</th>
+			</tr>
+			<tr *ngFor="let activity of activities">
+				<td>{{activity.name}}</td>
+				<td>{{activity.id}}</td>
+				<td>{{activity.type}}</td>
+			</tr>
+		</table>
+	</div>
+  <div class="cell3 box">Célula 3</div>
+</div>

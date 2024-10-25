@@ -10,6 +10,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [x] Using scss style sheet.
 - [x] Added route view animation
 - [x] Lazy loading routing. 
+- [x] Settings ESLint & Prettier
 - [x] Page 404
 - [x] SideNav with Collapsed/Expanded animation
 - [ ] Switch template light or dark. 

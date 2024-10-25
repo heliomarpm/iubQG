@@ -1,0 +1,162 @@
+#sidenav {
+	background: var(--sidenav-bg-color);
+	transition: .3s ease;
+	position: fixed;
+	top: 0;
+	width: var(--sidenav-width);
+	height: 100vh;
+	overflow-x: hidden;
+	scrollbar-width: none;
+	// box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+
+	&.collapsed {
+		width: var(--sidenav-min-width);
+	}
+
+	.sidenav-header {
+		display: flex;
+		align-items: center;
+		padding: 0.938rem 0.938rem 0 0.938rem;
+		width: 100%;
+		height: 60px;
+
+		.sidenav-header-app {
+			margin-left: 0.8rem;
+			font-size: 24px;
+			font-weight: 700;
+			font-weight: lighter;
+			// text-shadow: 0px 0px 3px #ccc;
+			color: var(--sidenav-text-color);
+		}
+	}
+
+	// .fal {
+	// 	width: 20px;
+	// 	height: 20px;
+	// }
+
+	nav {
+		margin: 0;
+		padding: 0.938rem;
+		height: calc(100% - 3.4rem);
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			height: 100%;
+
+			li {
+				width: 100%;
+				margin-bottom: 0.625rem;
+
+				&.separator {
+					border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+					margin: 10px 0;
+				}
+
+				&.space {
+					flex-grow: 1;
+				}
+
+				&.item {
+					cursor: pointer;
+
+					&:hover a {
+						background-color: var(--sidenav-item-color-hover);
+						color: #000;
+					}
+
+					a {
+						display: flex;
+						align-items: center;
+						height: 3rem;
+						color: var(--sidenav-text-color);
+						text-decoration: none;
+						border-radius: 0.625rem;
+						// transition: all 0.3s ease;
+						transition: width .3s ease;
+
+						&.active {
+							background-color: var(--sidenav-item-color-active);
+
+							* {
+								color: #222;
+							}
+
+						}
+
+						span {
+							margin-left: 1.5rem;
+						}
+
+						i {
+							align-items: center;
+							justify-content: center;
+							text-align: center;
+							font-size: 1.35rem;
+							width: 2rem;
+							min-width: 2rem;
+							padding: .8rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+/* BOTÃO DO MENU ANIMADO */
+.menu-animation {
+	// margin: 2px 20px;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
+	width: 20px;
+	background-color: transparent;
+
+	&.active {
+		margin-right: 4px;
+		transition-delay: 0.2s;
+		transform: rotate(-225deg);
+	}
+}
+
+.menu-animation>span {
+	display: block;
+	width: 20px;
+	height: 2px;
+	border-radius: 8px;
+	background-color: var(--sidenav-text-color);
+}
+
+.menu-animation>span:not(:last-child) {
+	margin-bottom: 4px;
+}
+
+.menu-animation,
+.menu-animation>span {
+	transition: all 0.5s ease-in-out;
+}
+
+.menu-animation.active>span:nth-child(2) {
+	opacity: 0;
+}
+
+.menu-animation.active>span:nth-child(1),
+.menu-animation.active>span:nth-child(3) {
+	transition-delay: 0.2s;
+}
+
+.menu-animation.active>span:nth-child(1) {
+	transform: translateY(6px);
+}
+
+.menu-animation.active>span:nth-child(3) {
+	transform: translateY(-6px) rotate(-90deg);
+}
