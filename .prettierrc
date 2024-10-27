@@ -19,9 +19,22 @@
 	"embeddedLanguageFormatting": "auto",
 	"htmlWhitespaceSensitivity": "css",
 	"proseWrap": "preserve",
-	"plugins": ["@trivago/prettier-plugin-sort-imports"],
-	"importOrder": ["^@angular/core(.*)$", "^@angular/(.*)$", "^@core/(.*)$", "^@shared/(.*)$", "^@server/(.*)$", "^@app/(.*)$", "^[./]"],
-	"importOrderParserPlugins": ["typescript", "classProperties", "decorators-legacy"],
+	"plugins": [
+		"@trivago/prettier-plugin-sort-imports"
+	],
+	"importOrder": [
+		"^@angular/(.*)$",
+		"^@core/(.*)$",
+		"^@shared/(.*)$",
+		"^@server/(.*)$",
+		"^@app/(.*)$",
+		"^[./]"
+	],
+	"importOrderParserPlugins": [
+		"typescript",
+		"classProperties",
+		"decorators-legacy"
+	],
 	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true
 }
