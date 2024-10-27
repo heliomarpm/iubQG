@@ -52,7 +52,7 @@ $color-created: #146718;
 
 	.box {
 		flex: 0 0 25%;
-		width: min(200px, 25%);
+		width: min(180px, 25%);
 
 		&::after {
 			content: '';
@@ -112,7 +112,6 @@ $color-created: #146718;
 	border-radius: var(--border-radius);
 	padding: 7px 7px 7px 10px;
 	margin-bottom: 1px;
-	cursor: pointer;
 	position: relative;
 
 	&:last-child {
@@ -127,6 +126,12 @@ $color-created: #146718;
 		font-size: 0.8rem;
 		margin-top: 5px;
 		position: relative;
+		cursor: pointer;
+
+		&:hover {
+			background: rgba(0, 0, 0, 0.1);
+			box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+		}
 	}
 
 	p {

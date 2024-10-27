@@ -1,296 +1,96 @@
 <h1>compare works!</h1>
 
 <section class="filter">
-		<input #search type="text" placeholder="nome da jornada" class="search" />
+	<input #search type="text" placeholder="nome da jornada" class="search" />
 
-		<input #newVersion type="number" name="new-version" title="versão nova" class="new-version" />
-		<input #oldVersion type="number" name="old-version" title="versão antiga" class="old-version" />
-		&nbsp;&nbsp;
-		<button>comparar</button>
+	<input #newVersion type="number" name="new-version" title="versão nova" class="new-version" />
+	<input #oldVersion type="number" name="old-version" title="versão antiga" class="old-version" />
+	&nbsp;&nbsp;
+	<button (click)="onCompare()">comparar</button>
 </section>
 
 <section class="grid-container">
-	<div class="box deleted">
-		<h1>Removido</h1>
-		<div class="column">
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-		</div>
-	</div>
 
-	<div class="box recreated">
-		<h1>Recriado</h1>
-		<div class="column">
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
+		@if (diff.blocks.deleted.length > 0) {
+			<div class="box deleted">
+				<h1>Removido</h1>
+				<div class="column">
+					@for (item of diff.blocks.deleted; track $index) {
+						<div class="card">
+							<h3>{{ item.activityName }}</h3>
+							<p>{{ item.activityId }}</p>
+							<p>{{ item.activityType }}</p>
+						</div>
+					}
+				</div>
 			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-		</div>
-	</div>
+		}
 
-	<div class="box recreated-changed">
-		<h1>Recriado e Alterado</h1>
-		<div class="column">
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
+		@if (diff.blocks.recreated.length > 0) {
+			<div class="box recreated">
+				<h1>Recriado</h1>
+				<div class="column">
+					@for (item of diff.blocks.recreated; track $index) {
+						<div class="card">
+							<h3>{{ item.activityName }}</h3>
+							<p>{{ item.activityId }}</p>
+							<p>{{ item.activityType }}</p>
+						</div>
+					}
+				</div>
 			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
-			</div>
-		</div>
-	</div>
+		}
 
-	<div class="box changed">
-		<h1>Alterado</h1>
-		<div class="column">
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
+		@if (diff.blocks.recreatedUpdated.length > 0) {
+			<div class="box recreated-changed">
+				<h1>Recriado e Alterado</h1>
+				<div class="column">
+					@for (item of diff.blocks.recreatedUpdated; track $index) {
+						<div class="card">
+							<h3>{{ item.activityName }}</h3>
+							<p>{{ item.activityId }}</p>
+							<p>{{ item.activityType }}</p>
+							@for (changed of item.diff; track $index) {
+								<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{changed.propertyName}}</p>
+							}
+						</div>
+					}
+				</div>
 			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-				<p class="comment">o que foi alterado</p>
-			</div>
-		</div>
-	</div>
+		}
 
-	<div class="box created">
-		<h1>Adicionado</h1>
-		<div class="column">
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
+		@if (diff.blocks.updated.length > 0) {
+			<div class="box changed">
+				<h1>Alterado</h1>
+				<div class="column">
+					@for (item of diff.blocks.updated; track $index) {
+						<div class="card">
+							<h3>{{ item.activityName }}</h3>
+							<p>{{ item.activityId }}</p>
+							<p>{{ item.activityType }}</p>
+							@for (changed of item.diff; track $index) {
+								<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{changed.propertyName}}</p>
+							}
+						</div>
+					}
+				</div>
 			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
-			<div class="card">
-				<h3>activityName</h3>
-				<p>activityId</p>
-				<p>activityType</p>
-			</div>
+		}
 
-		</div>
-	</div>
-</section>
+		@if (diff.blocks.added.length > 0) {
+			<div class="box created">
+				<h1>Alterado</h1>
+				<div class="column">
+					@for (item of diff.blocks.added; track $index) {
+						<div class="card">
+							<h3>{{ item.activityName }}</h3>
+							<p>{{ item.activityId }}</p>
+							<p>{{ item.activityType }}</p>
+						</div>
+					}
+				</div>
+			</div>
+		}
+	</section>
+	
+	<app-code-modal [jsonData]="diffProp"></app-code-modal>

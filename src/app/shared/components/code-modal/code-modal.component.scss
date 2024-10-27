@@ -1,0 +1,75 @@
+dialog {
+	width: 500px;
+	border: none;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	padding: 10px 20px 20px 20px;
+
+	margin: auto;
+}
+
+pre {
+	background-color: #f4f4f4;
+	padding: 10px;
+	border-radius: 5px;
+	max-height: 300px;
+	overflow-y: auto;
+	// white-space: pre-wrap;
+	// word-break: break-word;
+	font-family: Consolas, 'Courier New', Courier, monospace;
+
+	.json-key {
+		color: #d19a66;
+	}
+
+	.json-string {
+		color: #98c379;
+	}
+
+	.json-number {
+		color: #d19a66;
+	}
+
+	.json-boolean {
+		color: #56b6c2;
+	}
+}
+
+
+button.close {
+	margin: 0;
+	padding: 5px 10px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+
+	&:hover {
+		border-radius: 8px;
+		background-color: #f4f4f4;
+	}
+
+	i {
+		font-size: 1.8em;
+	}
+}
+
+button {
+	margin-top: 10px;
+	padding: 8px 12px;
+	font-size: 0.9em;
+	cursor: pointer;
+}
+
+.titlebar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.copy-success {
+	color: green;
+	font-size: 0.9em;
+	display: block;
+	margin-top: 5px;
+}

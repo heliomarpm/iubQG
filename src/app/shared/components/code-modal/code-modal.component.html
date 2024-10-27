@@ -1,0 +1,16 @@
+<dialog #dialog>
+	<div class="titlebar">
+		<h2>{{ title() ?? 'Conteúdo' }}</h2>
+		<button class="close" (click)="closeDialog()">
+			<i class="far fa-times close-icon"></i>
+		</button>
+	</div>
+
+	<pre>{{ jsonData() | json }}</pre>
+	
+	<!-- <button (click)="copyToClipboard(jsonData)">Copiar Conteúdo</button>
+	@if (copySuccess) {
+		<small class="copy-success">Conteúdo copiado!</small>
+	} -->
+	<!-- <button (click)="closeDialog()">Fechar</button> -->
+</dialog>
