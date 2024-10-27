@@ -1,0 +1,33 @@
+div{
+	margin: 20px 50px 20px 50px;
+	display: block;
+	width: auto;
+	min-width: 100px;
+}
+img{
+	width: 64px;
+}
+span{
+	font-weight: lighter;
+}
+.card{
+	background-color: rgba( 255, 255, 255, .5);
+	display: flex ;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	border: 1px solid grey;
+	border-radius: 5%;
+	opacity: .9;
+	box-shadow: 0 0 2em grey;
+	transition: box-shadow .5s;
+}
+.card:hover{
+	opacity: 1;
+	box-shadow: 0 0 4em grey;
+}
+@media ( max-width: 600px ) {
+	div{
+			margin: 20px 20px 20px 20px;
+	}
+}

@@ -1,35 +1,55 @@
 <div class="grid-container">
-  <div class="cell1 box">
-
-		<table style="width: 100%;">
-			<caption>Estratégia de distribuição</caption>
+	<div class="cell1 box">
+		<table style="width: 100%">
+			<caption>
+				Estratégia de distribuição
+			</caption>
+			<thead>
+				<tr>
+					<th>Jornada</th>
+					<th colspan="2">
+						Publish
+						<p><small>versão | distribuição</small></p>
+					</th>
+					<th colspan="2">
+						Pilot
+						<p><small>versão | distribuição</small></p>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (flow of flows; track $index) {
+					<tr>
+						<td data-th="Jornada">{{ flow.flowName }}</td>
+						<td data-th="Versão Publish">{{ flow.publishVersion }}</td>
+						<td data-th="Dist. Publish">{{ flow.publishDist }}</td>
+						<td data-th="Versão Pilot">{{ flow.pilotVersion }}</td>
+						<td data-th="Dist. Pilot">{{ flow.pilotDist }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	<div class="cell2 box">
+		<table style="width: 100%">
+			<caption>
+				Versões
+			</caption>
 			<tr>
 				<th>Jornada</th>
 				<th>Pilot</th>
 				<th>Publish</th>
 			</tr>
-			<tr *ngFor="let activity of activities">
-				<td>{{activity.name}}</td>
-				<td>{{activity.id}}</td>
-				<td>{{activity.type}}</td>
-			</tr>
-		</table>
-
-	</div>
-  <div class="cell2 box">
-		<table style="width: 100%;">
-			<caption>Versões</caption>
-			<tr>
-				<th>Jornada</th>
-				<th>Pilot</th>
-				<th>Publish</th>
-			</tr>
-			<tr *ngFor="let activity of activities">
-				<td>{{activity.name}}</td>
-				<td>{{activity.id}}</td>
-				<td>{{activity.type}}</td>
-			</tr>
+			@for (activity of activities; track $index) {
+				<tr>
+					<td>{{ activity.name }}</td>
+					<td>{{ activity.id }}</td>
+					<td>{{ activity.type }}</td>
+				</tr>
+			}
 		</table>
 	</div>
-  <div class="cell3 box">Célula 3</div>
+	<div class="cell3 box favorites">
+		<app-favorite/>
+	</div>
 </div>
