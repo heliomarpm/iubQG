@@ -2,7 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 
 import { CodeModalComponent } from '../../shared/components/code-modal/code-modal.component';
-import { BlockDiff, Comparison, DiffType } from './compare.model';
+import { Comparison, DiffType } from './compare.model';
 
 @Component({
 	selector: 'app-compare',
@@ -40,5 +40,28 @@ export class CompareComponent {
 		// console.log(diff);
 		this.diffProp = diff;
 		this.diffModal.openDialog();
+	}
+
+	copyJSIUBot() {
+		const tempTextarea = document.createElement('textarea');
+		navigator.clipboard.writeText(tempTextarea.value)
+			.then(() => {
+				// this.copySuccess = true;
+				// setTimeout(() => (this.copySuccess = false), 2000); // Mensagem de sucesso temporária
+			})
+			.catch((error) => {
+				console.error('Error copying to clipboard:', error);
+			});
+	}
+
+	private copyToClipboard(content: string) {
+		navigator.clipboard.writeText(content)
+			.then(() => {
+				// this.copySuccess = true;
+				// setTimeout(() => (this.copySuccess = false), 2000); // Mensagem de sucesso temporária
+			})
+			.catch((error) => {
+				console.error('Error copying to clipboard:', error);
+			});		
 	}
 }

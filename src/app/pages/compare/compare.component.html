@@ -1,4 +1,4 @@
-<h1>compare works!</h1>
+<h1>comparar versão</h1>
 
 <section class="filter">
 	<input #search type="text" placeholder="nome da jornada" class="search" />
@@ -7,90 +7,96 @@
 	<input #oldVersion type="number" name="old-version" title="versão antiga" class="old-version" />
 	&nbsp;&nbsp;
 	<button (click)="onCompare()">comparar</button>
+
+	<button [disabled]="diff.flowName.length === 0" (click)="copyJSIUBot()">
+		<i class="fab fa-js-square"></i>
+	</button>
+	<button [disabled]="diff.flowName.length === 0">
+		<i class="fal fa-file-download"></i>
+	</button>
 </section>
 
 <section class="grid-container">
-
-		@if (diff.blocks.deleted.length > 0) {
-			<div class="box deleted">
-				<h1>Removido</h1>
-				<div class="column">
-					@for (item of diff.blocks.deleted; track $index) {
-						<div class="card">
-							<h3>{{ item.activityName }}</h3>
-							<p>{{ item.activityId }}</p>
-							<p>{{ item.activityType }}</p>
-						</div>
-					}
-				</div>
+	@if (diff.blocks.deleted.length > 0) {
+		<div class="box deleted">
+			<h1>Removido</h1>
+			<div class="column">
+				@for (item of diff.blocks.deleted; track $index) {
+					<div class="card">
+						<h3>{{ item.activityName }}</h3>
+						<p>{{ item.activityId }}</p>
+						<p>{{ item.activityType }}</p>
+					</div>
+				}
 			</div>
-		}
+		</div>
+	}
 
-		@if (diff.blocks.recreated.length > 0) {
-			<div class="box recreated">
-				<h1>Recriado</h1>
-				<div class="column">
-					@for (item of diff.blocks.recreated; track $index) {
-						<div class="card">
-							<h3>{{ item.activityName }}</h3>
-							<p>{{ item.activityId }}</p>
-							<p>{{ item.activityType }}</p>
-						</div>
-					}
-				</div>
+	@if (diff.blocks.recreated.length > 0) {
+		<div class="box recreated">
+			<h1>Recriado</h1>
+			<div class="column">
+				@for (item of diff.blocks.recreated; track $index) {
+					<div class="card">
+						<h3>{{ item.activityName }}</h3>
+						<p>{{ item.activityId }}</p>
+						<p>{{ item.activityType }}</p>
+					</div>
+				}
 			</div>
-		}
+		</div>
+	}
 
-		@if (diff.blocks.recreatedUpdated.length > 0) {
-			<div class="box recreated-changed">
-				<h1>Recriado e Alterado</h1>
-				<div class="column">
-					@for (item of diff.blocks.recreatedUpdated; track $index) {
-						<div class="card">
-							<h3>{{ item.activityName }}</h3>
-							<p>{{ item.activityId }}</p>
-							<p>{{ item.activityType }}</p>
-							@for (changed of item.diff; track $index) {
-								<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{changed.propertyName}}</p>
-							}
-						</div>
-					}
-				</div>
+	@if (diff.blocks.recreatedUpdated.length > 0) {
+		<div class="box recreated-changed">
+			<h1>Recriado e Alterado</h1>
+			<div class="column">
+				@for (item of diff.blocks.recreatedUpdated; track $index) {
+					<div class="card">
+						<h3>{{ item.activityName }}</h3>
+						<p>{{ item.activityId }}</p>
+						<p>{{ item.activityType }}</p>
+						@for (changed of item.diff; track $index) {
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{ changed.propertyName }}</p>
+						}
+					</div>
+				}
 			</div>
-		}
+		</div>
+	}
 
-		@if (diff.blocks.updated.length > 0) {
-			<div class="box changed">
-				<h1>Alterado</h1>
-				<div class="column">
-					@for (item of diff.blocks.updated; track $index) {
-						<div class="card">
-							<h3>{{ item.activityName }}</h3>
-							<p>{{ item.activityId }}</p>
-							<p>{{ item.activityType }}</p>
-							@for (changed of item.diff; track $index) {
-								<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{changed.propertyName}}</p>
-							}
-						</div>
-					}
-				</div>
+	@if (diff.blocks.updated.length > 0) {
+		<div class="box changed">
+			<h1>Alterado</h1>
+			<div class="column">
+				@for (item of diff.blocks.updated; track $index) {
+					<div class="card">
+						<h3>{{ item.activityName }}</h3>
+						<p>{{ item.activityId }}</p>
+						<p>{{ item.activityType }}</p>
+						@for (changed of item.diff; track $index) {
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{ changed.propertyName }}</p>
+						}
+					</div>
+				}
 			</div>
-		}
+		</div>
+	}
 
-		@if (diff.blocks.added.length > 0) {
-			<div class="box created">
-				<h1>Alterado</h1>
-				<div class="column">
-					@for (item of diff.blocks.added; track $index) {
-						<div class="card">
-							<h3>{{ item.activityName }}</h3>
-							<p>{{ item.activityId }}</p>
-							<p>{{ item.activityType }}</p>
-						</div>
-					}
-				</div>
+	@if (diff.blocks.added.length > 0) {
+		<div class="box created">
+			<h1>Alterado</h1>
+			<div class="column">
+				@for (item of diff.blocks.added; track $index) {
+					<div class="card">
+						<h3>{{ item.activityName }}</h3>
+						<p>{{ item.activityId }}</p>
+						<p>{{ item.activityType }}</p>
+					</div>
+				}
 			</div>
-		}
-	</section>
-	
-	<app-code-modal [jsonData]="diffProp"></app-code-modal>
+		</div>
+	}
+</section>
+
+<app-code-modal [jsonData]="diffProp"></app-code-modal>

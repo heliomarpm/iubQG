@@ -34,11 +34,9 @@ export class CodeModalComponent {
   }
 
 	copyToClipboard(content: unknown) {
-		const tempTextarea = document.createElement('textarea');
-		tempTextarea.value = JSON.stringify(content, null, 2); // Formata o JSON com indentação
-		document.body.appendChild(tempTextarea);
-		tempTextarea.select();
-		navigator.clipboard.writeText(tempTextarea.value)
+		const copy = JSON.stringify(content, null, 2); // Formata o JSON com indentação
+
+		navigator.clipboard.writeText(copy)
 			.then(() => {
 				this.copySuccess = true;
 				setTimeout(() => (this.copySuccess = false), 2000); // Mensagem de sucesso temporária
@@ -46,6 +44,5 @@ export class CodeModalComponent {
 			.catch((error) => {
 				console.error('Error copying to clipboard:', error);
 			});
-		document.body.removeChild(tempTextarea);
 	}
 }

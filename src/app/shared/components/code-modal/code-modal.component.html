@@ -6,8 +6,11 @@
 		</button>
 	</div>
 
-	<pre>{{ jsonData() | json }}</pre>
-	
+	<div class="content">
+		<i class="fal fa-copy" (click)="copyToClipboard(jsonData())" aria-hidden="true"></i>
+		<pre>{{ jsonData() | json }}</pre>
+	</div>
+
 	<!-- <button (click)="copyToClipboard(jsonData)">Copiar Conteúdo</button>
 	@if (copySuccess) {
 		<small class="copy-success">Conteúdo copiado!</small>

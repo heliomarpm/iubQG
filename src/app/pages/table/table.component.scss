@@ -1,0 +1,29 @@
+.filter {
+	display: flex;
+	gap: 10px;
+	padding: 24px 0 14px 0;
+	overflow: auto;
+	margin-top: -17px;
+	position: relative;
+
+	input {
+		&.search {
+			width: min(325px, 80vw);
+		}
+	}
+}
+
+.container {
+	padding: 0 0 4px 0;
+	height: calc(100% - 6.5rem);
+	overflow: auto;
+	position: relative;
+}
+
+table {
+	width: 100%;
+
+	a {
+		cursor: pointer;
+	}
+}

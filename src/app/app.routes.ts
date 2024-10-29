@@ -7,6 +7,7 @@ export const ROUTES: Routes = [
 	{ path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent) },	
 	{ path: 'analyze', loadComponent: () => import('./pages/analyze/analyze.component').then(c => c.AnalyzeComponent) },	
 	{ path: 'compare', loadComponent: () => import('./pages/compare/compare.component').then(c => c.CompareComponent) },	
+	{ path: 'table', loadComponent: () => import('./pages/table/table.component').then(c => c.TableComponent) },	
 	{ path: 'settings', loadComponent: () => import('./pages/settings/settings.component').then(c => c.SettingsComponent) },
 	{ path: '**', redirectTo: '/404' },
 ];
