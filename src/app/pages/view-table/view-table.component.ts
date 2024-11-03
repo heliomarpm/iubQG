@@ -1,23 +1,35 @@
-import { JsonPipe, TitleCasePipe } from '@angular/common';
-import { Component, OnInit, input } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
+
+type dataType = Array<{ [key: string]: unknown }>;
+
 
 @Component({
-	selector: 'app-table',
-	standalone: true,
-	imports: [TitleCasePipe, JsonPipe],
-	templateUrl: './table.component.html',
-	styleUrl: './table.component.scss',
+  selector: 'app-view-table',
+  standalone: true,
+  imports: [JsonPipe, CommonModule, CodeModalComponent],
+  templateUrl: './view-table.component.html',
+  styleUrl: './view-table.component.scss'
 })
-export class TableComponent implements OnInit {
-	// data = input.required<Array<{ [key: string]: unknown }>>();
+export class ViewTableComponent implements OnInit {
+	@ViewChild(CodeModalComponent) diffModal!: CodeModalComponent;
 
-	data: Array<{ [key: string]: unknown }> = [
+	// data = input.required<Array<{ [key: string]: unknown }>>();
+	selectedRow: number | null = null;  // Armazena o índice da linha selecionada
+	codeModal: CodeModalType = { title: '', data: '' };
+
+	loading: boolean = false;
+	msgLoading = '';
+
+	data: dataType = [
 		{ id: 1, nome: 'Produto C', preco: 10.5, quantidade: 5 },
 		{ id: 2, nome: 'Produto B', preco: 20, quantidade: 3 },
 		{ id: 3, nome: 'Produto A', preco: 15, quantidade: 5 },
 	];
 
-	data2: Array<{ [key: string]: unknown }> = [
+	data2: dataType = [
 		{
 			activityId: 'bf42d76b-f475-491a-baf4-949aa7a85599',
 			version: 345,
@@ -2749,13 +2761,36 @@ export class TableComponent implements OnInit {
 	sortOrder = 1;
 
 	ngOnInit(): void {
+		this.msgLoading = '';
+		// this.loadData(this.data);
+	}
+
+	loadData(data: dataType) {
+		this.loading = true;
+		this.msgLoading = 'carregando...';
+		this.data = data;
 		if (this.data.length > 0) {
 			this.keys = Object.keys(this.data[0]);
 		}
+		this.msgLoading = `${this.data.length} blocos`;
+		this.loading = false;
 	}
 
-	transfomValue(value: unknown): string {
-		return (typeof value === 'object' ? JSON.stringify(value || '') : value || '') as string;
+	selectRow(index: number): void {
+    this.selectedRow = index;
+  }
+
+	transfomValue(value: unknown, ellipsis: boolean = false): string {
+		const text = (typeof value === 'object' ? JSON.stringify(value || '') : value || '') as string;
+		if (ellipsis && text.length > 100) {
+			return `${text.substring(0, 97)}...`;
+		}
+		return text;
+	}
+
+	isBigValue(value: unknown): boolean {
+		const text = this.transfomValue(value, false);
+		return text.length > 100;
 	}
 
 	sortBy(property: string) {
@@ -2774,7 +2809,7 @@ export class TableComponent implements OnInit {
 				}
 				return result * this.sortOrder;
 			}),
-		];		
+		];
 	}
 
 	sortIcon(property: string) {
@@ -2782,5 +2817,10 @@ export class TableComponent implements OnInit {
 			return this.sortOrder === 1 ? '🔺' : '🔻';
 		}
 		return ' ';
+	}
+
+	openModal(title: string, data: unknown) {
+		this.codeModal = { title, data };
+		this.diffModal.openDialog();
 	}
 }

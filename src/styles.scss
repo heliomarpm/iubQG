@@ -281,7 +281,6 @@ table {
 
 @media screen and (min-width: 600px) {
 	table {
-
 		th,
 		td {
 			display: table-cell;
@@ -299,7 +298,6 @@ table {
 	}
 }
 
-
 .box {
 	position: relative;
 	margin: 0;
@@ -310,4 +308,8 @@ table {
 
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(20px);
+}
+
+.nowrap {
+	white-space: nowrap;
 }

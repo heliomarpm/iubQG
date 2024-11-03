@@ -1,5 +1,7 @@
 .filter {
 	display: flex;
+	justify-self: start;
+	align-items: center;
 	gap: 10px;
 	padding: 24px 0 14px 0;
 	overflow: auto;
@@ -23,7 +25,25 @@
 table {
 	width: 100%;
 
+	box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+
+
 	a {
 		cursor: pointer;
+	}
+
+	td a {
+		color: rgb(24, 67, 133);
+	}
+
+	tr {
+		td {
+			cursor: pointer
+		}
+
+		&.selected {
+			background-color: #f0f8ff;
+			// font-weight: bold;
+		}
 	}
 }

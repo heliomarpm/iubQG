@@ -18,10 +18,13 @@ const navItems = [
 		label: 'Compare',
 	},
 	{
+		type: 'separator',
+	},
+	{
 		type: 'route',
 		routeLink: 'table',
 		icon: 'fal fa-table',
-		label: 'Blocos',
+		label: 'Tablela',
 	},
 	{
 		type: 'space',

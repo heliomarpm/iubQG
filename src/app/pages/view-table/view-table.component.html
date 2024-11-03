@@ -1,0 +1,39 @@
+<h1>listar blocos</h1>
+
+<section class="filter">
+	<input #search type="text" placeholder="nome da jornada" class="search" />
+	&nbsp;&nbsp;
+	<button (click)="loadData(data2)" aria-hidden="true">carregar</button>
+	<small>{{ msgLoading }}</small>
+</section>
+
+<section class="container">
+	<table>
+		<thead>
+			<tr>
+				@for (key of keys; track $index) {
+					<th>
+						<a (click)="sortBy(key)" aria-hidden="true">{{ key }}{{ sortIcon(key) }}</a>
+					</th>
+				}
+			</tr>
+		</thead>
+		<tbody>
+			@for (item of data; track $index) {
+				<tr (click)="selectRow($index)" [ngClass]="{ selected: selectedRow === $index }">
+					@for (key of keys; track $index) {
+						<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
+							@if (isBigValue(item[key])) {
+								<a (click)="openModal(key, item[key])" aria-hidden="true">{{ transfomValue(item[key], true) }}</a>
+							} @else {
+								{{ transfomValue(item[key]) }}
+							}
+						</td>
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
+</section>
+
+<app-code-modal [title]="codeModal.title" [data]="codeModal.data"></app-code-modal>

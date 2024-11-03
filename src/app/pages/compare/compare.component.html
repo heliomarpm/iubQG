@@ -8,10 +8,10 @@
 	&nbsp;&nbsp;
 	<button (click)="onCompare()">comparar</button>
 
-	<button [disabled]="diff.flowName.length === 0" (click)="copyJSIUBot()">
+	<button [disabled]="diff.flowName.length === 0" (click)="scriptIUBot()" title="script para iubot">
 		<i class="fab fa-js-square"></i>
 	</button>
-	<button [disabled]="diff.flowName.length === 0">
+	<button [disabled]="diff.flowName.length === 0" (click)="jsonResultDiff()" title="resultado comparação">
 		<i class="fal fa-file-download"></i>
 	</button>
 </section>
@@ -57,7 +57,7 @@
 						<p>{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
-							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{ changed.propertyName }}</p>
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
 						}
 					</div>
 				}
@@ -75,7 +75,7 @@
 						<p>{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
-							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(changed)">{{ changed.propertyName }}</p>
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
 						}
 					</div>
 				}
@@ -85,7 +85,7 @@
 
 	@if (diff.blocks.added.length > 0) {
 		<div class="box created">
-			<h1>Alterado</h1>
+			<h1>Novo</h1>
 			<div class="column">
 				@for (item of diff.blocks.added; track $index) {
 					<div class="card">
@@ -99,4 +99,4 @@
 	}
 </section>
 
-<app-code-modal [jsonData]="diffProp"></app-code-modal>
+<app-code-modal [title]="codeModal.title" [data]="codeModal.data" [closeFromOutside]="true" ></app-code-modal>

@@ -1,19 +1,19 @@
-<dialog #dialog>
+<dialog #dialog (click)="onCloseFromOutside($event)" aria-hidden="true">
 	<div class="titlebar">
-		<h2>{{ title() ?? 'Conteúdo' }}</h2>
+		<h2>{{ title() }}</h2>
 		<button class="close" (click)="closeDialog()">
 			<i class="far fa-times close-icon"></i>
 		</button>
 	</div>
 
 	<div class="content">
-		<i class="fal fa-copy" (click)="copyToClipboard(jsonData())" aria-hidden="true"></i>
-		<pre>{{ jsonData() | json }}</pre>
+		<div class="copy">
+			@if (copySuccess) {
+				<small class="copy-success">conteúdo copiado!</small>
+			}
+			<i class="fal fa-copy" (click)="copyToClipboard(data())" aria-hidden="true"></i>
+		</div>
+		<pre><code>{{ data() | json }}</code></pre>
 	</div>
-
-	<!-- <button (click)="copyToClipboard(jsonData)">Copiar Conteúdo</button>
-	@if (copySuccess) {
-		<small class="copy-success">Conteúdo copiado!</small>
-	} -->
-	<!-- <button (click)="closeDialog()">Fechar</button> -->
 </dialog>
+

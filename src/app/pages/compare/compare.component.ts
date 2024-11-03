@@ -1,8 +1,8 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 
-import { CodeModalComponent } from '../../shared/components/code-modal/code-modal.component';
-import { Comparison, DiffType } from './compare.model';
+import { Comparison } from './compare.model';
+import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
 
 @Component({
 	selector: 'app-compare',
@@ -14,7 +14,10 @@ import { Comparison, DiffType } from './compare.model';
 export class CompareComponent {
 	@ViewChild(CodeModalComponent) diffModal!: CodeModalComponent;
 
-	diffProp!: DiffType;
+	// selectedDiff: {activityName: string, diff: DiffType|null} = {activityName: '', diff: null};
+	// codeModal: {title: string, data: unknown} = {title: '', data: ''};
+	codeModal: CodeModalType = {title: '', data: ''};
+
 	diff: Comparison = {
 		flowName: '',
 		newVersion: '',
@@ -36,32 +39,17 @@ export class CompareComponent {
 		});
 	}
 
-	openDiffModal(diff: DiffType) {
-		// console.log(diff);
-		this.diffProp = diff;
+	openDiffModal(title: string, data: unknown) {
+		this.codeModal = {title, data};
 		this.diffModal.openDialog();
 	}
 
-	copyJSIUBot() {
-		const tempTextarea = document.createElement('textarea');
-		navigator.clipboard.writeText(tempTextarea.value)
-			.then(() => {
-				// this.copySuccess = true;
-				// setTimeout(() => (this.copySuccess = false), 2000); // Mensagem de sucesso temporária
-			})
-			.catch((error) => {
-				console.error('Error copying to clipboard:', error);
-			});
+	scriptIUBot() {
+		const data = `script iubot`;
+		this.openDiffModal("Script IUBot", data);
 	}
 
-	private copyToClipboard(content: string) {
-		navigator.clipboard.writeText(content)
-			.then(() => {
-				// this.copySuccess = true;
-				// setTimeout(() => (this.copySuccess = false), 2000); // Mensagem de sucesso temporária
-			})
-			.catch((error) => {
-				console.error('Error copying to clipboard:', error);
-			});		
+	jsonResultDiff() {		
+		this.openDiffModal("Resultado Comparação", this.diff);
 	}
 }
