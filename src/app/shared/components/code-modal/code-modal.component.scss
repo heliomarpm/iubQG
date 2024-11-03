@@ -8,22 +8,22 @@
 // }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 99;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 99;
 
-  display: none;
+	display: none;
 }
 
 dialog {
 	min-height: 120px;
 	min-width: 380px;
 	max-height: 90vh;
-  max-width: 90vw;
+	max-width: 90vw;
 
 	border: none;
 	border-radius: 8px;
@@ -36,10 +36,10 @@ dialog {
 	// resize: both;
 
 	&::backdrop {
-    position: fixed;
-    inset: 0px;
+		position: fixed;
+		inset: 0px;
 		background-color: rgba(0, 0, 0, 0.7);
-}
+	}
 }
 
 .content {
@@ -62,25 +62,9 @@ dialog {
 		// white-space: pre-wrap;
 		// word-break: break-word;
 		font-family: Consolas, 'Courier New', Courier, monospace;
-
-		.json-key {
-			color: #d19a66;
-		}
-
-		.json-string {
-			color: #98c379;
-		}
-
-		.json-number {
-			color: #d19a66;
-		}
-
-		.json-boolean {
-			color: #56b6c2;
-		}
 	}
 
-	> .copy {
+	>.copy {
 		z-index: 1;
 		display: flex;
 		align-items: center;

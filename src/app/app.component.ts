@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { SidenavService } from './shared/components/sidenav/sidenav.service';
+import { LoaderService } from './shared/services/loader.service';
 
 @Component({
 	selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
 	public asideExpanded = this.sidenavService.expanded;
 	public screenWidth = signal<number>(window.innerWidth);
 
-	constructor(private sidenavService: SidenavService) {}
+	constructor(private sidenavService: SidenavService, public loaderService: LoaderService) {}
 
 	@HostListener('window:resize')
 	onResize() {

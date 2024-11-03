@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
-import { provideClientHydration } from '@angular/platform-browser';
+// import { provideClientHydration } from '@angular/platform-browser';
 import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { ROUTES } from './app.routes';
@@ -14,6 +14,6 @@ export const appConfig: ApplicationConfig = {
 		{ provide: ErrorHandler, useClass: GlobalErrorHandlerService },
 		{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
 		provideRouter(ROUTES, withViewTransitions()),
-		provideClientHydration(),
+		// provideClientHydration(),
 	],
 };

@@ -1,1 +1,39 @@
-<p>table works!</p>
+<table>
+	@if (caption()?.length) {
+		<caption>{{ caption() }}</caption>
+	}
+	<thead>
+		<tr>
+			@for (key of keys; track $index) {
+				@if (!ignoreColumns().includes(key)) {
+					<th>
+						<a (click)="sortBy(key)" aria-hidden="true">{{ key }}{{ sortIcon(key) }}</a>
+					</th>
+				}
+			}
+		</tr>
+	</thead>
+	<tbody>
+		@if (!noRenderData()) {
+			@for (item of data; track $index) {
+				<tr (click)="selectRow($index)" [ngClass]="{ selected: selectedRow === $index }">
+					@for (key of keys; track $index) {
+						@if (!ignoreColumns().includes(key)) {
+							<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
+								@if (isValueLimited(item[key])) {
+									<a (click)="valueSelected.emit({ key, value: item[key] })" aria-hidden="true">{{
+										transfomValue(item[key], true)
+									}}</a>
+								} @else {
+									{{ transfomValue(item[key]) }}
+								}
+							</td>
+						}
+					}
+				</tr>
+			}
+		} @else {
+			<ng-content></ng-content>
+		}
+	</tbody>
+</table>

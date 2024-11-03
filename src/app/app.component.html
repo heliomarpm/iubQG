@@ -1,7 +1,13 @@
 <app-sidenav />
 
+@if (loaderService.getLoading()) {
+	<progress id="progress-site"></progress>
+}
+
+
 <div id="content">
-  <main id="main" [ngClass]="asideExpanded() ? '' : 'expanded'">
-    <router-outlet #outlet="outlet" />
+	<main id="main" [ngClass]="asideExpanded() ? '' : 'expanded'">
+		<router-outlet #outlet="outlet" />
   </main>
 </div>
+

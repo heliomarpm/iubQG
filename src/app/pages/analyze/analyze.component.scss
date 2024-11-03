@@ -75,10 +75,6 @@
   }
 }
 
-.content {
-	grid-area: content;
-}
-
 .space {
 	flex-grow: 1;
 }
@@ -86,4 +82,24 @@
 .separator {
 	border-bottom: 1px solid var(--placeholder-color);
 	margin: 10px 0;
+}
+
+.content {
+	// grid-area: content;
+	padding: 0 0 4px 0;
+	height: 100%;
+	overflow: auto;
+	position: relative;
+
+}
+
+.INFO {
+	background-color: #9fbcec41;
+	font-size: -.2rem !important;
+}
+.WARNING {
+	background-color: #f0d6a23c;
+}
+.ERROR {
+	background-color: #f5bfca5f;
 }

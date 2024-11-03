@@ -12,7 +12,7 @@ import { CodeModalComponent, CodeModalType } from '../../shared/components/code-
 	styleUrl: './compare.component.scss',
 })
 export class CompareComponent {
-	@ViewChild(CodeModalComponent) diffModal!: CodeModalComponent;
+	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 
 	// selectedDiff: {activityName: string, diff: DiffType|null} = {activityName: '', diff: null};
 	// codeModal: {title: string, data: unknown} = {title: '', data: ''};
@@ -41,7 +41,7 @@ export class CompareComponent {
 
 	openDiffModal(title: string, data: unknown) {
 		this.codeModal = {title, data};
-		this.diffModal.openDialog();
+		this.codeModalElement.openDialog();
 	}
 
 	scriptIUBot() {

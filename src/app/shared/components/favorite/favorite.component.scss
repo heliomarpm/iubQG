@@ -4,6 +4,12 @@ div{
 	width: auto;
 	min-width: 100px;
 }
+a {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	color : #333;
+}
 img{
 	width: 64px;
 }

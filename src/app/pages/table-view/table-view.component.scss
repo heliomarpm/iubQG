@@ -22,28 +22,32 @@
 	position: relative;
 }
 
-table {
-	width: 100%;
+a {
+	cursor: pointer;
 
-	box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
-
-
-	a {
-		cursor: pointer;
-	}
-
-	td a {
+	&.open-code {
 		color: rgb(24, 67, 133);
 	}
-
-	tr {
-		td {
-			cursor: pointer
-		}
-
-		&.selected {
-			background-color: #f0f8ff;
-			// font-weight: bold;
-		}
-	}
 }
+
+// table {
+// 	width: 100%;
+
+// 	box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+
+// 	td a {
+// 		color: rgb(24, 67, 133);
+// 	}
+
+// 	tr {
+// 		td {
+// 			cursor: pointer
+// 		}
+
+// 		&.selected {
+// 			background-color: #dadada;
+// 			// border: 2px solid var(--primary-color);
+// 			font-weight: 500;
+// 		}
+// 	}
+// }

@@ -3,7 +3,7 @@
 <section class="filter">
 	<input #search type="text" placeholder="nome da jornada" class="search" />
 	&nbsp;&nbsp;
-	<button>analisar</button>
+	<button (click)="loadData()">analisar</button>
 </section>
 
 <section class="grid-container">
@@ -28,7 +28,50 @@
 		}
 
 		<span class="separator"></span>
-		<a href="#">gtf5</a>
+		@for (item of statistics?.types; track $index) {
+				<span class="pill">{{ item }}</span>
+		}
 	</div>
-	<div class="box content"></div>
+	<div class="content">
+		<app-table [data]="data.data" [caption]="data.title" [noRenderData]="true" [ignoreColumns]="ignoreColumns" >
+
+			@for (item of data.data; track $index) {
+				<tr class="{{ item['level'] }}">
+					@for (key of keys; track $index) {
+						<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
+								{{ item[key] }}
+						</td>
+					}
+				</tr>
+			}
+
+		</app-table>
+
+		<!-- <table>
+		<caption>{{ data.title }}</caption>
+		<thead>
+			<tr>
+				<th>Grupo</th>
+				<th>Tipo bloco</th>
+				<th>Nome bloco</th>
+				<th>Problema</th>
+				<th>Anotação</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (item of data.data; track $index) {
+				<tr>
+					<td data-th="Grupo">{{ item.type }}</td>
+					<td data-th="Tipo bloco">{{ item.blockType }}</td>
+					<td data-th="Nome bloco">{{ item.blockName }}</td>
+					<td data-th="Problema">{{ item.issue }}</td>
+					<td data-th="Anotação">{{ item.note }}</td>
+				</tr>
+			}
+		</tbody>
+	</table> -->
+		<!--		<pre #output></pre>-->
+	</div>
 </section>
+
+<app-code-modal [title]="codeModal.title" [data]="codeModal.data"></app-code-modal>

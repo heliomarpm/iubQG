@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, ElementRef, OnInit, input, viewChild } from '@angular/core';
+import { Component, ElementRef, input, viewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-code-modal',
@@ -9,11 +9,11 @@ import { Component, ElementRef, OnInit, input, viewChild } from '@angular/core';
 	styleUrl: './code-modal.component.scss',
 })
 export class CodeModalComponent {
-	elDialog = viewChild<ElementRef<HTMLDialogElement>>('dialog');
+	dialogElement = viewChild<ElementRef<HTMLDialogElement>>('dialog');
 
 	title = input<string>('Conteúdo');
 	data = input.required<string | unknown>();
-	closeFromOutside = input<boolean>(false);
+	closeFromOutside = input<boolean>(true);
 
 	copySuccess: boolean = false;
 
@@ -22,7 +22,7 @@ export class CodeModalComponent {
 			return;
 		}
 
-		const dialog = this.elDialog()!.nativeElement;
+		const dialog = this.dialogElement()!.nativeElement;
 
 		const rect = dialog.getBoundingClientRect();
 		if (event.clientY < rect.top || event.clientY > rect.bottom || event.clientX < rect.left || event.clientX > rect.right) {
@@ -32,27 +32,15 @@ export class CodeModalComponent {
 
 	openDialog() {
 		// this.diffDialog.nativeElement.classList.add('open');
-		this.elDialog()!.nativeElement.showModal();
+		this.dialogElement()!.nativeElement.showModal();
 	}
 
 	closeDialog() {
 		// this.diffDialog.nativeElement.classList.remove('open');
 
 		// setTimeout(() => {
-		this.elDialog()!.nativeElement.close();
+		this.dialogElement()!.nativeElement.close();
 		// }, 300);
-	}
-
-	formatJson(data: unknown): string {
-		const jsonString = JSON.stringify(data, null, 2);
-		return jsonString
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-			.replace(/("[\w]+")(?=\s*:)/g, '<span class="json-key">$1</span>')
-			.replace(/:\s(".*?")/g, ': <span class="json-string">$1</span>')
-			.replace(/:\s(\d+\.?\d*)/g, ': <span class="json-number">$1</span>')
-			.replace(/:\s(true|false|null)/g, ': <span class="json-boolean">$1</span>');
 	}
 
 	copyToClipboard(content: unknown) {

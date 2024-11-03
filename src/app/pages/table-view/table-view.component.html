@@ -3,15 +3,23 @@
 <section class="filter">
 	<input #search type="text" placeholder="nome da jornada" class="search" />
 	&nbsp;&nbsp;
-	<button (click)="loadData(data2)" aria-hidden="true">carregar</button>
-	<small>{{ msgLoading }}</small>
+	<button (click)="loadData()">carregar</button>
+
+	<div>
+		@if (config.flowName.length > 0) {
+			<h3>{{ config.flowName.toUpperCase() }} v{{ config.flowVersion }}</h3>
+			<a (click)="openModalBlocks()" (keyup)="openModalBlocks()" class="open-code" aria-disabled="true">
+				{{ config.activityCount }} {{ config.activityCount === 1 ? 'bloco' : 'blocos' }}
+			</a>
+		}
+	</div>
 </section>
 
 <section class="container">
-	<table>
+	<!-- <table>
 		<thead>
 			<tr>
-				@for (key of keys; track $index) {
+				@for (key of config.keys; track $index) {
 					<th>
 						<a (click)="sortBy(key)" aria-hidden="true">{{ key }}{{ sortIcon(key) }}</a>
 					</th>
@@ -21,7 +29,7 @@
 		<tbody>
 			@for (item of data; track $index) {
 				<tr (click)="selectRow($index)" [ngClass]="{ selected: selectedRow === $index }">
-					@for (key of keys; track $index) {
+					@for (key of config.keys; track $index) {
 						<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
 							@if (isBigValue(item[key])) {
 								<a (click)="openModal(key, item[key])" aria-hidden="true">{{ transfomValue(item[key], true) }}</a>
@@ -33,7 +41,9 @@
 				</tr>
 			}
 		</tbody>
-	</table>
+	</table> -->
+
+	<app-table [data]="data" [maxLengthForEllipsed]="100" (valueSelected)="openModal($event.key, $event.value)"></app-table>
 </section>
 
 <app-code-modal [title]="codeModal.title" [data]="codeModal.data"></app-code-modal>
