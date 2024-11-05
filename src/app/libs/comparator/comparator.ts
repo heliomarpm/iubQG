@@ -8,18 +8,18 @@ export default class Comparator {
 
 	constructor(oldFlow: JsonType, newFlow: JsonType) {
 		if (!oldFlow || !newFlow) {
-			throw new Error("Flow not found!");
+			throw new Error("Fluxo não encontrado!");
 		}
 
-		delete oldFlow.desenho_estatico?.definicao_atividade;
-		delete newFlow.desenho_estatico?.definicao_atividade;
+		delete oldFlow.desenho_estatico;
+		delete newFlow.desenho_estatico;
 
 		if (oldFlow.definicao_atividade.flowId !== newFlow.definicao_atividade.flowId) {
-			throw new Error("Flows must have the same flowId");
+			throw new Error("Os fluxos devem ter o mesmo flowId");
 		}
 
 		if (oldFlow.definicao_atividade.flowVersionNumber === newFlow.definicao_atividade.flowVersionNumber) {
-			throw new Error("Flows must have different versions");
+			throw new Error("Os fluxos devem ter versões diferentes");
 		}
 
 		this.oldFlow = utils.updateActivityConfigurations(oldFlow);

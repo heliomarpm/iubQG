@@ -8,6 +8,12 @@
 
 <section class="grid-container">
 	<div class="box aside">
+		@for (item of statistics?.types; track $index) {
+			<span class="pill">{{ item }}</span>
+		}
+		
+		<span class="separator"></span>
+
 		@for (
 			item of [
 				{ title: 'Explore the Docs', link: 'https://angular.dev' },
@@ -26,25 +32,18 @@
 				</svg>
 			</a>
 		}
-
-		<span class="separator"></span>
-		@for (item of statistics?.types; track $index) {
-				<span class="pill">{{ item }}</span>
-		}
 	</div>
 	<div class="content">
-		<app-table [data]="data.data" [caption]="data.title" [noRenderData]="true" [ignoreColumns]="ignoreColumns" >
-
+		<app-table [data]="data.data" [caption]="data.title" [noRenderData]="true" [ignoreColumns]="ignoreColumns">
 			@for (item of data.data; track $index) {
 				<tr class="{{ item['level'] }}">
 					@for (key of keys; track $index) {
 						<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
-								{{ item[key] }}
+							{{ item[key] }}
 						</td>
 					}
 				</tr>
 			}
-
 		</app-table>
 
 		<!-- <table>

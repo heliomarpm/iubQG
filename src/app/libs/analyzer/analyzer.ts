@@ -17,7 +17,7 @@ export default class Analyzer {
 			throw new Error('Flow not found!');
 		}
 
-		delete jsonFlow.desenho_estatico?.definicao_atividade;
+		delete jsonFlow.desenho_estatico;
 		const defFlow = jsonFlow.definicao_atividade;
 
 		this.flow = {

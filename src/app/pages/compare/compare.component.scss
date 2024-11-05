@@ -83,7 +83,7 @@ $color-created: #146718;
 		}
 
 		h1 {
-			font-size: 1.2rem;
+			font-size: clamp(.9rem, 1.1vw, 1.1rem);
 			border: none;
 			border-radius: var(--border-radius);
 			margin-bottom: 4px;
@@ -128,7 +128,7 @@ $color-created: #146718;
 		margin-top: 5px;
 		position: relative;
 
-		font-size: clamp(.68rem, 1vw, 0.8rem);
+		font-size: clamp(.68rem, 1vw, 0.7rem);
 		white-space: nowrap;
 		overflow: hidden;
   	text-overflow: ellipsis;
@@ -141,12 +141,12 @@ $color-created: #146718;
 
 	p {
 		margin: 0;
-		font-size: 0.8rem;
+		font-size: 0.68rem;
 	}
 
 	h3 {
 		font-weight: 600;
-		font-size: clamp(.58rem, .8vw, 0.8rem);
+		font-size: clamp(.55rem, .8vw, .7rem);
 		margin: 0;
 		padding: 0;
 	}
@@ -240,4 +240,9 @@ $color-created: #146718;
 	.column::-webkit-scrollbar-thumb {
 		background: $color-created;
 	}
+}
+
+.data-count::before {
+  color: var(--primary-text-color);
+  background-color: var(--primary-color);
 }

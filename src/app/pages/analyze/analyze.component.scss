@@ -30,7 +30,7 @@
 	flex-direction: column;
 	align-items: start;
 	flex-wrap: wrap;
-	gap: 1.25rem;
+	gap: .3rem;
 
 	.pill {
   	display: flex;
@@ -55,19 +55,19 @@
 			background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
 		}
 
-		&:nth-child(6n + 1) {
-			--pill-accent: var(--bright-blue);
-		}
+		// &:nth-child(6n + 1) {
+		// 	--pill-accent: var(--bright-blue);
+		// }
 
-		&:nth-child(6n + 2) {
-			--pill-accent: var(--french-violet);
-		}
+		// &:nth-child(6n + 2) {
+		// 	--pill-accent: var(--french-violet);
+		// }
 
-		&:nth-child(6n + 3),
-		&:nth-child(6n + 4),
-		&:nth-child(6n + 5) {
-			--pill-accent: var(--hot-red);
-		}
+		// &:nth-child(6n + 3),
+		// &:nth-child(6n + 4),
+		// &:nth-child(6n + 5) {
+		// 	--pill-accent: var(--hot-red);
+		// }
 	}
 
    svg {

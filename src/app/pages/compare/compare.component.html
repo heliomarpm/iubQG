@@ -19,12 +19,12 @@
 <section class="grid-container">
 	@if (diff.blocks.deleted.length > 0) {
 		<div class="box deleted">
-			<h1>Removido</h1>
+			<h1 class="data-count" [attr.data-count]="diff.blocks.deleted.length">Removido's</h1>			
 			<div class="column">
 				@for (item of diff.blocks.deleted; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
-						<p>{{ item.activityId }}</p>
+						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 					</div>
 				}
@@ -34,12 +34,12 @@
 
 	@if (diff.blocks.recreated.length > 0) {
 		<div class="box recreated">
-			<h1>Recriado</h1>
+			<h1 class="data-count" [attr.data-count]="diff.blocks.recreated.length">Recriado's</h1>
 			<div class="column">
 				@for (item of diff.blocks.recreated; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
-						<p>{{ item.activityId }}</p>
+						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 					</div>
 				}
@@ -49,12 +49,12 @@
 
 	@if (diff.blocks.recreatedUpdated.length > 0) {
 		<div class="box recreated-changed">
-			<h1>Recriado e Alterado</h1>
+			<h1 class="data-count" [attr.data-count]="diff.blocks.recreatedUpdated.length">Recriado's e alterado's</h1>
 			<div class="column">
 				@for (item of diff.blocks.recreatedUpdated; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
-						<p>{{ item.activityId }}</p>
+						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
 							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
@@ -67,12 +67,12 @@
 
 	@if (diff.blocks.updated.length > 0) {
 		<div class="box changed">
-			<h1>Alterado</h1>
+			<h1 class="data-count" [attr.data-count]="diff.blocks.updated.length">Alterado's</h1>
 			<div class="column">
 				@for (item of diff.blocks.updated; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
-						<p>{{ item.activityId }}</p>
+						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
 							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
@@ -85,12 +85,12 @@
 
 	@if (diff.blocks.added.length > 0) {
 		<div class="box created">
-			<h1>Novo</h1>
+			<h1 class="data-count" [attr.data-count]="diff.blocks.added.length">Novo's</h1>
 			<div class="column">
 				@for (item of diff.blocks.added; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
-						<p>{{ item.activityId }}</p>
+						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 					</div>
 				}

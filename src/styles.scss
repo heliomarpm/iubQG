@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import 'ngx-toastr/toastr';
 
 :root {
 	--primary-color: #22232e;
 	--primary-color-rgb: 34, 35, 46;
 	--primary-color-shade: #33343e;
+	--primarytext-color: #f4f7fa;
 	--secondary-color: #adec55;
 	--secondary-color-rgb: 173, 236, 85;
 	--secondary-color-shade: #b1d77b;
+	--secondary-text-color: #2e2e2e;
+
 	// --color-even: #f5f9fc;
 	// --color-odd: #ebf3f9;
 	// --color-hover: #8795a0;
@@ -69,11 +73,6 @@
 	box-sizing: border-box;
 	// color-scheme: light dark;
 
-	font-size: .9rem;
-	font-family: Poppins, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-		"Segoe UI Symbol";
-
 	::placeholder {
 		color: var(--placeholder-color);
 		opacity: .4;
@@ -110,6 +109,9 @@ body {
 	position: relative;
 	background: var(--content-bg-color);
 	color: var(--text-color);
+
+	font-size: .9rem;
+	font-family: Poppins, sans-serif;
 }
 
 h1,
@@ -122,7 +124,7 @@ h6 {
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 1.8rem;
 }
 
 h2 {
@@ -326,4 +328,26 @@ table {
 
 .nowrap {
 	white-space: nowrap;
+}
+
+.data-count::before {
+  content: attr(data-count);
+  color: #fdfdfd;
+  background-color: #de2616;
+  border-radius: 50px;
+  font-size: 0.6rem;
+  line-height: 0.5rem;
+  font-family: sans-serif;
+  min-width: 1.6em;
+  height: 1.6em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -3px;
+  right: -3px;
+  padding: 2px;
+  font-weight: 400;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s ease-in-out;
 }
