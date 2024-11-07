@@ -20,3 +20,8 @@ export interface FlowReport {
 	countActivities: number;
 	validationReport: ValidationReport;
 }
+
+export interface ExternalFlows {
+	flowId: string;
+	flowName: string;
+}

@@ -4,7 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, ElementRef, ViewChild, viewChild } from '@angular/core';
 
 import { Analyzer } from '../../libs/analyzer';
-import { FlowReport } from '../../libs/analyzer/models';
+import { ExternalFlows, FlowReport } from '../../libs/analyzer/models';
 import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
 import { TableComponent } from '../../shared/components/table';
 import { JsonType } from '../../shared/types';
@@ -22,6 +22,7 @@ export class AnalyzeComponent {
 
 	outputElement = viewChild<ElementRef<HTMLPreElement>>('output');
 	report?: FlowReport;
+	externalFlows: ExternalFlows[] = [];
 
 	data: {
 		title: string;
@@ -43,6 +44,7 @@ export class AnalyzeComponent {
 			const analyzer = new Analyzer(data);
 			this.report = analyzer.runAnalysis();
 			this.statistics = analyzer.statisticsResult();
+			this.externalFlows = analyzer.getExtenalFlows();
 
 			console.log(this.statistics);
 

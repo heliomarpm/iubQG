@@ -15,7 +15,7 @@ export default class Comparator {
 		delete newFlow.desenho_estatico;
 
 		if (oldFlow.definicao_atividade.flowId !== newFlow.definicao_atividade.flowId) {
-			throw new Error("Os fluxos devem ter o mesmo flowId");
+			throw new Error("Os fluxos devem ter o mesmo Id");
 		}
 
 		if (oldFlow.definicao_atividade.flowVersionNumber === newFlow.definicao_atividade.flowVersionNumber) {

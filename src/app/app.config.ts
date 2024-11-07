@@ -18,9 +18,13 @@ export const appConfig: ApplicationConfig = {
 		{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
 		provideRouter(ROUTES, withViewTransitions()),
 		provideAnimations(), // required animations providers
-		importProvidersFrom(
-			ToastrModule.forRoot()
-    ),
-		// provideToastr(), // Toastr providers
+		// importProvidersFrom(
+		// 	ToastrModule.forRoot()
+    // ),
+		provideToastr({
+      // timeOut: 10000,
+      // positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }), 
 	],
 };

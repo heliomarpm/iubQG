@@ -17,7 +17,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
 			const toastr = this.injector.get(ToastrService);
 
 			console.error('An error occurred:', error);
-			toastr.error(error?.message || 'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.', 'Erro inesperado!');
+			toastr.error(error?.message || 'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.', 'Erro inesperado!');			
 			//throw error (Keep this line uncommented in development  in order to see the error in the console)
 		});
 	}

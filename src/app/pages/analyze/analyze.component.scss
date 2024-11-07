@@ -43,10 +43,8 @@
   	border-radius: 2.75rem;
   	border: 0;
   	transition: background 0.3s ease;
-  	font-family: var(--inter-font);
-  	font-size: 0.875rem;
+  	font-size: 0.75rem;
   	font-style: normal;
-  	font-weight: 500;
   	line-height: 1.4rem;
   	letter-spacing: -0.00875rem;
   	text-decoration: none;
@@ -94,12 +92,12 @@
 }
 
 .INFO {
-	background-color: #9fbcec41;
+	background-color: #c1d3f1;
 	font-size: -.2rem !important;
 }
 .WARNING {
-	background-color: #f0d6a23c;
+	background-color: #e0d69f;
 }
 .ERROR {
-	background-color: #f5bfca5f;
+	background-color: #f39c9c;
 }

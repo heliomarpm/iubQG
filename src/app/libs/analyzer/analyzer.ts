@@ -1,7 +1,7 @@
 import { JsonType } from '../shared/types';
 import utils from '../shared/utils';
 import { ValidationFactory } from './factories/validationFactory';
-import { FlowReport, Validation, ValidationReport } from './models';
+import { ExternalFlows, FlowReport, Validation, ValidationReport } from './models';
 
 export default class Analyzer {
 	private jsonFlow: JsonType;
@@ -42,7 +42,7 @@ export default class Analyzer {
 			const durations = reports.map((report: ValidationReport) => report.duration);
 			const totalDuration = durations.reduce((a: number, b: number) => a + b, 0);
 
-			console.log("validations", validations);
+			console.log('validations', validations);
 			this.flow.validationReport = { duration: totalDuration, validations };
 			this.flow.validationReport.validations?.sort(utils.dynamicSort(['level', 'type', 'blockName']));
 
@@ -131,5 +131,34 @@ export default class Analyzer {
 		if (result.validations?.length === 0) {
 			console.log(`\n>>> SUCESSO ${typeCount.get('SUCCESS')}  | Nenhuma inconsistência encontrado. <<<`);
 		}
+	}
+
+	public getExtenalFlows() {
+		// const gtfs = blocks.filter((block: JsonType) => block.activityType === 'GoToFlow');
+		//TODO: buscar nome das jornadas pelo id
+		const flowName = this.jsonFlow.definicao_atividade || '';
+		const blocks = this.jsonFlow.configuracao_atividade || [];
+
+		const externalInputs: ExternalFlows[] = [];
+		const blockExternalInputs = new Set<string>();
+
+		blocks.forEach((block: JsonType) => {
+			block.inputDataLoc?.forEach((input: string) => {
+				const [inputFlowName] = input.split('|');
+
+				if (inputFlowName !== flowName) {
+					blockExternalInputs.add(inputFlowName);
+				}
+			});
+		});
+
+		Array.from(blockExternalInputs).forEach((input: string) => {
+			externalInputs.push({
+				flowId: '',
+				flowName: input,
+			});
+		});
+
+		return externalInputs;
 	}
 }

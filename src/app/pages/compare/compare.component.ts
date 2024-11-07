@@ -42,7 +42,7 @@ export class CompareComponent {
 	) {}
 
 	onCompare() {
-		const oldFlow$ = this.http.get('/assets/quitacao.json');
+		const oldFlow$ = this.http.get('/assets/2via_345.json');
 		const newFlow$ = this.http.get('/assets/2via_372.json');
 
 		forkJoin([oldFlow$, newFlow$]).subscribe({
