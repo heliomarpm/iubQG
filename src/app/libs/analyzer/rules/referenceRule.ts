@@ -16,7 +16,7 @@ export class ReferenceRule implements Rule {
 		});
 	}
 
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityName, activityType, inputDataLoc } = activity;
 		const results: Validation[] = [];
 

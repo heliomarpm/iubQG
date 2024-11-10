@@ -16,33 +16,6 @@
 </section>
 
 <section class="container">
-	<!-- <table>
-		<thead>
-			<tr>
-				@for (key of config.keys; track $index) {
-					<th>
-						<a (click)="sortBy(key)" aria-hidden="true">{{ key }}{{ sortIcon(key) }}</a>
-					</th>
-				}
-			</tr>
-		</thead>
-		<tbody>
-			@for (item of data; track $index) {
-				<tr (click)="selectRow($index)" [ngClass]="{ selected: selectedRow === $index }">
-					@for (key of config.keys; track $index) {
-						<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
-							@if (isBigValue(item[key])) {
-								<a (click)="openModal(key, item[key])" aria-hidden="true">{{ transfomValue(item[key], true) }}</a>
-							} @else {
-								{{ transfomValue(item[key]) }}
-							}
-						</td>
-					}
-				</tr>
-			}
-		</tbody>
-	</table> -->
-
 	<app-table [data]="data" [maxLengthForEllipsed]="100" (valueSelected)="openModal($event.key, $event.value)"></app-table>
 </section>
 

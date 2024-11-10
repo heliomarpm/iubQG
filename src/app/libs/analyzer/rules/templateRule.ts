@@ -10,7 +10,7 @@ const templateFields: Record<string, string> = {
 };
 
 export class TemplateRule implements Rule {
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityName, activityType } = activity;
 		const field = templateFields[activityType] || "";
 
@@ -21,7 +21,7 @@ export class TemplateRule implements Rule {
 				const isValidJson = this.isValidTemplate(template);
 
 				if (!isValidJson) {
-					return [{
+					return {
 						type: "TEMPLATE",
 						level: "ERROR",
 						blockType: activityType,
@@ -29,7 +29,7 @@ export class TemplateRule implements Rule {
 						issue: "Template inválido",
 						note: `${JSON.stringify(template)}`,
 						message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} não contém template válido: ${RED}${JSON.stringify(template)}${RESET_COLOR}.`,
-					}];
+					};
 				}
 			}
 		}

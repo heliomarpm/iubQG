@@ -3,19 +3,29 @@
 <section class="filter">
 	<input #search type="text" placeholder="nome da jornada" class="search" />
 	&nbsp;&nbsp;
-	<button (click)="loadData()">analisar</button>
+	<button (click)="loadData(search.value)">analisar</button>
 </section>
 
 <section class="grid-container">
-	@if (data.data.length > 0) {
-		<div class="box aside">
-			@for (item of statistics?.types; track $index) {
-				<span class="pill">{{ item.toString().replace(',', ' >> ') }}</span>
-			}
+	@if (getTabs().length > 0) {
+		<div class="tabs">
+			<div class="tab-buttons">
+				@for (tab of getTabs(); track $index) {
+					<div class="tab-button-group">
+					<button [class.active]="selectedKey === tab" (click)="selectTab(tab)">{{ tab }}</button>
+					<button (click)="closeTab(tab)">x</button>
+				</div>
+				}
+			</div>
+			<div class="tab-content">
+				<div class="box aside">
+					@for (item of selectedData.statistics?.types; track $index) {
+						<span class="pill">{{ item.toString().replace(',', ' >> ') }}</span>
+					}
 
-			<span class="separator"></span>
+					<span class="separator"></span>
 
-			<!-- @for (
+					<!-- @for (
 				item of [
 					{ title: 'Explore the Docs', link: 'https://angular.dev' },
 					{ title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
@@ -25,55 +35,39 @@
 				];
 				track item.title
 			) { -->
-			@for (item of externalFlows; track $index) {
-				<a class="pill" [href]="item.flowId" target="_blank" rel="noopener">
-					<span>{{ item.flowName }}</span>
-					<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
-						<path
-							d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
-					</svg>
-				</a>
-			}
+					@for (item of selectedData.externalFlows; track $index) {
+						<!-- <a class="pill" [href]="item.flowId" target="_blank" rel="noopener"> -->
+							<span class="pill" (click)="loadData('quitacao')"  aria-hidden="true" >
+								<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
+									<path
+									d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
+								</svg>&nbsp;
+								<span>{{ item.flowName }}</span>
+						</span>
+						<!-- </a> -->
+					}
+				</div>
+
+				<div class="content">
+					<app-table
+						[data]="selectedData.data"
+						[caption]="selectedData.title"
+						[noRenderData]="true"
+						[ignoreColumns]="ignoreColumns">
+						@for (item of selectedData.data; track $index) {
+							<tr class="{{ item['level'] }}">
+								@for (key of selectedData.keys; track $index) {
+									<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
+										{{ item[key] }}
+									</td>
+								}
+							</tr>
+						}
+					</app-table>
+				</div>
+			</div>
 		</div>
 	}
-	<div class="content">
-		<app-table [data]="data.data" [caption]="data.title" [noRenderData]="true" [ignoreColumns]="ignoreColumns">
-			@for (item of data.data; track $index) {
-				<tr class="{{ item['level'] }}">
-					@for (key of keys; track $index) {
-						<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
-							{{ item[key] }}
-						</td>
-					}
-				</tr>
-			}
-		</app-table>
-
-		<!-- <table>
-		<caption>{{ data.title }}</caption>
-		<thead>
-			<tr>
-				<th>Grupo</th>
-				<th>Tipo bloco</th>
-				<th>Nome bloco</th>
-				<th>Problema</th>
-				<th>Anotação</th>
-			</tr>
-		</thead>
-		<tbody>
-			@for (item of data.data; track $index) {
-				<tr>
-					<td data-th="Grupo">{{ item.type }}</td>
-					<td data-th="Tipo bloco">{{ item.blockType }}</td>
-					<td data-th="Nome bloco">{{ item.blockName }}</td>
-					<td data-th="Problema">{{ item.issue }}</td>
-					<td data-th="Anotação">{{ item.note }}</td>
-				</tr>
-			}
-		</tbody>
-	</table> -->
-		<!--		<pre #output></pre>-->
-	</div>
 </section>
 
 <app-code-modal [title]="codeModal.title" [data]="codeModal.data"></app-code-modal>

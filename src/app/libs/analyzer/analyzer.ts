@@ -42,7 +42,6 @@ export default class Analyzer {
 			const durations = reports.map((report: ValidationReport) => report.duration);
 			const totalDuration = durations.reduce((a: number, b: number) => a + b, 0);
 
-			console.log('validations', validations);
 			this.flow.validationReport = { duration: totalDuration, validations };
 			this.flow.validationReport.validations?.sort(utils.dynamicSort(['level', 'type', 'blockName']));
 
@@ -53,7 +52,7 @@ export default class Analyzer {
 		}
 	}
 
-	public report() {
+	get report() {
 		return this.flow;
 	}
 

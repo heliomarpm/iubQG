@@ -163,7 +163,8 @@ li {
 
 
 button,
-input {
+input, 
+select {
 	font: inherit;
 	border: 1.5px solid var(--border-color);
 	border-radius: var(--border-radius);
@@ -195,12 +196,13 @@ button {
 	}
 }
 
-input {
+input,
+select {
 	position: relative;
 	outline: none;
 	background-color: transparent;
 	z-index: 0;
-	transition: border-color 0.5s;
+	transition: border-color 0.5s;	
 }
 
 table {
@@ -382,4 +384,12 @@ table {
 		background-color: #f6b656;
 		border-left: 7px solid #de9206;
 	}
+}
+
+
+.input-box {
+	display: flex;
+	gap: 10px;
+	padding: 5px;
+	overflow: auto;
 }

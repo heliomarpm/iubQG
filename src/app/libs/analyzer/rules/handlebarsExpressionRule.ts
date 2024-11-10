@@ -10,9 +10,6 @@ const consistencyFields: Record<string, string[]> = {
 	Mapper: ['mapperUdt.mapperTemplate'],
 	Filter: ['filterUdt.filterTemplate'],
 	CallApi: [
-		'callApiUdt.hom.body',
-		'callApiUdt.hom.queryString',
-		'callApiUdt.hom.routing',
 		'callApiUdt.prod.body',
 		'callApiUdt.prod.queryString',
 		'callApiUdt.prod.routing',
@@ -25,7 +22,7 @@ export class HandlebarsExpressionRule implements Rule {
 	// Expressões handlebars de valores (duas ou três chaves)
 	private valueExpressionRegex = /{{2,3}[^{}]+}{2,3}/g;
 
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityName, activityType } = activity;
 		const consistencyFieldsForType = consistencyFields[activityType] || [];
 		const results: Validation[] = [];

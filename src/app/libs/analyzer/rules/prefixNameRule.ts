@@ -18,13 +18,13 @@ const prefixRules: Record<string, string[]> = {
 };
 
 export class PrefixNameRule implements Rule {
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityName, activityType } = activity;
 		const rules = prefixRules[activityType] || [];
 
 		const hasPrefix = rules.some((prefix) => activityName.startsWith(prefix));
 		if (!hasPrefix) {
-			return [{
+			return {
 				type: "PREFIXO",
 				level: "INFO",
 				blockType: activityType,
@@ -32,7 +32,7 @@ export class PrefixNameRule implements Rule {
 				issue: "Prefixo não segue os padrões de boas práticas",
 				note: `Sugestão: ${rules.join(", ")}`,
 				message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} não segue os padroes de prefixos sugeridos: ${YELLOW}${rules.join(", ")}${RESET_COLOR}.`,
-			}];
+			};
 		}
 		return null;
 	}

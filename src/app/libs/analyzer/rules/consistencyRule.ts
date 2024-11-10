@@ -5,7 +5,7 @@ import Rule, { Validation } from '../models';
 export class ConsistencyRule implements Rule {
 	private static readonly expectedOutputDataLocPatterns = [/^(.+)_result$/, /^([^|]+)\|(.+)_result$/];
 
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityType, activityName, inputDataLoc, outputDataLoc } = activity;
 		const results: Validation[] = [];
 

@@ -1,13 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, ElementRef, ViewChild, viewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { Analyzer } from '../../libs/analyzer';
-import { ExternalFlows, FlowReport } from '../../libs/analyzer/models';
+import { ExternalFlows } from '../../libs/analyzer/models';
 import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
 import { TableComponent } from '../../shared/components/table';
 import { JsonType } from '../../shared/types';
+
+type dataType = {
+	name: string;
+	title: string;
+	data: Array<{ [key: string]: any }>;
+	keys: string[];
+	statistics?: {
+		duration: number;
+		types: Map<string, number>;
+	};
+	externalFlows: ExternalFlows[];
+};
 
 @Component({
 	selector: 'app-analyze',
@@ -17,52 +29,71 @@ import { JsonType } from '../../shared/types';
 	styleUrl: './analyze.component.scss',
 })
 export class AnalyzeComponent {
+	[x: string]: any;
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 	codeModal: CodeModalType = { title: '', data: '' };
 
-	outputElement = viewChild<ElementRef<HTMLPreElement>>('output');
-	report?: FlowReport;
-	externalFlows: ExternalFlows[] = [];
-
-	data: {
-		title: string;
-		data: Array<{ [key: string]: any }>;
-	} = { title: '', data: [] };
-	keys: string[] = [];
-	statistics?: {
-		duration: number;
-		types: Map<string, number>;
-	};
+	datasets: { [key: string]: dataType } = {};
+	selectedKey: string | null = null;
+	selectedData!: dataType;
 
 	ignoreColumns = ['message', 'level'];
 
 	constructor(private http: HttpClient) {}
 
-	loadData() {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		this.http.get<JsonType>('/assets/flow.json').subscribe(data => {
+	loadData(flowName: string) {
+		flowName = flowName.length > 0 ? flowName : 'flow';
+
+		this.http.get<JsonType>(`/assets/${flowName}.json`).subscribe(data => {
 			const analyzer = new Analyzer(data);
-			this.report = analyzer.runAnalysis();
-			this.statistics = analyzer.statisticsResult();
-			this.externalFlows = analyzer.getExtenalFlows();
+			const report = analyzer.runAnalysis();
 
-			console.log(this.statistics);
+			let keys: string[] = [];
+			const validations = report.validationReport.validations || [];
 
-			this.data = {
-				title: `Jornada: ${this.report.name} | Versão: ${this.report.version} | Situação: ${this.report.situation} | Blocos: ${this.report.countActivities}`,
-				data: this.report.validationReport.validations || [],
+			(keys = validations.length > 0 ? Object.keys(validations[0]) : []), (keys = keys.filter(item => !this.ignoreColumns.includes(item)));
+
+			const dataset: dataType = {
+				name: report.name,
+				title: `Jornada: ${report.name} | Versão: ${report.version} | Situação: ${report.situation} | Blocos: ${report.countActivities}`,
+				data: validations,
+				keys,
+				statistics: analyzer.statisticsResult(),
+				externalFlows: analyzer.getExtenalFlows(),
 			};
 
-			(this.keys = this.data.data.length > 0 ? Object.keys(this.data.data[0]) : []),
-				// this.keys.splice(this.keys.indexOf('message'), 1);
-				(this.keys = this.keys.filter(item => !this.ignoreColumns.includes(item)));
-
-			// this.printReport(this.report);
+			this.addTab(dataset);
 		});
 	}
 
 	openModal(title: string, data: unknown) {
 		this.codeModal = { title, data };
 		this.codeModalElement.openDialog();
+	}
+
+	getTabs() {
+		return Object.keys(this.datasets);
+	}
+
+	addTab(data: dataType) {
+		if (!this.datasets[data.name]) {
+			this.datasets[data.name] = data;
+		}
+		this.selectTab(data.name);
+	}
+
+	selectTab(key: string) {
+		this.selectedKey = key;
+		this.selectedData = this.datasets[key];
+	}
+
+	closeTab(key: string) {
+		delete this.datasets[key];
+		if (this.selectedTab === key) {
+			const keys = this.getTabs();
+			if (keys.length > 0) {
+				this.selectTab(keys[0]);
+			}
+		}
 	}
 }

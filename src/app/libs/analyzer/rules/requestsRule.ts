@@ -9,7 +9,7 @@ export class RequestRule implements Rule {
 		this.activityList = activityList;
 	}
 
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const results: Validation[] = [];
 		const { activityId, activityType, activityName } = activity;
 
@@ -23,7 +23,7 @@ export class RequestRule implements Rule {
 		const nextActivity = this.activityList.find((act) => act.activityId === nextActivityId);
 
 		if (!nextActivity || nextActivity.activityType !== "UserResponse") {
-			return [{
+			return {
 				type: "CONEXÃO INVÁLIDA",
 				level: "ERROR",
 				blockType: activityType,
@@ -31,7 +31,7 @@ export class RequestRule implements Rule {
 				issue: "Conexão inválida",
 				note:	"Conexão subsequente deve ser do tipo 'UserResponse'.",
 				message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} contém uma conexão inválida. A conexão subsequente precisa ser ${GREEN}"UserResponse"${RESET_COLOR}.`,
-			}];
+			};
 		}
 
 		// Extraindo as opções de "acoes" no UserRequest

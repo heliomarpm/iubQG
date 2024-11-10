@@ -25,7 +25,7 @@ const requiredFields: Record<string, string[]> = {
 };
 
 export class RequiredFieldsRule implements Rule {
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityType, activityName } = activity;
 		const required = requiredFields[activityType] || [];
 
@@ -36,7 +36,7 @@ export class RequiredFieldsRule implements Rule {
 
 		// Se houver campos obrigatórios faltando, retorna a validação com erro
 		if (missingFields.length > 0) {
-			return [{
+			return {
 				type: "CAMPO OBRIGATORIO",
 				level: "ERROR",
 				blockType: activityType,
@@ -44,7 +44,7 @@ export class RequiredFieldsRule implements Rule {
 				issue: "Campos obrigatórios faltando",
 				note: `ausente: ${missingFields.join(", ")}`,
 				message: `Campos obrigatórios do ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} não foram preenchidos: ${RED}${missingFields.join(", ")}${RESET_COLOR}.`,
-			}];
+			};
 		}
 
 		return null;

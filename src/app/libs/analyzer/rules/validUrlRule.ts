@@ -7,7 +7,7 @@ const urlFields: Record<string, string[]> = {
 };
 
 export class ValidUrlRule implements Rule {
-	validate(activity: JsonType): Validation[] | null {
+	validate(activity: JsonType): Validation | Validation[] | null {
 		const { activityType, activityName } = activity;
 		const fields = urlFields[activityType] || [];
 		const results: Validation[] = [];

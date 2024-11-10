@@ -31,25 +31,27 @@
 		</table>
 	</div>
 	<div class="cell2 box">
-		<table style="width: 100%">
-			<!-- <caption>
-				Versões
-			</caption> -->
-			<tr>
-				<th>Jornada</th>
-				<th>Pilot</th>
-				<th>Publish</th>
-			</tr>
-			@for (activity of activities; track $index) {
-				<tr>
-					<td>{{ activity.name }}</td>
-					<td>{{ activity.id }}</td>
-					<td>{{ activity.type }}</td>
-				</tr>
-			}
-		</table>
+		<div class="input-box">
+			<select #selectDoc style="width: 120px">
+				<option value="1" selected>CPF</option>
+				<option value="2">CNPJ</option>
+			</select>
+			
+			<button (click)="onGenerateDoc(selectDoc.value)" > gerar documento </button>
+		</div>
+		<div class="input-box">
+			<input #doc type="text" placeholder="informe o cpf ou cnpj" />
+			<button (click)="onValidateDoc(doc.value)"> validar </button>
+		</div>
 	</div>
 	<div class="cell3 box favorites">
-		<app-favorite/>
+
+		@for (item of [
+			{title: 'Angular', href: 'https://angular.io'},
+			{title: 'Github', href: 'https://github.com'}
+			]; track $index) {
+			<app-favorite [item]="item" />
+		}
+
 	</div>
 </div>
