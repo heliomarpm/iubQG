@@ -14,7 +14,6 @@ export class CodeModalComponent {
 	title = input<string>('Conteúdo');
 	data = input.required<string | unknown>();
 	closeFromOutside = input<boolean>(true);
-
 	copySuccess: boolean = false;
 
 	onCloseFromOutside(event: MouseEvent): void {
@@ -54,6 +53,8 @@ export class CodeModalComponent {
 			})
 			.catch(error => {
 				console.error('Error copying to clipboard:', error);
+				throw error;
 			});
 	}
+
 }

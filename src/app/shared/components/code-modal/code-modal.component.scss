@@ -114,3 +114,9 @@ button.close {
 	align-items: center;
 	margin-bottom: 10px;
 }
+
+pre,
+code {
+	// white-space: pre-wrap;
+	word-break: break-word;
+}

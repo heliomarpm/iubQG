@@ -1,3 +1,4 @@
+import { BlockContent } from "@app/libs/comparator";
 
 export type DiffType = {
 	propertyName: string;
@@ -24,10 +25,10 @@ export interface Comparison {
 	newVersion: string;
 	oldVersion: string;
 	blocks: {
-		deleted: Block[];
+		deleted: BlockContent[];
 		recreated: BlockDiff[];
 		recreatedUpdated: BlockDiff[];
 		updated: BlockDiff[];
-		added: Block[];
+		added: BlockContent[];
 	};
 }

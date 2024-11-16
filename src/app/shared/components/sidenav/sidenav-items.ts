@@ -2,20 +2,24 @@ const navItems = [
 	{
 		type: 'route',
 		routeLink: 'dashboard',
-		icon: 'fal fa-home',
-		label: 'Dashboard',
+		// icon: 'fal fa-home',
+		icon: 'window',
+		label: 'Painel Principal',
 	},
 	{
 		type: 'route',
 		routeLink: 'analyze',
-		icon: 'fal fa-tasks',
-		label: 'Analyze',
+		// icon: 'fal fa-tasks',
+		icon: 'troubleshoot',
+		label: 'Analisar Construção',
 	},
 	{
 		type: 'route',
 		routeLink: 'compare',
-		icon: 'fal fa-not-equal',
-		label: 'Compare',
+		// icon: 'fal fa-not-equal',
+		icon: 'compare_arrows',
+		// icon: 'text_compare',
+		label: 'Comparar Versões',
 	},
 	{
 		type: 'separator',
@@ -23,8 +27,9 @@ const navItems = [
 	{
 		type: 'route',
 		routeLink: 'table',
-		icon: 'fal fa-table',
-		label: 'Tablela',
+		// icon: 'fal fa-table',
+		icon: 'table',
+		label: 'Listar Blocos',
 	},
 	{
 		type: 'space',
@@ -35,8 +40,9 @@ const navItems = [
 	{
 		type: 'route',
 		routeLink: 'settings',
-		icon: 'fal fa-cog',
-		label: 'Settings',
+		// icon: 'fal fa-cog',
+		icon: 'settings',
+		label: 'Configurações',
 	},
 ];
 

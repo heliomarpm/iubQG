@@ -1,7 +1,8 @@
 <h1>analisar construção</h1>
 
 <section class="filter">
-	<input #search type="text" placeholder="nome da jornada" class="search" />
+	<input #search type="text" name="search" placeholder="nome da jornada" class="search" />
+	<input #version type="number" name="version" placeholder="versão" class="version" />
 	&nbsp;&nbsp;
 	<button (click)="loadData(search.value)">analisar</button>
 </section>
@@ -12,7 +13,9 @@
 			<div class="tab-buttons">
 				@for (tab of getTabs(); track $index) {
 					<div class="tab-button-group">
-					<button [class.active]="selectedKey === tab" (click)="selectTab(tab)">{{ tab }}</button>
+					<button [class.active]="selectedKey === tab" (click)="selectTab(tab)">
+						{{ tab }}
+					</button>
 					<button (click)="closeTab(tab)">x</button>
 				</div>
 				}

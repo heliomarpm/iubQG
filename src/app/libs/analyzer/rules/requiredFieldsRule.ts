@@ -5,11 +5,6 @@ import utils, { CYAN, RED, RESET_COLOR } from "../../shared/utils";
 const requiredFields: Record<string, string[]> = {
 	Decision: ["inputDataLoc", "decisionUdt.conditions", "decisionUdt.decisionEngineType"],
 	CallApi: [
-		"callApiUdt.hom.url",
-		"callApiUdt.hom.authentication.authenticationType",
-		"callApiUdt.hom.authentication.authenticationUri",
-		"callApiUdt.hom.authentication.clientId",
-		"callApiUdt.hom.authentication.client_secret",
 		"callApiUdt.prod.url",
 		"callApiUdt.prod.authentication.authenticationType",
 		"callApiUdt.prod.authentication.authenticationUri",

@@ -1,9 +1,10 @@
 <h1>listar blocos</h1>
 
 <section class="filter">
-	<input #search type="text" placeholder="nome da jornada" class="search" />
+	<input #search type="text" name="search" placeholder="nome da jornada" class="search" />
+	<input #version type="number" name="version" placeholder="versão" class="version" />
 	&nbsp;&nbsp;
-	<button (click)="loadData()">carregar</button>
+	<button (click)="loadData(search.value, version.value)">carregar</button>
 
 	<div>
 		@if (config.flowName.length > 0) {

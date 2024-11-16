@@ -2,12 +2,13 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 
 import Comparator from '../../libs/comparator/comparator';
 import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
-import { ErrorType } from '../../shared/types';
-import { Comparison } from './compare.model';
+import { Block, Comparison } from './compare.model';
+import { FlowService } from '@app/core/services/flow.service';
+import { JsonType } from '@app/shared/types';
 
 @Component({
 	selector: 'app-compare',
@@ -19,8 +20,6 @@ import { Comparison } from './compare.model';
 export class CompareComponent {
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 
-	// selectedDiff: {activityName: string, diff: DiffType|null} = {activityName: '', diff: null};
-	// codeModal: {title: string, data: unknown} = {title: '', data: ''};
 	codeModal: CodeModalType = { title: '', data: '' };
 
 	diff: Comparison = {
@@ -36,21 +35,33 @@ export class CompareComponent {
 		},
 	};
 
+	icons = {
+		flow: 'flowsheet',
+		check: 'check',
+		error: 'error',
+	};
+
+	icoFlow = signal<string>("flowsheet");
+
 	constructor(
-		private http: HttpClient,
-		private toastr: ToastrService,
+		protected http: HttpClient,
+		private flowService: FlowService,
+		private toastr: ToastrService
 	) {}
 
-	onCompare() {
-		const oldFlow$ = this.http.get('/assets/2via_345.json');
-		const newFlow$ = this.http.get('/assets/2via_372.json');
+	onCompare(flowName: string, oldVersion: string, newVersion: string) {
+		const nOldVersion = Math.min(Number(oldVersion), Number(newVersion));
+		const nNewVersion = Math.max(Number(oldVersion), Number(newVersion));
+
+		const oldFlow$ = this.flowService.get<JsonType>(flowName, nOldVersion);
+		const newFlow$ = this.flowService.get<JsonType>(flowName, nNewVersion);
 
 		forkJoin([oldFlow$, newFlow$]).subscribe({
 			next: ([oldData, newData]) => {
 				try {
 					const compare = new Comparator(oldData, newData);
 					this.diff = compare.runComparison();
-				} catch (err) {					
+				} catch (err) {
 					if (err instanceof Error) {
 						this.toastr.error(err.message, 'Comparar versões');
 					} else {
@@ -58,7 +69,7 @@ export class CompareComponent {
 					}
 				}
 			},
-			error: error => console.error('An error occurred:', error),
+			// error: error => this.toastr.error(error.message, 'An error occurred:'),
 		});
 
 		// this.http.get<Comparison>('/assets/diff.json').subscribe(data => {
@@ -72,8 +83,36 @@ export class CompareComponent {
 	}
 
 	scriptIUBot() {
-		const data = `script iubot`;
-		this.openDiffModal('Script IUBot', data);
+		const blocks = (blocks: Array<Block>) => {
+			return JSON.stringify(blocks.map(item => item.activityName));
+		};
+
+		this.http.get('/assets/diff-change-color.js.txt', { responseType: 'text' }).subscribe(template => {
+			const script = template
+				.replace('{{flowName}}', this.diff.flowName)
+				.replace('{{oldVersion}}', this.diff.oldVersion)
+				.replace('{{newVersion}}', this.diff.newVersion)
+				.replace('{{deletedBlocks}}', blocks(this.diff.blocks.deleted))
+				.replace('{{recreatedBlocks}}', blocks(this.diff.blocks.recreated))
+				.replace('{{recreatedUpdatedBlocks}}', blocks(this.diff.blocks.recreatedUpdated))
+				.replace('{{updatedBlocks}}', blocks(this.diff.blocks.updated))
+				.replace('{{addedBlocks}}', blocks(this.diff.blocks.added));
+
+			navigator.clipboard
+				.writeText(script)
+				.then(() => {
+					this.icoFlow.set(this.icons.check);
+					this.toastr.success('Abra o IUBot e cole o script no console', 'Código copiado');
+				})
+				.catch(error => {
+					console.error('Error copying to clipboard:', error);
+					this.icoFlow.set(this.icons.error);
+					this.toastr.error('Erro ao copiar para área de transferência', 'Error ao copiar');
+				})
+				.finally(() => setTimeout(() => (this.icoFlow.set(this.icons.flow)), 2000));
+
+			// this.openDiffModal('Script IUBot', script);
+		});
 	}
 
 	jsonResultDiff() {

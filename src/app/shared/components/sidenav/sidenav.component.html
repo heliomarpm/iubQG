@@ -26,7 +26,8 @@
 				} @else {
 					<li class="item">
 						<a [routerLink]="item.routeLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-							<i [class]="item.icon"></i>
+							<!-- <i [class]="item.icon"></i> -->
+							<i class="material-symbols-outlined" [title]="item.label">{{item.icon}}</i>
 							@if (expanded()) {
 								<span>{{ item.label }}</span>
 							}

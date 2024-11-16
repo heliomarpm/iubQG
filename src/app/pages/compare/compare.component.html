@@ -1,31 +1,34 @@
 <h1>comparar versão</h1>
 
 <section class="filter">
-	<input #search type="text" placeholder="nome da jornada" class="search" />
+	<input #search type="text" name="search" placeholder="nome da jornada" class="search" />
 
-	<input #newVersion type="number" name="new-version" title="versão nova" class="new-version" />
-	<input #oldVersion type="number" name="old-version" title="versão antiga" class="old-version" />
+	<input #newVersion type="number" name="new-version" placeholder="versão" class="version" />
+	<input #oldVersion type="number" name="old-version" placeholder="versão" class="version" />
 	&nbsp;&nbsp;
-	<button (click)="onCompare()">comparar</button>
+	<button (click)="onCompare(search.value, oldVersion.value, newVersion.value)">comparar</button>
 
 	<button [disabled]="diff.flowName.length === 0" (click)="scriptIUBot()" title="script para iubot">
-		<i class="fab fa-js-square"></i>
+		<!-- <i class="fab fa-js-square"></i> -->
+		<i class="material-symbols-outlined">{{ icoFlow() }}</i>
 	</button>
 	<button [disabled]="diff.flowName.length === 0" (click)="jsonResultDiff()" title="resultado comparação">
-		<i class="fal fa-file-download"></i>
+		<!-- <i class="fal fa-file-download"></i> -->
+		<i class="material-symbols-outlined">download</i>
 	</button>
 </section>
 
 <section class="grid-container">
 	@if (diff.blocks.deleted.length > 0) {
 		<div class="box deleted">
-			<h1 class="data-count" [attr.data-count]="diff.blocks.deleted.length">Removido's</h1>			
+			<h1 class="data-count" [attr.data-count]="diff.blocks.deleted.length">Removido's</h1>
 			<div class="column">
 				@for (item of diff.blocks.deleted; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
+						<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, item.content)">conteúdo</p>
 					</div>
 				}
 			</div>
@@ -41,6 +44,9 @@
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
+						@for (changed of item.diff; track $index) {
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
+						}
 					</div>
 				}
 			</div>
@@ -92,6 +98,7 @@
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
+						<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, item.content)">conteúdo</p>
 					</div>
 				}
 			</div>

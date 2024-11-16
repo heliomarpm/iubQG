@@ -7,11 +7,12 @@ export class SidenavService {
 	public expanded = signal(this.localExpanded);
 	public screenWidth = signal<number>(window.innerWidth);
 
-	constructor() {
-		// effect(() => {
-		//   console.log("Sidenav Expanded: ", this.expanded());
-		// })
-	}
+	// constructor() {
+	// 	effect(() => {
+	// 	  console.log("Sidenav Expanded: ", this.expanded());
+	// 	})
+	// }
+
 	private get localExpanded() {
 		return localStorage.getItem('sidenavExpanded') !== 'false';
 	}

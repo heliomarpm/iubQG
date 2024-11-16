@@ -13,20 +13,20 @@ $color-created: #146718;
 	margin-top: -17px;
 	position: relative;
 
-	input {
-		// border: 1px solid #848383;
-		// border-radius: var(--border-radius);;
-		// padding: 7px 10px;
+	// input {
+	// 	// border: 1px solid #848383;
+	// 	// border-radius: var(--border-radius);;
+	// 	// padding: 7px 10px;
 
-		&.search {
-			width: min(325px, 80vw);
-		}
+	// 	&.search {
+	// 		width: min(325px, 80vw);
+	// 	}
 
-		&.old-version,
-		&.new-version {
-			width: 80px ;
-		}
-	}
+	// 	&.old-version,
+	// 	&.new-version {
+	// 		width: 80px ;
+	// 	}
+	// }
 }
 
 .grid-container {

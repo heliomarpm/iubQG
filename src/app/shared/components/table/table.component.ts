@@ -1,13 +1,17 @@
 /* eslint-disable no-underscore-dangle */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, input } from '@angular/core';
+
+import { StringfyPipe, TextEllipsisPipe } from '@app/core/pipes';
+
 import utils from '../../../libs/shared/utils';
 
 @Component({
 	selector: 'app-table',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, TextEllipsisPipe, StringfyPipe],
 	templateUrl: './table.component.html',
 	styleUrl: './table.component.scss',
 })
@@ -30,13 +34,13 @@ export class TableComponent implements OnInit {
 	}
 
 	@Input() set data(data: Array<{ [key: string]: any }>) {
-		this._data = data;
-		this.keys = data?.[0] ? Object.keys(data[0]) : [];
+		this._data = data || [];
+		this.keys = this._data?.[0] ? Object.keys(this._data[0]) : [];
 	}
 
 	// eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
 	ngOnInit(): void {
-		console.log("OnInit~TableComponent")
+		console.log('OnInit~TableComponent');
 		//throw new Error('Method not implemented.');
 	}
 
@@ -82,6 +86,7 @@ export class TableComponent implements OnInit {
 	}
 
 	isValueLimited(value: unknown): boolean {
+		console.log('isValueLimited~TableComponent');
 		if (this.maxLengthForEllipsed() <= 3) {
 			return false;
 		}

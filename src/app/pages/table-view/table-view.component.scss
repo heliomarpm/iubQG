@@ -8,12 +8,16 @@
 	margin-top: -17px;
 	position: relative;
 
-	input {
-		&.search {
-			width: min(325px, 80vw);
-		}
-	}
+	// input {
+	// 	width: 80px ;
+
+	// 	&.search {
+	// 		width: min(325px, 80vw);
+	// 	}
+	// }
+
 }
+
 
 table caption {
 	text-align: left !important;

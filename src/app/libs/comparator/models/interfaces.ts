@@ -7,22 +7,26 @@ interface Block {
 }
 
 export interface BlockMap extends Block {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
 }
 
+export interface BlockContent extends Block {
+	content: unknown;
+}
 export interface BlockDiff extends Block {
 	diff: DiffType[];
 }
 
 export interface Comparison {
 	flowName: string;
-	newVersion: string;
 	oldVersion: string;
+	newVersion: string;
 	blocks: {
-		deleted: Block[];
+		deleted: BlockContent[];
 		recreated: BlockDiff[];
 		recreatedUpdated: BlockDiff[];
 		updated: BlockDiff[];
-		added: Block[];
+		added: BlockContent[];
 	};
 }

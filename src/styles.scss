@@ -162,8 +162,8 @@ li {
 }
 
 
+input,
 button,
-input, 
 select {
 	font: inherit;
 	border: 1.5px solid var(--border-color);
@@ -193,6 +193,7 @@ button {
 
 	&:hover:not(:disabled) {
 		border-color: var(--placeholder-color);
+		text-shadow: 0px 0px 3px #676966;
 	}
 }
 
@@ -202,7 +203,18 @@ select {
 	outline: none;
 	background-color: transparent;
 	z-index: 0;
-	transition: border-color 0.5s;	
+	transition: border-color 0.5s;
+}
+
+input {
+	&.flow,
+	&.search {
+		width: min(325px, 80vw);
+	}
+
+	&.version {
+		width: 85px ;
+	}
 }
 
 table {
@@ -386,10 +398,25 @@ table {
 	}
 }
 
-
 .input-box {
 	display: flex;
 	gap: 10px;
 	padding: 5px;
 	overflow: auto;
+}
+
+
+.green {
+	color: #146718;
+}
+
+.red {
+	color: #E53935;
+}
+
+.material-symbols-outlined {
+	font-size: 1.2rem;
+	line-height: .90rem;
+	top: 3px;
+	position: relative;
 }

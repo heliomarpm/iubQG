@@ -1,5 +1,5 @@
 export type DiffType = {
 	propertyName: string;
-	new: any;
-	old: any;
+	new: unknown;
+	old: unknown;
 };

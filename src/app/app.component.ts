@@ -5,12 +5,14 @@ import { RouterOutlet } from '@angular/router';
 
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { SidenavService } from './shared/components/sidenav/sidenav.service';
-import { LoaderService } from './shared/services/loader.service';
+import { LoaderService } from './core/services/loader.service';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, CommonModule, SidenavComponent],
+	imports: [RouterOutlet, CommonModule, SidenavComponent, SpinnerComponent],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
 })

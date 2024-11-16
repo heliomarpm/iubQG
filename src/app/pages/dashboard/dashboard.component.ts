@@ -1,8 +1,8 @@
 import { Component, ElementRef, viewChild } from '@angular/core';
 
 import { FavoriteComponent } from '../../shared/components/favorite/favorite.component';
-import utils from '../../shared/helpers/utils';
-import Is from '../../shared/helpers/is';
+import utils from '../../core/helpers/utils';
+import Is from '../../core/helpers/is';
 
 @Component({
 	selector: 'app-dashboard',
@@ -54,21 +54,21 @@ export class DashboardComponent {
 		} else if (isValid && num.length === 14) {
 			isValid = Is.cnpj(num);
 		}
-		
+
 		const inputDoc = this.inputDoc()?.nativeElement;
 		if (!inputDoc) return;
 
-		if (isValid) {			
+		if (isValid) {
 			inputDoc.value = 'documento válido';
 			inputDoc.style.color = 'green';
 		} else {
 			inputDoc.value = 'documento inválido';
 			inputDoc.style.color = 'red';
 		}
-		
+
 		setTimeout(() => (
 			inputDoc.value = doc,
 			inputDoc.style.color = 'black'
-		), 2000); 
+		), 2000);
 	}
 }

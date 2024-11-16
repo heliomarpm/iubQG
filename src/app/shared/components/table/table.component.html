@@ -20,12 +20,12 @@
 					@for (key of keys; track $index) {
 						@if (!ignoreColumns().includes(key)) {
 							<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
-								@if (isValueLimited(item[key])) {
-									<a (click)="valueSelected.emit({ key, value: item[key] })" aria-hidden="true">{{
-										transfomValue(item[key], true)
-									}}</a>
+								@if ( (item[key] | stringfy).length > maxLengthForEllipsed()) {
+									<a (click)="valueSelected.emit({ key, value: item[key] })" aria-hidden="true">
+										{{ item[key] | textEllipsis : maxLengthForEllipsed() }}
+									</a>
 								} @else {
-									{{ transfomValue(item[key]) }}
+									{{ item[key] | textEllipsis : 0 }}
 								}
 							</td>
 						}

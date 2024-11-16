@@ -86,21 +86,20 @@
 							* {
 								color: #222;
 							}
-
 						}
 
 						span {
-							margin-left: 1.5rem;
+							margin-left: .2rem;
 						}
 
-						i {
+						.material-symbols-outlined {
 							align-items: center;
 							justify-content: center;
 							text-align: center;
-							font-size: 1.35rem;
-							width: 2rem;
-							min-width: 2rem;
-							padding: .8rem;
+							font-size: 1.56rem;
+							top: 1px;
+							position: relative;
+							padding: 0 .8rem;
 						}
 					}
 				}
