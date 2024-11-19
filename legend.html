@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+
+	<div style="width: auto; padding: 20px; ">
+	<span>${flowName} - v${oldVersion} vs v${newVersion}</span>
+	<ul style='list-style: none; color: white; width: 150px;'>
+		<li style='background: #E53935; margin: 2px; padding: 3px 6px; border-radius: 3px;'>removidos</li>
+		<li style='background: #f7c307; margin: 2px; padding: 3px 6px; border-radius: 3px;'>recriado</li>
+		<li style='background: #FB8C00; margin: 2px; padding: 3px 6px; border-radius: 3px;'>recriado e alterado</li>
+		<li style='background: #003d73; margin: 2px; padding: 3px 6px; border-radius: 3px;'>alterado</li>
+		<li style='background: #146718; margin: 2px; padding: 3px 6px; border-radius: 3px;'>incluido</li>
+	</ul>
+
+	<span class="draw">diagram</span>
+	</div>
+
+	<script>
+		//localizar o elemento com a classe "draw" e adicionar uma label acima
+		const drawElement = document.querySelector('.draw');
+		const labelElement = document.createElement('label');
+		labelElement.textContent = 'diagram';
+		drawElement.parentNode.insertBefore(labelElement, drawElement);
+	</script>
+</body>
+</html>

@@ -14,6 +14,7 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
 import { enableProdMode } from '@angular/core';
 import { environment } from '@environments/environment';
+import { provideHighlightOptions } from 'ngx-highlightjs';
 
 if (environment.production) {
 	console.log('Production');
@@ -39,5 +40,11 @@ export const appConfig: ApplicationConfig = {
 			// positionClass: 'toast-bottom-right',
 			preventDuplicates: true,
 		}),
+		provideHighlightOptions({
+      coreLibraryLoader: () => import('highlight.js/lib/core'),
+      languages: {
+				json: () => import('highlight.js/lib/languages/json'),
+      }
+    })
 	],
 };

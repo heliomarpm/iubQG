@@ -1,10 +1,13 @@
 import { JsonPipe } from '@angular/common';
 import { Component, ElementRef, input, viewChild } from '@angular/core';
 
+import { Highlight } from 'ngx-highlightjs';
+import 'highlight.js/styles/stackoverflow-light.min.css';
+
 @Component({
 	selector: 'app-code-modal',
 	standalone: true,
-	imports: [JsonPipe],
+	imports: [JsonPipe, Highlight],
 	templateUrl: './code-modal.component.html',
 	styleUrl: './code-modal.component.scss',
 })

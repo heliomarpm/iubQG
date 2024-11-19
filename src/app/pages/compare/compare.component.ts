@@ -87,7 +87,7 @@ export class CompareComponent {
 			return JSON.stringify(blocks.map(item => item.activityName));
 		};
 
-		this.http.get('/assets/diff-change-color.js.txt', { responseType: 'text' }).subscribe(template => {
+		this.http.get('/assets/diff-change-color.js', { responseType: 'text' }).subscribe(template => {
 			const script = template
 				.replace('{{flowName}}', this.diff.flowName)
 				.replace('{{oldVersion}}', this.diff.oldVersion)

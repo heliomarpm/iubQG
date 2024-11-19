@@ -55,13 +55,17 @@ dialog {
 	pre {
 		width: 100%;
 		height: 100%;
-		padding: 10px;
+		padding: 2px;
 		overflow-y: auto;
 		background-color: inherit;
 		border-radius: inherit;
 		// white-space: pre-wrap;
-		// word-break: break-word;
+		word-break: break-word;
 		font-family: Consolas, 'Courier New', Courier, monospace;
+
+		code {
+			line-height: 1.3rem;
+		}
 	}
 
 	>.copy {
@@ -115,8 +119,3 @@ button.close {
 	margin-bottom: 10px;
 }
 
-pre,
-code {
-	// white-space: pre-wrap;
-	word-break: break-word;
-}

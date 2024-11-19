@@ -13,9 +13,9 @@
 			}
 			<i class="fal fa-copy" (click)="copyToClipboard(data())" aria-hidden="true"></i>
 		</div>
-		
-		<pre>{{ data() | json }}</pre>
 
+		<!-- <pre>{{ data() | json }}</pre> -->
+		<pre><code [highlight]="data() | json" language="json"></code></pre>
 	</div>
 </dialog>
 
