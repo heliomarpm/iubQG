@@ -162,7 +162,7 @@ li {
 }
 
 
-input,
+input:not([type="checkbox"]),
 button,
 select {
 	font: inherit;
@@ -197,7 +197,7 @@ button {
 	}
 }
 
-input,
+input:not([type="checkbox"]),
 select {
 	position: relative;
 	outline: none;
@@ -206,7 +206,7 @@ select {
 	transition: border-color 0.5s;
 }
 
-input {
+input:not([type="checkbox"]) {
 	&.flow,
 	&.search {
 		width: min(325px, 80vw);

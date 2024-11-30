@@ -17,7 +17,16 @@
 </section>
 
 <section class="container">
-	<app-table [data]="data" [maxLengthForEllipsed]="100" (valueSelected)="openModal($event.key, $event.value)"></app-table>
+	@if (data.length > 0) {
+		<button (click)="openColumnSelector()">Selecionar Colunas</button>		
+	}
+
+	<app-table
+		[data]="data"
+		[maxLengthForEllipsed]="100"
+		[hideColumns]="hideColumns"
+		(valueSelected)="openModal($event.key, $event.value)"></app-table>
 </section>
 
 <app-code-modal [title]="codeModal.title" [data]="codeModal.data"></app-code-modal>
+<app-check-list [title]="'Visualizar colunas'" [items]="config.keys" [uncheckedItems]="hideColumns"  (applyChanges)="applyColumnSelection($event)" ></app-check-list>

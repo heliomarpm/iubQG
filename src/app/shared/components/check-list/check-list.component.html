@@ -1,0 +1,30 @@
+<dialog #dialog (click)="onCloseFromOutside($event)" aria-hidden="true">
+	<div class="titlebar">
+		<h2>{{ title() }}</h2>
+		<button class="close" (click)="closeDialog()">
+			<i class="far fa-times close-icon"></i>
+		</button>
+	</div>
+
+	<div class="content">
+		<label class="select-all">
+			<input type="checkbox" (change)="toggleAll($event)" [checked]="uncheckedItems()?.length === 0" />
+			selecionar todos
+		</label>
+
+		<div class="list">
+			@for (item of checkedItems; track $index) {
+				<!-- <div class="item"> -->
+				<label>
+					<input type="checkbox" [checked]="item.selected" (change)="toggleItem($event, item)" />
+					{{ item.label }}
+				</label>
+				<!-- </div> -->
+			}
+		</div>
+		<div class="buttons">
+			<button class="cancel" (click)="cancelSelection()">Cancelar</button>
+			<button class="apply" (click)="applySelection()">Aplicar</button>
+		</div>
+	</div>
+</dialog>

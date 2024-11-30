@@ -5,7 +5,7 @@
 	<thead>
 		<tr>
 			@for (key of keys; track $index) {
-				@if (!ignoreColumns().includes(key)) {
+				@if (!hideColumns().includes(key)) {
 					<th>
 						<a (click)="sortBy(key)" aria-hidden="true">{{ key }}{{ sortIcon(key) }}</a>
 					</th>
@@ -18,14 +18,14 @@
 			@for (item of data; track $index) {
 				<tr (click)="selectRow($index)" [ngClass]="{ selected: selectedRow === $index }">
 					@for (key of keys; track $index) {
-						@if (!ignoreColumns().includes(key)) {
+						@if (!hideColumns().includes(key)) {
 							<td [attr.data-th]="key" [ngClass]="key.includes('Id') ? 'nowrap' : ''">
-								@if ( (item[key] | stringfy).length > maxLengthForEllipsed()) {
+								@if ((item[key] | stringfy).length > maxLengthForEllipsed()) {
 									<a (click)="valueSelected.emit({ key, value: item[key] })" aria-hidden="true">
-										{{ item[key] | textEllipsis : maxLengthForEllipsed() }}
+										{{ item[key] | textEllipsis: maxLengthForEllipsed() }}
 									</a>
 								} @else {
-									{{ item[key] | textEllipsis : 0 }}
+									{{ item[key] | textEllipsis: 0 }}
 								}
 							</td>
 						}

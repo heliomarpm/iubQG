@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 
-import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
-import { JsonType } from '../../shared/types';
-import { TableComponent } from '../../shared/components/table';
 import { FlowService } from '@app/core/services/flow.service';
+import { CheckListComponent, CodeModalComponent, CodeModalType, TableComponent } from '@app/shared/components';
+
+import { JsonType } from '../../shared/types';
 
 @Component({
 	selector: 'app-table-view',
 	standalone: true,
-	imports: [CommonModule, CodeModalComponent, TableComponent],
+	imports: [CommonModule, CodeModalComponent, TableComponent, CheckListComponent],
 	templateUrl: './table-view.component.html',
 	styleUrl: './table-view.component.scss',
 })
 export class TableViewComponent {
+	@ViewChild(CheckListComponent) checkListElement!: CheckListComponent;
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 	codeModal: CodeModalType = { title: '', data: '' };
 
@@ -26,6 +27,7 @@ export class TableViewComponent {
 	} = { flowName: '', flowVersion: 0, keys: [], activityTypes: {}, activityCount: 0 };
 
 	data: Array<JsonType> = [];
+	hideColumns: string[] = JSON.parse(localStorage.getItem('route.table.hideColumns') || '[]');
 
 	constructor(private flowService: FlowService) {}
 
@@ -61,5 +63,15 @@ export class TableViewComponent {
 	openModalBlocks() {
 		this.codeModal = { title: 'Tipos de Blocos', data: this.config.activityTypes };
 		this.codeModalElement.openDialog();
+	}
+
+	openColumnSelector() {
+		this.checkListElement.openDialog();
+	}
+
+	applyColumnSelection(columns: string[]) {
+		const allColumns = structuredClone(this.config.keys);
+		this.hideColumns = allColumns.filter(col => !columns.includes(col));
+		localStorage.setItem('route.table.hideColumns', JSON.stringify(this.hideColumns));
 	}
 }

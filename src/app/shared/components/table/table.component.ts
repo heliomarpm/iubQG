@@ -19,7 +19,7 @@ export class TableComponent implements OnInit {
 	@Output() valueSelected = new EventEmitter<{ key: string; value: unknown }>();
 	maxLengthForEllipsed = input<number>(0);
 	noRenderData = input<boolean>(false);
-	ignoreColumns = input<string[]>([]);
+	hideColumns = input<string[]>([]);
 	caption = input<string>();
 
 	selectedRow: number | null = null; // Armazena o índice da linha selecionada
