@@ -34,7 +34,7 @@ export class ReferenceRule implements Rule {
 						blockType: activityType,
 						blockName: activityName,
 						issue: "input de outro fluxo",
-						note: `Assegure-se de que o input exista: "${JSON.stringify(input)}".`,
+						note: `Assegure-se de que o input exista: ${JSON.stringify(input)}.`,
 						message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} recebe um input de outro fluxo: ${YELLOW}${JSON.stringify(input)}${RESET_COLOR}.`,
 					});
 				} else {
@@ -59,7 +59,7 @@ export class ReferenceRule implements Rule {
 							blockType: activityType,
 							blockName: activityName,
 							issue: "input inexistente",
-							note: `Substitua o input: "${JSON.stringify(input)}".`,
+							note: `Substitua o input: ${JSON.stringify(input)}.`,
 							message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} recebe um input inexistente: ${RED}${JSON.stringify(input)}${RESET_COLOR}.`,
 						});
 					}

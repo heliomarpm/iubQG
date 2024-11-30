@@ -61,7 +61,13 @@
 		// &:nth-child(6n + 5) {
 		// 	--pill-accent: var(--hot-red);
 		// }
+
+		&.selected {
+			background: color-mix(in srgb, var(--pill-accent) 25%, transparent);
+			font-weight: bold;
+		}
 	}
+
 
 	svg {
 		margin-inline-start: 0.25rem;

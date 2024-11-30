@@ -31,6 +31,10 @@ export default class Analyzer {
 		this.jsonFlow = utils.updateActivityConfigurations(jsonFlow);
 	}
 
+	get report() {
+		return this.flow;
+	}
+
 	public runAnalysis(): FlowReport {
 		try {
 			const blocks = this.jsonFlow.configuracao_atividade || [];
@@ -50,10 +54,6 @@ export default class Analyzer {
 			console.error(`Fluxo invalido: ${error}`);
 			throw new Error(`Flow invalido: ${error}`);
 		}
-	}
-
-	get report() {
-		return this.flow;
 	}
 
 	public statisticsResult() {

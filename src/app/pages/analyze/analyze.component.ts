@@ -29,32 +29,32 @@ type dataType = {
 	styleUrl: './analyze.component.scss',
 })
 export class AnalyzeComponent {
-	[x: string]: any;
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 	codeModal: CodeModalType = { title: '', data: '' };
 
 	datasets: { [key: string]: dataType } = {};
-	selectedKey: string | null = null;
+	selectedTab: string | null = null;
 	selectedData!: dataType;
 
-	ignoreColumns = ['message', 'level'];
+	hideColumns = ['message', 'level'];
+	filteredType: string | null = null;
 
 	constructor(private http: HttpClient) {}
 
-	loadData(flowName: string) {
-		flowName = flowName.length > 0 ? flowName : 'flow';
+	loadData(flowName: string, flowVersion: string) {
+		flowName = flowName.trim().length > 0 ? flowName.trim() : 'flow';
 
-		this.http.get<JsonType>(`/assets/${flowName}.json`).subscribe(data => {
+		this.http.get<JsonType>(`/assets/${flowName}_${flowVersion.trim()}.json`).subscribe(data => {
 			const analyzer = new Analyzer(data);
 			const report = analyzer.runAnalysis();
 
 			let keys: string[] = [];
 			const validations = report.validationReport.validations || [];
 
-			(keys = validations.length > 0 ? Object.keys(validations[0]) : []), (keys = keys.filter(item => !this.ignoreColumns.includes(item)));
+			(keys = validations.length > 0 ? Object.keys(validations[0]) : []), (keys = keys.filter(item => !this.hideColumns.includes(item)));
 
 			const dataset: dataType = {
-				name: report.name,
+				name: `${report.name}_${report.version}`,
 				title: `Jornada: ${report.name} | Versão: ${report.version} | Situação: ${report.situation} | Blocos: ${report.countActivities}`,
 				data: validations,
 				keys,
@@ -83,8 +83,8 @@ export class AnalyzeComponent {
 	}
 
 	selectTab(key: string) {
-		this.selectedKey = key;
-		this.selectedData = this.datasets[key];
+		this.selectedTab = key;
+		this.selectedData = structuredClone(this.datasets[key]);
 	}
 
 	closeTab(key: string) {
@@ -94,6 +94,26 @@ export class AnalyzeComponent {
 			if (keys.length > 0) {
 				this.selectTab(keys[0]);
 			}
+		}
+	}
+
+	filterByType(group: string) {
+		// Atualiza o grupo filtrado
+		this.filteredType = group !== this.filteredType ? group : null;
+		this.applyFilter();
+	}
+
+	private applyFilter() {
+		if (!this.datasets) {
+			return;
+		}
+
+		if (this.filteredType) {
+			const filterType = this.filteredType.split(',')[0].substring(2).trim();
+			const clonedData = structuredClone(this.datasets[this.selectedTab!]?.data ?? []);
+			this.selectedData.data = clonedData.filter(item => item['type'] === filterType);
+		} else {
+			this.selectedData.data = structuredClone(this.datasets[this.selectedTab!]?.data);
 		}
 	}
 }

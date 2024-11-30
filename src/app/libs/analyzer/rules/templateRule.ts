@@ -1,6 +1,7 @@
 import Rule, { Validation } from "../models";
 import { JsonType } from "../../shared/types";
 import utils, { CYAN, RED, RESET_COLOR } from "../../shared/utils";
+import Handlebars from "handlebars";
 
 const templateFields: Record<string, string> = {
 	Mapper: "mapperUdt.mapperTemplate",
@@ -36,10 +37,32 @@ export class TemplateRule implements Rule {
 		return null;
 	}
 
+	private isValidHandlebarsTemplate(template: string): boolean {
+		try {
+				// Compila o template para verificar a sintaxe Handlebars
+				Handlebars.compile(template);
+
+				// Remove expressões Handlebars e valida como JSON
+				const sanitizedJson = template.replace(/{{{?.*?}}}?/g, "null");
+				return JSON.parse(sanitizedJson) !== null;
+		} catch (error) {
+				return false;
+		}
+}
+
 	private isValidTemplate(str: string): boolean {
 		// Valida chaves abertas e fechadas
 		const isValid = this.checkHandlebarsBraces(str);
 		if (!isValid) {
+			return false;
+		}
+
+		try {
+			// verificar a sintaxe Handlebars
+			Handlebars.compile(str);
+			// Handlebars.parse(str);
+		} catch (e) {
+			console.error(e);
 			return false;
 		}
 
