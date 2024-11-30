@@ -93,7 +93,7 @@
             {
                 "activityId": "260a5806-dc1a-4200-89a2-db27ca303b57",
                 "activityType": "SendMessage",
-                "activityName": "sm_sem_boleto_elegivel",
+                "activityName": "sm_sem_boleto_elegivel_alt",
                 "nextActivityId": "be7808d4-78f6-4e8d-8701-4b2ff4a9fa67",
                 "nextActivityDecisionList": {}
             },
@@ -1309,7 +1309,7 @@
             "flowId": "a1717650-66c2-9cf5-4c88-62124730b8ec",
             "flowName": "whatsapp_pj_reneg_segunda_via_boleto",
             "activityType": "SendMessage",
-            "activityName": "sm_sem_boleto_elegivel",
+            "activityName": "sm_sem_boleto_elegivel_alt",
             "maskDataTemplate": null,
             "nextActivityId": null,
             "nextActivityName": null,

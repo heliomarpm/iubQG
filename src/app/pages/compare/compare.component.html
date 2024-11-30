@@ -8,22 +8,27 @@
 	&nbsp;&nbsp;
 	<button (click)="onCompare(search.value, oldVersion.value, newVersion.value)">comparar</button>
 
-	<button [disabled]="diff.flowName.length === 0" (click)="scriptIUBot()" title="script para iubot">
+	<button [disabled]="data.flowName.length === 0" (click)="scriptIUBot()" title="script para iubot">
 		<!-- <i class="fab fa-js-square"></i> -->
 		<i class="material-symbols-outlined">{{ icoFlow() }}</i>
 	</button>
-	<button [disabled]="diff.flowName.length === 0" (click)="jsonResultDiff()" title="resultado comparação">
+	<button [disabled]="data.flowName.length === 0" (click)="exportToExcel()" title="exportar para excel">
 		<!-- <i class="fal fa-file-download"></i> -->
 		<i class="material-symbols-outlined">download</i>
+	</button>
+	&nbsp;&nbsp;
+	<button [disabled]="data.flowName.length === 0" (click)="jsonResultDiff()" title="resultado comparação">
+		<!-- <i class="fal fa-file-download"></i> -->
+		<i class="material-symbols-outlined">schema</i>
 	</button>
 </section>
 
 <section class="grid-container">
-	@if (diff.blocks.deleted.length > 0) {
+	@if (data.blocks.deleted.length > 0) {
 		<div class="box deleted">
-			<h1 class="data-count" [attr.data-count]="diff.blocks.deleted.length">Removido's</h1>
+			<h1 class="data-count" [attr.data-count]="data.blocks.deleted.length">Removido's</h1>
 			<div class="column">
-				@for (item of diff.blocks.deleted; track $index) {
+				@for (item of data.blocks.deleted; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
@@ -35,11 +40,11 @@
 		</div>
 	}
 
-	@if (diff.blocks.recreated.length > 0) {
+	@if (data.blocks.recreated.length > 0) {
 		<div class="box recreated">
-			<h1 class="data-count" [attr.data-count]="diff.blocks.recreated.length">Recriado's</h1>
+			<h1 class="data-count" [attr.data-count]="data.blocks.recreated.length">Recriado's</h1>
 			<div class="column">
-				@for (item of diff.blocks.recreated; track $index) {
+				@for (item of data.blocks.recreated; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
@@ -53,11 +58,11 @@
 		</div>
 	}
 
-	@if (diff.blocks.recreatedUpdated.length > 0) {
+	@if (data.blocks.recreatedUpdated.length > 0) {
 		<div class="box recreated-changed">
-			<h1 class="data-count" [attr.data-count]="diff.blocks.recreatedUpdated.length">Recriado's e alterado's</h1>
+			<h1 class="data-count" [attr.data-count]="data.blocks.recreatedUpdated.length">Recriado's e alterado's</h1>
 			<div class="column">
-				@for (item of diff.blocks.recreatedUpdated; track $index) {
+				@for (item of data.blocks.recreatedUpdated; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
@@ -71,11 +76,11 @@
 		</div>
 	}
 
-	@if (diff.blocks.updated.length > 0) {
+	@if (data.blocks.updated.length > 0) {
 		<div class="box changed">
-			<h1 class="data-count" [attr.data-count]="diff.blocks.updated.length">Alterado's</h1>
+			<h1 class="data-count" [attr.data-count]="data.blocks.updated.length">Alterado's</h1>
 			<div class="column">
-				@for (item of diff.blocks.updated; track $index) {
+				@for (item of data.blocks.updated; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
@@ -89,11 +94,11 @@
 		</div>
 	}
 
-	@if (diff.blocks.added.length > 0) {
+	@if (data.blocks.added.length > 0) {
 		<div class="box created">
-			<h1 class="data-count" [attr.data-count]="diff.blocks.added.length">Novo's</h1>
+			<h1 class="data-count" [attr.data-count]="data.blocks.added.length">Novo's</h1>
 			<div class="column">
-				@for (item of diff.blocks.added; track $index) {
+				@for (item of data.blocks.added; track $index) {
 					<div class="card">
 						<h3>{{ item.activityName }}</h3>
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
