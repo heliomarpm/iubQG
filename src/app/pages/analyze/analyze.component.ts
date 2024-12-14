@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Analyzer } from '../../libs/analyzer';
 import { ExternalFlows } from '../../libs/analyzer/models';
 import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
 import { TableComponent } from '../../shared/components/table';
-import { JsonType } from '../../shared/types';
+import { FlowDefinition, JsonType } from '../../shared/types';
+import { FlowService } from '@app/core/services';
+import { ToastrService } from 'ngx-toastr';
+import { AutocompleteComponent } from '@app/shared/components';
 
 type dataType = {
 	name: string;
@@ -24,11 +27,11 @@ type dataType = {
 @Component({
 	selector: 'app-analyze',
 	standalone: true,
-	imports: [HttpClientModule, CodeModalComponent, TableComponent, CommonModule],
+	imports: [HttpClientModule, CodeModalComponent, TableComponent, CommonModule, AutocompleteComponent],
 	templateUrl: './analyze.component.html',
 	styleUrl: './analyze.component.scss',
 })
-export class AnalyzeComponent {
+export class AnalyzeComponent implements OnInit {
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 	codeModal: CodeModalType = { title: '', data: '' };
 
@@ -38,13 +41,37 @@ export class AnalyzeComponent {
 
 	hideColumns = ['message', 'level'];
 	filteredType: string | null = null;
+	
+	flowsData: FlowDefinition[] = [];
+	searchData: string[]=[];
 
-	constructor(private http: HttpClient) {}
+	constructor(
+			protected http: HttpClient,
+			private flowService: FlowService,
+			private toastr: ToastrService,
+		) {}
 
-	loadData(flowName: string, flowVersion: string) {
-		flowName = flowName.trim().length > 0 ? flowName.trim() : 'flow';
+	async ngOnInit() {
+		this.flowsData = await this.flowService.loadFlows();
+		this.searchData = this.flowsData.map(flow => flow.flowName);
+	}
 
-		this.http.get<JsonType>(`/assets/${flowName}_${flowVersion.trim()}.json`).subscribe(data => {
+	analyze(flowName: string, flowVersion: string) {
+		const flow = this.flowsData.find(flow => flow.flowName === flowName);
+
+		if (!flow) {
+			this.toastr.error('Flow not found');
+			return;
+		}
+
+		if (Number(flowVersion) === 0) {
+			flowVersion = flow.versions.hom.publish.toString() || '0';
+		}
+
+		// flowName = flowName.trim().length > 0 ? flowName.trim() : 'flow';
+
+		// this.http.get<JsonType>(`/assets/${flowName}_${flowVersion.trim()}.json`).subscribe(data => {
+		this.flowService.extractFlow<JsonType>(flow.flowId, Number(flowVersion)).subscribe(data => {
 			const analyzer = new Analyzer(data);
 			const report = analyzer.runAnalysis();
 

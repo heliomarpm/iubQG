@@ -1,0 +1,47 @@
+{
+	"/api/token": {
+		"target": "https://hom-sts-int.mbi.cloud.ihf",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/api/token": "/api/oauth/token"
+		},
+		"logLevel": "debug"
+	},
+	"/api/jornadas": {
+		"target": "https://configuracoes-anywhere.api-sp.hom.aws.cloud.ihf/configuracoes-anywhere/v1",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/api/jornadas": "/definicao_jornadas/listar/floweditor/af1ea2f3-c55e-4903-805d-854d5b4babf0/00000000-0000-0000-0000-000000000000"
+		},
+		"logLevel": "debug"
+	},
+	"/api/jornadas/extrair": {
+		"target": "https://configuracoes-anywhere.api-sp.hom.aws.cloud.ihf/configuracoes-anywhere/v1/jornadas/extrair/FLOWEDITOR/af1ea2f3-c55e-4903-805d-854d5b4babf0/00000000-0000-0000-0000-000000000000",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/api/extrair": ""
+		},
+		"logLevel": "debug"
+	},
+	"/api/jornadas/listar/hom": {
+		"target": "https://roteirizadoravi-api.hom.cloud.itau.com.br/v1",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/api/jornadas": "/definicao_jornadas/definicao_jornadas?status="
+		},
+		"logLevel": "debug"
+	},
+	"/api/jornadas/listar/pro": {
+		"target": "https://roteirizadoravi-api.cloud.itau.com.br/v1",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/api/jornadas": "/definicao_jornadas/definicao_jornadas?status="
+		},
+		"logLevel": "debug"
+	}
+}

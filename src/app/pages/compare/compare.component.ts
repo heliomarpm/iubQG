@@ -2,26 +2,27 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, signal } from '@angular/core';
 
 import { FlowService } from '@app/core/services/flow.service';
-import { JsonType } from '@app/shared/types';
+import { FlowDefinition, JsonType } from '@app/shared/types';
 
 import Comparator from '../../libs/comparator/comparator';
 import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
 import { Block, Comparison } from './compare.model';
 import * as XLSX from 'xlsx';
+import { AutocompleteComponent } from '@app/shared/components';
 
 // const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
 @Component({
 	selector: 'app-compare',
 	standalone: true,
-	imports: [HttpClientModule, CodeModalComponent],
+	imports: [HttpClientModule, CodeModalComponent, AutocompleteComponent],
 	templateUrl: './compare.component.html',
 	styleUrl: './compare.component.scss',
 })
-export class CompareComponent {
+export class CompareComponent implements OnInit {
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 
 	codeModal: CodeModalType = { title: '', data: '' };
@@ -47,32 +48,48 @@ export class CompareComponent {
 
 	icoFlow = signal<string>('flowsheet');
 
+	flowsData: FlowDefinition[] = [];
+	searchData: string[]=[];
+
 	constructor(
 		protected http: HttpClient,
 		private flowService: FlowService,
 		private toastr: ToastrService,
 	) {}
 
-	async onCompare(flowName: string, oldVersion: string, newVersion: string) {
+	async ngOnInit() {
+		this.flowsData = await this.flowService.loadFlows();
+		this.searchData = this.flowsData.map(flow => flow.flowName);
+	}
+
+	async compare(flowName: string, oldVersion: string, newVersion: string) {
+		const flow = this.flowsData.find(flow => flow.flowName === flowName || flow.flowId === flowName);
+
+		if (!flow) {
+			this.toastr.error('Flow not found');
+			return;
+		}
+
+		console.log(flow);
+		if ( Number(oldVersion) === 0) {
+			oldVersion = flow.versions.prod.pilot.toString() || '0';
+		}
+		if (Number(newVersion) === 0) {
+			newVersion = flow.versions.hom.publish.toString() || '0';
+		}
+		
 		const nOldVersion = Math.min(Number(oldVersion), Number(newVersion));
 		const nNewVersion = Math.max(Number(oldVersion), Number(newVersion));
 
-		// if (nNewVersion === 0) {
-		// 	console.log('Buscando a versão');
+		if (nOldVersion === nNewVersion) {
+			this.toastr.info('Os fluxos devem ter versões diferentes');
+			return;
+		}
 
-		// 	// Aguarda a versão antes de prosseguir
-		// 	const flowAvi = await firstValueFrom(this.flowService.getFlow(flowName));
-
-		// 	if (!flowAvi.version) {
-		// 		this.toastr.error('Versão não encontrada', 'Erro');
-		// 		return;
-		// 	}
-
-		// 	console.log('flowAvi', flowAvi);
-		// }
-
-		const oldFlow$ = this.flowService.get<JsonType>(flowName, nOldVersion);
-		const newFlow$ = this.flowService.get<JsonType>(flowName, nNewVersion);
+		// const oldFlow$ = this.flowService.get<JsonType>(flowName, nOldVersion);
+		// const newFlow$ = this.flowService.get<JsonType>(flowName, nNewVersion);
+		const oldFlow$ = this.flowService.extractFlow<JsonType>(flow.flowId, nOldVersion);
+		const newFlow$ = this.flowService.extractFlow<JsonType>(flow.flowId, nNewVersion);
 
 		forkJoin([oldFlow$, newFlow$]).subscribe({
 			next: ([oldData, newData]) => {

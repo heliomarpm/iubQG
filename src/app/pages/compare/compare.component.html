@@ -1,24 +1,22 @@
 <h1>comparar versão</h1>
 
 <section class="filter">
-	<input #search type="text" name="search" placeholder="nome da jornada" class="search" />
+	<!-- <input #search type="text" name="search" placeholder="nome da jornada" class="search" /> -->
+	<app-autocomplete #search class="search" [data]="searchData" placeholder="jornada" />
 
 	<input #newVersion type="number" name="new-version" placeholder="versão" class="version" />
 	<input #oldVersion type="number" name="old-version" placeholder="versão" class="version" />
 	&nbsp;&nbsp;
-	<button (click)="onCompare(search.value, oldVersion.value, newVersion.value)">comparar</button>
+	<button (click)="compare(search.value, oldVersion.value, newVersion.value)">comparar</button>
 
 	<button [disabled]="data.flowName.length === 0" (click)="scriptIUBot()" title="script para iubot">
-		<!-- <i class="fab fa-js-square"></i> -->
 		<i class="material-symbols-outlined">{{ icoFlow() }}</i>
 	</button>
 	<button [disabled]="data.flowName.length === 0" (click)="exportToExcel()" title="exportar para excel">
-		<!-- <i class="fal fa-file-download"></i> -->
 		<i class="material-symbols-outlined">download</i>
 	</button>
 	&nbsp;&nbsp;
 	<button [disabled]="data.flowName.length === 0" (click)="jsonResultDiff()" title="resultado comparação">
-		<!-- <i class="fal fa-file-download"></i> -->
 		<i class="material-symbols-outlined">schema</i>
 	</button>
 </section>

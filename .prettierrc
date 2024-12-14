@@ -19,15 +19,15 @@
 	"embeddedLanguageFormatting": "auto",
 	"htmlWhitespaceSensitivity": "css",
 	"proseWrap": "preserve",
-	"plugins": [
-		"@trivago/prettier-plugin-sort-imports"
-	],
+	"plugins": ["@trivago/prettier-plugin-sort-imports--"],
 	"importOrder": [
+		"^@angular/core/(.*)$",
 		"^@angular/(.*)$",
 		"^@core/(.*)$",
 		"^@shared/(.*)$",
 		"^@server/(.*)$",
 		"^@app/(.*)$",
+		"^@env/(.*)$",
 		"^[./]"
 	],
 	"importOrderParserPlugins": [

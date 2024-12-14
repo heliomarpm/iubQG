@@ -5,3 +5,4 @@ export * from './table/table.component';
 export * from './code-modal/code-modal.component';
 export * from './code-modal/code-modal.type';
 export * from './check-list/check-list.component';
+export * from "./autocomplete/autocomplete.component"

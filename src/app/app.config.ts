@@ -1,32 +1,46 @@
-import { provideToastr } from 'ngx-toastr';
-
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ApplicationConfig, ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, enableProdMode, ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 // import { provideClientHydration } from '@angular/platform-browser';
-import { provideRouter, withViewTransitions } from '@angular/router';
+
+import { provideToastr } from 'ngx-toastr';
 
 import { ROUTES } from './app.routes';
 import { GlobalErrorHandler } from './core/error';
 import { HttpErrorInterceptor } from './core/error/http-error.interceptor';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
-
-import { enableProdMode } from '@angular/core';
-import { environment } from '@environments/environment';
+import { environment } from '@env/environment';
 import { provideHighlightOptions } from 'ngx-highlightjs';
+import { FlowService } from './core/services';
+
 
 if (environment.production) {
 	console.log('Production');
   enableProdMode();
 }
 
+export function initializeApp(flowService: FlowService):() => Promise<void> {
+  return async () => {
+    await flowService.loadFlows();
+  };
+}
+
+
 //** Angular Animations: https://angular.dev/guide/animations/route-animations */
 export const appConfig: ApplicationConfig = {
 	providers: [
+		// provideHttpClient(withInterceptors([AuthInterceptor, ErrorInterceptor])),
+		provideHttpClient(),
+		{
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      multi: true,
+      deps: [FlowService],
+    },
 		provideZoneChangeDetection({ eventCoalescing: true }),
 		importProvidersFrom(HttpClientModule),
-		// provideHttpClient(withInterceptors([AuthInterceptor, ErrorInterceptor])),
 
 		{ provide: ErrorHandler, useClass: GlobalErrorHandler },
 		{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },

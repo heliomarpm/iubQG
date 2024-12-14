@@ -1,4 +1,6 @@
 export const environment = {
 	production: true,
-	apiSD9: 'http://localhost:3000'
+	api: 'http://localhost:8080',
+	apiSD9: 'http://localhost:3000',
+	apiAVI: '/assets',
 };

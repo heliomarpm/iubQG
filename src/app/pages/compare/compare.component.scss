@@ -5,31 +5,36 @@ $color-changed: #003d73;
 $color-created: #146718;
 
 .filter {
+	z-index: 99;
 	display: flex;
 	gap: 10px;
 	padding: 24px 0 14px 0;
-	// height: calc(100% - 8px);
+	//height: calc(100% - 8px);
 	overflow: auto;
 	margin-top: -17px;
 	position: relative;
 
-	// input {
-	// 	// border: 1px solid #848383;
-	// 	// border-radius: var(--border-radius);;
-	// 	// padding: 7px 10px;
+	.search{
+		width: min(325px, 80vw);
+	}
+		// input {
+		// 	// border: 1px solid #848383;
+		// 	// border-radius: var(--border-radius);;
+		// 	// padding: 7px 10px;
 
-	// 	&.search {
-	// 		width: min(325px, 80vw);
-	// 	}
+		// 	&.search {
+		// 		width: min(325px, 80vw);
+		// 	}
 
-	// 	&.old-version,
-	// 	&.new-version {
-	// 		width: 80px ;
-	// 	}
-	// }
+		// 	&.old-version,
+		// 	&.new-version {
+		// 		width: 80px ;
+		// 	}
+		// }
 }
 
 .grid-container {
+	z-index: 1;
 	display: flex;
 	gap: 10px;
 	padding: 0 0 4px 0;
@@ -131,7 +136,7 @@ $color-created: #146718;
 		font-size: clamp(.68rem, 1vw, 0.7rem);
 		white-space: nowrap;
 		overflow: hidden;
-  	text-overflow: ellipsis;
+		text-overflow: ellipsis;
 
 		&:hover {
 			background: rgba(0, 0, 0, 0.1);
@@ -243,6 +248,6 @@ $color-created: #146718;
 }
 
 .data-count::before {
-  color: var(--primary-text-color);
-  background-color: var(--primary-color);
+	color: var(--primary-text-color);
+	background-color: var(--primary-color);
 }
