@@ -1,0 +1,17 @@
+<!-- <div class="wrapper"> -->
+	<div #searchWrapper class="search-wrapper" [ngClass]="{'active': suggestions.length>0}">
+		<!-- <a #linkTag href="" target="_blank" hidden></a> -->
+		<input #search type="text" class="search" [placeholder]="placeholder()" (keyup)="searchItem(search.value)">
+
+		<div #suggBox class="suggestions-box" [hidden]="suggestions.length===0">
+			<!-- @if (suggestions.length>0) { -->
+				<ul>
+				@for (item of suggestions; track $index) {
+					<li (click)="select($event.target)" aria-hidden="true">{{item}}</li>
+				}
+			</ul>
+			<!-- } -->
+		</div>
+		<!-- <div #icon class="icon"><i class="fas fa-search"></i></div> -->
+	</div>
+<!-- </div> -->
