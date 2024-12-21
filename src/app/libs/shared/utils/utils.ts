@@ -17,8 +17,8 @@ const utils = {
 			const definition = definicao_atividade.activityList.find((def: JsonType) => def.activityId === activity.activityId);
 
 			if (definition) {
-				activity.nextActivityId = definition.nextActivityId;
-				activity.nextDecitionActivityId = definition.nextActivityDecisionList;
+				activity.nextActivityId = definition.nextActivityId && JSON.stringify(definition.nextActivityId) !== "{}" ? definition.nextActivityId : undefined;
+				activity.nextDecitionActivityId = definition.nextActivityDecisionList && JSON.stringify(definition.nextActivityDecisionList) !== "{}" ? definition.nextActivityDecisionList : undefined;
 			}
 		});
 
@@ -96,7 +96,7 @@ const utils = {
 			for (const property of properties) {
 				let sortOrder = 1;
 				let prop = property;
-				
+
 				if (property.startsWith("-")) {
 					sortOrder = -1;
 					prop = property.substring(1); // Remove o sinal de menos
