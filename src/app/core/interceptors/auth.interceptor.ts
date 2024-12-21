@@ -3,7 +3,6 @@ import {	HttpInterceptor, HttpRequest, HttpHandler, HttpEvent} from '@angular/co
 import { Observable } from 'rxjs';
 import { SKIP_TOKEN, TokenService } from '../services/token.service';
 
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 	constructor(private tokenService: TokenService) { }
