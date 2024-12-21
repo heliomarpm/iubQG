@@ -41,7 +41,7 @@ export class AnalyzeComponent implements OnInit {
 
 	hideColumns = ['message', 'level'];
 	filteredType: string | null = null;
-	
+
 	flowsData: FlowDefinition[] = [];
 	searchData: string[]=[];
 
@@ -57,21 +57,21 @@ export class AnalyzeComponent implements OnInit {
 	}
 
 	analyze(flowName: string, flowVersion: string) {
-		const flow = this.flowsData.find(flow => flow.flowName === flowName);
+		// const flow = this.flowsData.find(flow => flow.flowName === flowName);
 
-		if (!flow) {
-			this.toastr.error('Flow not found');
-			return;
-		}
+		// if (!flow) {
+		// 	this.toastr.error('Flow not found');
+		// 	return;
+		// }
 
-		if (Number(flowVersion) === 0) {
-			flowVersion = flow.versions.hom.publish.toString() || '0';
-		}
+		// if (Number(flowVersion) === 0) {
+		// 	flowVersion = flow.versions.hom.publish.toString() || '0';
+		// }
 
 		// flowName = flowName.trim().length > 0 ? flowName.trim() : 'flow';
 
-		// this.http.get<JsonType>(`/assets/${flowName}_${flowVersion.trim()}.json`).subscribe(data => {
-		this.flowService.extractFlow<JsonType>(flow.flowId, Number(flowVersion)).subscribe(data => {
+		this.http.get<JsonType>(`/assets/${flowName}_${flowVersion.trim()}.json`).subscribe(data => {
+		// this.flowService.extractFlow<JsonType>(flow.flowId, Number(flowVersion)).subscribe(data => {
 			const analyzer = new Analyzer(data);
 			const report = analyzer.runAnalysis();
 

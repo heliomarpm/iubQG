@@ -25,8 +25,8 @@ export default class Comparator {
 		const oldVersion: number = oldFlow.definicao_atividade.flowVersionNumber;
 		const newVersion: number = newFlow.definicao_atividade.flowVersionNumber;
 
-		this.oldFlow = utils.updateActivityConfigurations(oldVersion < newVersion ? oldFlow: newFlow);
-		this.newFlow = utils.updateActivityConfigurations(oldVersion > newVersion ? oldFlow: newFlow);
+		this.oldFlow = utils.updateActivityConfigurations(oldVersion < newVersion ? oldFlow : newFlow);
+		this.newFlow = utils.updateActivityConfigurations(oldVersion > newVersion ? oldFlow : newFlow);
 	}
 
 	public runComparison(): Comparison {
@@ -47,6 +47,7 @@ export default class Comparator {
 		const newBlockMap = new Map<string, BlockMap>(this.newFlow.configuracao_atividade.map((block: JsonType) => [block.activityId, block]));
 
 		const recreatedIds = new Set<string>(); // Armazena os activityIds de blocos recriados
+		const ignoreKeys = ['activityId', 'version', 'statusFlowDef'];
 
 		// Processar exclusões e recriações na lista de configuração
 		oldBlockMap.forEach((oldBlock, activityId) => {
@@ -61,7 +62,8 @@ export default class Comparator {
 				);
 
 				if (recreatedBlock) {
-					const changes = this.findDifferences(oldBlock, recreatedBlock);
+					delete recreatedBlock.version;
+					const changes = this.findDifferences(oldBlock, recreatedBlock, ignoreKeys);
 
 					if (changes) {
 						results.blocks.recreatedUpdated.push({
@@ -102,7 +104,9 @@ export default class Comparator {
 				}
 			} else {
 				const newBlock = newBlockMap.get(activityId)!;
-				const changes = this.findDifferences(oldBlock, newBlock);
+				delete newBlock.version;
+
+				const changes = this.findDifferences(oldBlock, newBlock, ignoreKeys);
 				if (changes) {
 					results.blocks.updated.push({
 						activityId: newBlock.activityId,
@@ -129,17 +133,19 @@ export default class Comparator {
 		return results;
 	}
 
-	private findDifferences(oldBlock: BlockMap, newBlock: BlockMap, parentKey = ''): DiffType[] | null {
+	private findDifferences(oldBlock: BlockMap, newBlock: BlockMap, ignoreKeys: string[] = [], parentKey = ''): DiffType[] | null {
 		const changes: DiffType[] = [];
+		const allKeys = new Set([...Object.keys(oldBlock), ...Object.keys(newBlock)]); // Combinar todas as chaves
 
-		Object.keys(oldBlock).forEach(key => {
-			if (key === 'activityId') {
-				return;
-			}
+		allKeys.forEach((key) => {
 			const oldValue = oldBlock[key];
 			const newValue = newBlock[key];
 			const currentKey = parentKey ? `${parentKey}.${key}` : key;
 
+			// Ignorar chaves especificadas
+			if (ignoreKeys.includes(currentKey)) {
+				return;
+			}
 			if (!oldValue && !newValue) {
 				return;
 			}
@@ -152,10 +158,28 @@ export default class Comparator {
 						new: newValue,
 					});
 				}
-			} else if (typeof oldValue === 'object' && typeof newValue === 'object') {
-				const nestedChanges = this.findDifferences(oldValue, newValue, currentKey);
+			} else if (oldValue && typeof oldValue === 'object' && newValue && typeof newValue === 'object') {
+				const nestedChanges = this.findDifferences(oldValue, newValue, ignoreKeys, currentKey);
 				if (nestedChanges) changes.push(...nestedChanges);
-			} else if (!utils.isEqual(oldValue, newValue, true)) {
+			}
+			else if (oldValue === undefined) {
+				// só existe na nova versão
+				changes.push({
+					propertyName: currentKey,
+					old: undefined,
+					new: newValue,
+				});
+			}
+			else if (newValue === undefined) {
+				// só existe na versão antiga
+				changes.push({
+					propertyName: currentKey,
+					old: oldValue,
+					new: undefined,
+				});
+			}
+			else if (!utils.isEqual(oldValue, newValue, true)) {
+				// Valores diferentes
 				changes.push({
 					propertyName: currentKey,
 					old: oldValue,

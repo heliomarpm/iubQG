@@ -1989,7 +1989,7 @@
                     "authentication": {
                         "authenticationType": "oauth2_clientCredentials",
                         "authenticationUri": "https://des-sts-int.mbi.cloud.ihf/api/oauth/token",
-                        "clientId": "e0181528-90cf-4b3b-9cbb-336f9d76f8c4",
+                        "client_id": "e0181528-90cf-4b3b-9cbb-336f9d76f8c4",
                         "client_secret": "d838bb3f-9f39-4502-acc2-86668e9dc06b"
                     },
                     "protocols": null,
