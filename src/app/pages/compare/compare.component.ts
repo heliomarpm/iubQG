@@ -12,13 +12,15 @@ import { CodeModalComponent, CodeModalType } from '../../shared/components/code-
 import { Block, Comparison } from './compare.model';
 import * as XLSX from 'xlsx';
 import { AutocompleteComponent } from '@app/shared/components';
+import { NgClass } from '@angular/common';
+import { skipToken } from '@app/core/services/token.service';
 
 // const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
 @Component({
 	selector: 'app-compare',
 	standalone: true,
-	imports: [HttpClientModule, CodeModalComponent, AutocompleteComponent],
+	imports: [HttpClientModule, CodeModalComponent, AutocompleteComponent, NgClass],
 	templateUrl: './compare.component.html',
 	styleUrl: './compare.component.scss',
 })
@@ -63,21 +65,20 @@ export class CompareComponent implements OnInit {
 	}
 
 	async compare(flowName: string, oldVersion: string, newVersion: string) {
-		const flow = this.flowsData.find(flow => flow.flowName === flowName || flow.flowId === flowName);
+		// const flow = this.flowsData.find(flow => flow.flowName === flowName || flow.flowId === flowName);
 
-		if (!flow) {
-			this.toastr.error('Flow not found');
-			return;
-		}
+		// if (!flow) {
+		// 	this.toastr.error('Flow not found');
+		// 	return;
+		// }
 
-		console.log(flow);
-		if ( Number(oldVersion) === 0) {
-			oldVersion = flow.versions.prod.pilot.toString() || '0';
-		}
-		if (Number(newVersion) === 0) {
-			newVersion = flow.versions.hom.publish.toString() || '0';
-		}
-		
+		// if ( Number(oldVersion) === 0) {
+		// 	oldVersion = flow.versions.prod.pilot.toString() || '0';
+		// }
+		// if (Number(newVersion) === 0) {
+		// 	newVersion = flow.versions.hom.publish.toString() || '0';
+		// }
+
 		const nOldVersion = Math.min(Number(oldVersion), Number(newVersion));
 		const nNewVersion = Math.max(Number(oldVersion), Number(newVersion));
 
@@ -86,10 +87,10 @@ export class CompareComponent implements OnInit {
 			return;
 		}
 
-		// const oldFlow$ = this.flowService.get<JsonType>(flowName, nOldVersion);
-		// const newFlow$ = this.flowService.get<JsonType>(flowName, nNewVersion);
-		const oldFlow$ = this.flowService.extractFlow<JsonType>(flow.flowId, nOldVersion);
-		const newFlow$ = this.flowService.extractFlow<JsonType>(flow.flowId, nNewVersion);
+		const oldFlow$ = this.flowService.get<JsonType>(flowName, nOldVersion);
+		const newFlow$ = this.flowService.get<JsonType>(flowName, nNewVersion);
+		// const oldFlow$ = this.flowService.extractFlow<JsonType>(flow.flowId, nOldVersion);
+		// const newFlow$ = this.flowService.extractFlow<JsonType>(flow.flowId, nNewVersion);
 
 		forkJoin([oldFlow$, newFlow$]).subscribe({
 			next: ([oldData, newData]) => {

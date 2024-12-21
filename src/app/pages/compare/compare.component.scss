@@ -128,7 +128,7 @@ $color-created: #146718;
 		cursor: pointer;
 		background: rgba(0, 0, 0, 0.07);
 		display: block;
-		padding: 5px;
+		padding: 5px 10px;
 		border-radius: var(--border-radius);
 		margin-top: 5px;
 		position: relative;
@@ -141,6 +141,13 @@ $color-created: #146718;
 		&:hover {
 			background: rgba(0, 0, 0, 0.1);
 			box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+		}
+
+		&.deleted {
+			border-right: 8px solid $color-deleted;
+		}
+		&.added {
+			border-right: 8px solid $color-created;
 		}
 	}
 

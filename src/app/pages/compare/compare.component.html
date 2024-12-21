@@ -1,4 +1,9 @@
-<h1>comparar versão</h1>
+<div style="display: flex; align-items: center;">
+	<h1>comparar versão</h1>
+	@if(data.flowName.length > 0) {
+		<small style="padding-left: 10px; color: #395e6d;"> > {{ data.flowName }} - v{{ data.oldVersion }} vs v{{ data.newVersion }}</small>
+	}
+</div>
 
 <section class="filter">
 	<!-- <input #search type="text" name="search" placeholder="nome da jornada" class="search" /> -->
@@ -48,7 +53,13 @@
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
-							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
+							<p class="comment deleted" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)"
+							[ngClass]="{
+								'deleted': changed?.old !== undefined && changed?.new === undefined,
+								'added': changed?.new !== undefined && changed?.old === undefined
+							}">
+									{{ changed.propertyName }}
+								</p>
 						}
 					</div>
 				}
@@ -66,7 +77,13 @@
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
-							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)"
+							[ngClass]="{
+								'deleted': changed?.old !== undefined && changed?.new === undefined,
+								'added': changed?.new !== undefined && changed?.old === undefined
+							}">
+								{{ changed.propertyName }}
+							</p>
 						}
 					</div>
 				}
@@ -84,7 +101,13 @@
 						<p style="font-weight: 500;">{{ item.activityId }}</p>
 						<p>{{ item.activityType }}</p>
 						@for (changed of item.diff; track $index) {
-							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)">{{ changed.propertyName }}</p>
+							<p class="comment" [attr.aria-hidden]="true" (click)="openDiffModal(item.activityName, changed)"
+							[ngClass]="{
+								'deleted': changed?.old !== undefined && changed?.new === undefined,
+								'added': changed?.new !== undefined && changed?.old === undefined
+							}">
+								{{ changed.propertyName }}
+							</p>
 						}
 					</div>
 				}
