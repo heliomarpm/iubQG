@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, input, viewChild } from '@angular/core';
+import { Component, ElementRef, input, output, viewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-autocomplete',
@@ -9,8 +9,10 @@ import { Component, ElementRef, input, viewChild } from '@angular/core';
 	styleUrl: './autocomplete.component.scss'
 })
 export class AutocompleteComponent {
+
 	data = input<string[]>(['']);
 	placeholder = input<string>('digite para pesquisar');
+	valueChanged = output<string>();
 
 	searchWrapper = viewChild.required<ElementRef<HTMLDivElement>>("searchWrapper");
 	inputBox = viewChild.required<ElementRef<HTMLInputElement>>("search");
@@ -20,12 +22,33 @@ export class AutocompleteComponent {
 	// webLink: string = "";
 
 	suggestions: string[] = [];
+	private initialValue: string = '';
 
 	constructor() { }
 
 	get value(): string {
 		return this.inputBox()!.nativeElement.value;
 	}
+
+	handleFocus(): void {
+    this.initialValue = this.value;
+  }
+
+	handleKeyUp(event: KeyboardEvent, value: string) {
+    if (event.key === 'Escape') {
+      this.hideSuggestions();
+    } else {
+      this.searchItem(value);
+    }
+  }
+
+  // Método para esconder as sugestões
+  handleBlur(): void {
+    if (this.value !== this.initialValue) {
+      this.valueChanged.emit(this.value);
+    }
+    this.hideSuggestions();
+  }
 
 	searchItem(value: string) {
 		console.log(value, this.suggestions.length, this.data().length);
@@ -59,20 +82,6 @@ export class AutocompleteComponent {
 		if (this.suggestions.length == 0) {
 			this.suggestions = [value];
 		}
-
-
-		// emptyData = emptyData.map((item: string) => {
-		// 	item = `<li>${item}</li>`;
-		// 	return item;
-		// });
-
-		// searchWrapper.classList.add("active"); //show autocomplete box
-//show autocomplete box
-		// this.showSuggestions(emptyData);
-		// const allList = suggBox.querySelectorAll("li");
-		// for (let i = 0; i < allList.length; i++) {
-		// 	allList[i].setAttribute("onclick", "select(this)");
-		// }
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,5 +115,7 @@ export class AutocompleteComponent {
 		this.suggBox()!.nativeElement.innerHTML = listData;
 	}
 
-
+	private hideSuggestions() {
+		this.suggestions = [];
+	}
 }

@@ -1,7 +1,10 @@
 <!-- <div class="wrapper"> -->
 	<div #searchWrapper class="search-wrapper" [ngClass]="{'active': suggestions.length>0}">
 		<!-- <a #linkTag href="" target="_blank" hidden></a> -->
-		<input #search type="text" class="search" [placeholder]="placeholder()" (keyup)="searchItem(search.value)">
+		<input #search type="text" class="search" [placeholder]="placeholder()"
+				(focus)="handleFocus()"
+				(keyup)="handleKeyUp($event, search.value)"
+				(blur)="handleBlur()">
 
 		<div #suggBox class="suggestions-box" [hidden]="suggestions.length===0">
 			<!-- @if (suggestions.length>0) { -->
