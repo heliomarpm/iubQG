@@ -1,0 +1,23 @@
+{\n "html": "clique no botao",\n \"acoes\":[ \n { \n \"rotulo\": \"contrato\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{{id}}\"\n }, \n { \n \"rotulo\": \"titulo\",\n \"tipo\": \"userReplyRes\", \n \"acao\": '{{nome}}'\n }, \n { \n \"rotulo\": \"pagar no app\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"pagarNoApp\"\n }, \n { \n \"rotulo\": \"rever lista\",\n \"tipo\": \"userReplyRes\", \n  \"acao\": \"{ \\\"value\\\": \\\"reverLista\\\" }\"\n }, \n { \n \"rotulo\": \"preciso do pdf\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{ 'value': 'pdf' }\"\n        }\n    ]\n}
+
+
+0 = '"acao": "pagarNoApp"'
+1 = '"acao": "{ \\"value\\": \\"reverLista\\"}'
+2 =
+'"acao": "{ \\"value\\": \\"pdf\\'
+
+
+0 = '"acao": "pagarNoApp"'
+
+0 = '"acao": "pagarNoApp"'
+1 = '"acao": "{ \\"value\\": \\"reverLista\\" }"'
+2 = `"acao": "{ 'value': 'pdf' }"`
+3 = '"acao": "{{id}}"'
+4 = `"acao": '{{nome}}'`
+
+{
+"requestUserInfoTemplate": "{\n \"html\": \"#BOTAO#Aqui estão os dados da *atual parcela* do seu *{{{mp_escolhe_boleto_result.nome_produto_gerado}}}*####{{{#ifCond (gt (length mp_dados_cliente_eq3_result.nome_fantasia) 0)}}} {{{mp_dados_cliente_eq3_result.nome_fantasia}}}{{{/ifCond}}}.##valor original da parcela: *R$ {{trim (formatNumber 'en-US' mp_escolhe_boleto_result.valor groupSeparator='.' decimalSeparator=',' )}}*##data de vencimento da parcela: *{{{ formatDate mp_escolhe_boleto_result.data_vencimento 'dd/MM/yyyy' }}}*##status: *aguardando pagamento* ⚠.@@{{{valueIsNotEmpty mp_escolhe_boleto_result.linha_digitavel}}}@@*Copie o código de barras* na mensagem anterior para realizar o pagamento no banco que preferir. Se tiver acesso à sua conta *Itaú Empresas* e quiser pagar por lá agora, é só clicar no botão *pagar no app*, que eu te ajudo.\", \n    \"acoes\":[\n { \n \"rotulo\": \"pagar no app\",\n            \"tipo\": \"userReplyRes\", \n            \"acao\": \"pagarNoApp\"\n        },\n        { \n            \"rotulo\": \"rever lista\",\n            \"tipo\": \"userReplyRes\", \n            \"acao\": \"{ \\\"value\\\": \\\"reverLista\\\" }\"\n        },\n        { \n            \"rotulo\": \"preciso do pdf\",\n            \"tipo\": \"userReplyRes\", \n            \"acao\": \"{ \\\"value\\\": \\\"pdf\\\" }\"\n        }\n    ]\n}",
+"requestUserInfoTemplate": "{\n \"html\": \"#BOTAO#Aqui estão os dados da *atual parcela* do seu *{{{mp_escolhe_boleto_result.nome_produto_gerado}}}*####{{{#ifCond (gt (length mp_dados_cliente_eq3_result.nome_fantasia) 0)}}} {{{mp_dados_cliente_eq3_result.nome_fantasia}}}{{{/ifCond}}}.##valor original da parcela: *R$ {{trim (formatNumber 'en-US' mp_escolhe_boleto_result.valor groupSeparator='.' decimalSeparator=',' )}}*##data de vencimento da parcela: *{{{ formatDate mp_escolhe_boleto_result.data_vencimento 'dd/MM/yyyy' }}}*##status: *aguardando pagamento* ⚠.@@{{{valueIsNotEmpty mp_escolhe_boleto_result.linha_digitavel}}}@@*Copie o código de barras* na mensagem anterior para realizar o pagamento no banco que preferir. Se tiver acesso à sua conta *Itaú Empresas* e quiser pagar por lá agora, é só clicar no botão *pagar no app*, que eu te ajudo.\", \n \"acoes\":[\n { \n \"rotulo\": \"pagar no app\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"pagarNoApp\"\n },\n { \n \"rotulo\": \"rever lista\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{ \\\"value\\\": \\\"reverLista\\\" }\"\n },\n { \n \"rotulo\": \"preciso do pdf\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{ 'value': 'pdf' }\"\n },\n { \n \"rotulo\": \"contrato\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{{id}}\"\n }, \n {\n \"rotulo\": \"titulo\",\n \"tipo\": \"userReplyRes\", \n \"acao\": '{{nome}}'\n },\n ]\n}",
+}
+
+\n { \n \"rotulo\": \"contrato\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{{id}}\"\n }, \n {\n \"rotulo\": \"titulo\",\n \"tipo\": \"userReplyRes\", \n \"acao\": \"{{nome}}\"\n }

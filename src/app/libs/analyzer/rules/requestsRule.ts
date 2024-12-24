@@ -29,7 +29,7 @@ export class RequestRule implements Rule {
 				blockType: activityType,
 				blockName: activityName,
 				issue: "Conexão inválida",
-				note:	"Conexão subsequente deve ser do tipo 'UserResponse'.",
+				note: "Conexão subsequente deve ser do tipo 'UserResponse'.",
 				message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} contém uma conexão inválida. A conexão subsequente precisa ser ${GREEN}"UserResponse"${RESET_COLOR}.`,
 			};
 		}
@@ -77,10 +77,10 @@ export class RequestRule implements Rule {
 				results.push({
 					type: "REGEX INCONSISTENTE",
 					level: "ERROR",
-					blockType: activityType,
-					blockName: activityName,
+					blockType: nextActivity.activityType,
+					blockName: nextActivity.activityName,
 					issue: "Regex inconsistente",
-					note: "Padrão incompatível com opções do UserRequest",
+					note: `Padrão incompatível com opções "(${options.join("|")})" do UserRequest "${activityName}"`,
 					message: `As opções ${RED}[${options}]${RESET_COLOR} definidas no ${CYAN}"${activityName}"${RESET_COLOR} não são compatíveis com o padrão esperado no ${CYAN}"${nextActivity.activityName}"${RESET_COLOR}: ${RED}"${responsePattern}"${RESET_COLOR}.`,
 				});
 			}
@@ -102,16 +102,23 @@ export class RequestRule implements Rule {
 
 	private extractRequestOptions(template: string): string[] {
 		const cleanedTemplate = template.replace(/\n|\r|\t/g, "");
-		const actionMatches = cleanedTemplate.match(/["']acao["']:\s*["']?(\{.*?\}["'])?/g) || [];
+		// const actionMatches = cleanedTemplate.match(/["']acao["']:\s*["']?(\{.*?\}["'])?/g) || [];
+		const actionMatches = cleanedTemplate.match(/["']acao["']:\s*["'](\{.*?\}|.*?)["']/g) || [];
 
 		return actionMatches.map((item) => {
-			const match = item.match(/["']acao["']:\s*(.*)?$/);
+			// const match = item.match(/["']acao["']:\s*(.*)?$/);
+			const match = item.match(/["']acao["']:\s*(.*)$/);
 
 			if (match) {
 				const value = match[1]
-					.replace(/^"(.*)"$/, "$1")
-					.replace(/'/g, '"')
-					.replace(/\\"/g, '"');
+					.replace(/^"(.*)"$/, "$1") 	// Remove aspas externas, se existirem
+					.replace(/'/g, '"') 				// Substitui aspas simples por aspas duplas
+					.replace(/\\"/g, '"'); 			// Remove escapes de aspas duplas
+
+				// Caso seja uma string simples, retorne diretamente
+				if (!value.startsWith("{") || !value.endsWith("}")) {
+					return value;
+				}
 
 				// Verifica se é uma expressão Handlebars
 				if (/^{{.*}}$/.test(value)) {
