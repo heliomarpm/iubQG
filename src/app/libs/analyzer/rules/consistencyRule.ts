@@ -23,12 +23,12 @@ export class ConsistencyRule implements Rule {
 		// 	});
 		// }
 
+		// Verifica se nome de resultado finaliza com "_result"
 		const expectedOutputDataLoc = ConsistencyRule.expectedOutputDataLocPatterns
 			.map(pattern => pattern.exec(outputDataLoc)?.[1])
 			.find(match => match);
 
 		if (!expectedOutputDataLoc) {
-			// Verifica se nome de resultado finaliza com "_result"
 			results.push({
 				type: 'INCONSISTENTE',
 				level: 'INFO',
@@ -103,6 +103,30 @@ export class ConsistencyRule implements Rule {
 					message: `Verifique se o ${activityType} ${CYAN}"${activityName}"${RESET_COLOR}, contém a validação de TENTATIVAS adequada.`,
 				});
 			}
+		}
+
+		if (Array.isArray(inputDataLoc) && inputDataLoc?.find((input: string) => input.startsWith('|'))?.length > 0) {
+			results.push({
+				type: 'INPUT INCONSISTENTE',
+				level: 'ERROR',
+				blockType: activityType,
+				blockName: activityName,
+				issue: 'Campo de entrada inválido',
+				note: "Campo de entrada não deve iniciar com '|'",
+				message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR}, está com campo de entrada iniciando com ${RED}"|"${RESET_COLOR}.`,
+			});
+		}
+
+		if (outputDataLoc.startsWith('|')) {
+			results.push({
+				type: 'OUTPUT INCONSISTENTE',
+				level: 'ERROR',
+				blockType: activityType,
+				blockName: activityName,
+				issue: 'Campo de saída inválido',
+				note: "Campo de saída não deve iniciar com '|'",
+				message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR}, está com campo de saída iniciando com ${RED}"|"${RESET_COLOR}.`,
+			});
 		}
 
 		return results.filter(result => result !== null);

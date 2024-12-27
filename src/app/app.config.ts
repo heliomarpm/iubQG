@@ -23,7 +23,11 @@ if (environment.production) {
 
 export function initializeApp(flowService: FlowService):() => Promise<void> {
   return async () => {
-    await flowService.loadFlows();
+		try {
+			await flowService.loadFlows();
+		} catch (error) {
+			console.error('Error loading flows', error);
+		}
   };
 }
 
