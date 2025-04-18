@@ -102,11 +102,10 @@ export class RequestRule implements Rule {
 
 	private extractRequestOptions(template: string): string[] {
 		const cleanedTemplate = template.replace(/\n|\r|\t/g, "");
-		// const actionMatches = cleanedTemplate.match(/["']acao["']:\s*["']?(\{.*?\}["'])?/g) || [];
 		const actionMatches = cleanedTemplate.match(/["']acao["']:\s*["'](\{.*?\}|.*?)["']/g) || [];
+		const handlebarsTest = /^{{{?.*}}}?$/g;
 
 		return actionMatches.map((item) => {
-			// const match = item.match(/["']acao["']:\s*(.*)?$/);
 			const match = item.match(/["']acao["']:\s*(.*)$/);
 
 			if (match) {
@@ -121,14 +120,17 @@ export class RequestRule implements Rule {
 				}
 
 				// Verifica se é uma expressão Handlebars
-				if (/^{{.*}}$/.test(value)) {
-					return "999";
+				if (handlebarsTest.test(value)) {
+					return "01";
 				}
 
 				try {
 					const parsed = JSON.parse(value.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3').replace(/'/g, '"'));
 					const firstValue = parsed[Object.keys(parsed)[0]];
-					return firstValue !== undefined ? firstValue : null;
+
+					return firstValue !== undefined 
+								? (handlebarsTest.test(firstValue) ? "02" : firstValue) 
+								: null;
 				} catch (e) {
 					try {
 						const jsonValue = value.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3');

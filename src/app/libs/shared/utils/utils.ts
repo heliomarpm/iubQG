@@ -25,7 +25,7 @@ const utils = {
 		return flow;
 	},
 
-	isValidJson(str: string): boolean {
+	isJson(str: string): boolean {
 		try {
 			JSON.parse(str);
 			return true;
@@ -48,75 +48,71 @@ const utils = {
 		return String(result);
 	},
 
-	isEqual(value1: any, value2: any, ignoreOrder = false): boolean {
+	isEquals(value1: any, value2: any, ignoreOrder = false): boolean {
 		if (value1 === value2) {
 			return true;
 		}
 
 		if (Array.isArray(value1) && Array.isArray(value2)) {
 			if (ignoreOrder) {
-				return value1.length === value2.length && value1.every((val) => value2.some((otherVal) => utils.isEqual(val, otherVal)));
+				return value1.length === value2.length && value1.every((val) => value2.some((otherVal) => utils.isEquals(val, otherVal)));
 			}
-			return value1.length === value2.length && value1.every((val, index) => utils.isEqual(val, value2[index]));
+			return value1.length === value2.length && value1.every((val, index) => utils.isEquals(val, value2[index]));
 		}
 
 		if (typeof value1 === "object" && typeof value2 === "object" && value1 !== null && value2 !== null) {
 			const keys1 = Object.keys(value1);
 			const keys2 = Object.keys(value2);
 
-			return keys1.length === keys2.length && keys1.every((key) => utils.isEqual(value1[key], value2[key]));
+			return keys1.length === keys2.length && keys1.every((key) => utils.isEquals(value1[key], value2[key]));
 		}
 
 		return false;
 	},
 
-	/**
-	 * FunÃ§Ã£o para ordenar objetos com base em mÃºltiplas propriedades.
+	 /**
+	 * Classifica objetos com base em múltiplas propriedades.
 	 *
-	 * @param {string | string[]} properties
-	 * @returns {function} Uma funÃ§Ã£o que pode ser usada com mÃ©todos de ordenaÃ§Ã£o, como Array.prototype.sort.
+	 * Se o nome da propriedade for prefixado com "-", a classificação será em ordem decrescente.
+	 *
+	 * @param {string | string[]} properties - Propriedades para classificar.
+	 * @returns {function} Uma função comparadora para uso com métodos de classificação como Array.prototype.sort.
 	 *
 	 * @example
 	 * const validations = [
-	 *     { level: "ERROR", type: "TypeA", message: "Something went wrong." },
-	 *     { level: "WARNING", type: "TypeB", message: "This is a warning." },
-	 *     { level: "ERROR", type: "TypeB", message: "Another error." },
+	 *     { level: "WARNING", type: "TypeA", message: "This is a warning." },
+	 *     { level: "ERROR", type: "TypeE", message: "Something went wrong." },
+	 *     { level: "ERROR", type: "TypeE", message: "Another error." },
 	 * ];
 	 *
-	 * const sortedValidations = validations.sort(dynamicSort(['level', 'type', '-message'])); *
+	 * const sortedValidations = validations.sort(sortByProps(['level', 'type', '-message']));
+	 * console.log(sortedValidations); // [{ level: "ERROR", type: "TypeE", message: "Something went wrong." }, ...]
 	 */
-	dynamicSort(properties: string | string[]): (a: any, b: any) => number {
-		properties = Array.isArray(properties) ? properties : [properties];
+	sortByProps(properties: string | string[]): (a: any, b: any) => number {
+		const propertyList = Array.isArray(properties) ? properties : [properties];
 
-		const toStringValue = (value: any): string => {
-			return (typeof value === "object" ? JSON.stringify(value || "") : value || "") as string;
-		}
+		const stringifyValue = (value: any): string => {
+			return String(typeof value === 'object' ? JSON.stringify(value || '') : value || '');
+		};
 
 		return (a: any, b: any): number => {
-			for (const property of properties) {
+			for (const property of propertyList) {
 				let sortOrder = 1;
-				let prop = property;
+				let currentProperty = property;
 
 				if (property.startsWith("-")) {
 					sortOrder = -1;
-					prop = property.substring(1); // Remove o sinal de menos
+					currentProperty = property.substring(1);
 				}
 
-				const comparison = toStringValue(a[prop]).localeCompare(toStringValue(b[prop]));
+				const comparisonResult = stringifyValue(a[currentProperty]).localeCompare(stringifyValue(b[currentProperty]));
 
-				// Se a comparaÃ§Ã£o nÃ£o for zero, retorna o resultado multiplicado pela ordem
-				if (comparison !== 0) {
-					return comparison * sortOrder;
+				if (comparisonResult !== 0) {
+					return comparisonResult * sortOrder;
 				}
 			}
-			return 0; // Se todos os campos forem iguais
+			return 0;
 		};
-	},
-	zeroPad: (value: number, max: number) => {
-		return value.toString().padStart(Math.floor(Math.log10(max) + 1), "0");
-	},
-	padStart(value: number | string, length: number, prefix = "0"): string {
-		return value.toString().padStart(length, prefix);
 	},
 };
 

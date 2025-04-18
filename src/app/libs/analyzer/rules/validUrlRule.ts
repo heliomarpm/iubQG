@@ -3,7 +3,12 @@ import { JsonType } from "../../shared/types";
 import utils, { CYAN, RED, RESET_COLOR } from "../../shared/utils";
 
 const urlFields: Record<string, string[]> = {
-	CallApi: ["callApiUdt.hom.url", "callApiUdt.hom.authentication.authenticationUri", "callApiUdt.prod.url", "callApiUdt.prod.authentication.authenticationUri"],
+	CallApi: [
+		"callApiUdt.hom.url", 
+		"callApiUdt.hom.authentication.authenticationUri", 
+		"callApiUdt.prod.url", 
+		"callApiUdt.prod.authentication.authenticationUri"
+	],
 };
 
 export class ValidUrlRule implements Rule {

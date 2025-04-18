@@ -48,7 +48,7 @@ export class TableComponent implements OnInit {
 		this.sortOrder = property === this.sortProperty ? this.sortOrder * -1 : 1;
 		this.sortProperty = property;
 
-		this.data.sort(utils.dynamicSort(`${this.sortOrder === 1 ? '' : '-'}${property}`));
+		this.data.sort(utils.sortByProps(`${this.sortOrder === 1 ? '' : '-'}${property}`));
 
 		// this.data = [
 		// 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

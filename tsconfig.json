@@ -22,8 +22,9 @@
 		"useDefineForClassFields": false,
 		"lib": ["ESNext", "dom"],
 		"paths": {
+			"@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
-      "@env/*": ["./src/environments/*"]
+			"@env/*": ["./src/environments/*"]
     }
 	},
 	"angularCompilerOptions": {

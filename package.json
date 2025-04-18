@@ -24,6 +24,7 @@
     "@angular/router": "^17.3.0",
     "file-saver": "^2.0.5",
     "handlebars": "^4.7.8",
+    "hybrid-webcache": "^0.1.1",
     "ngx-highlightjs": "^12.0.0",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

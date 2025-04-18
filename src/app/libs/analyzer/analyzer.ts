@@ -9,7 +9,7 @@ export default class Analyzer {
 
 	private statistic?: {
 		duration: number;
-		types: Map<string, number>;
+		types: Map<string, { count: number, level: string }>;
 	};
 
 	constructor(jsonFlow: JsonType) {
@@ -47,7 +47,7 @@ export default class Analyzer {
 			const totalDuration = durations.reduce((a: number, b: number) => a + b, 0);
 
 			this.flow.validationReport = { duration: totalDuration, validations };
-			this.flow.validationReport.validations?.sort(utils.dynamicSort(['level', 'type', 'blockName']));
+			this.flow.validationReport.validations?.sort(utils.sortByProps(['level', 'type', 'blockName']));
 
 			return this.flow;
 		} catch (error) {
@@ -58,7 +58,7 @@ export default class Analyzer {
 
 	public statisticsResult() {
 		if (!this.statistic) {
-			const typeCount = new Map<string, number>();
+			const types = new Map<string, { count: number, level: string }>();
 
 			const icons: Record<string, string> = {
 				SUCCESS: '✅',
@@ -71,13 +71,19 @@ export default class Analyzer {
 
 			report.validations?.forEach((validate: Validation) => {
 				const icon = icons[validate.level] || '';
-				const type = `${icon} ${validate.type}`;
-				typeCount.set(type, (typeCount.get(type)! || 0) + 1);
+				const key = `${icon} ${validate.type}`;
+
+				const current = types.get(key) || { count: 0, level: validate.level };
+
+				current.count++;
+				types.set(key, current);
+
+				// typeCount.set(key, (typeCount.get(key)! || 0) + 1);
 			});
 
 			this.statistic = {
 				duration: report.duration,
-				types: typeCount,
+				types,
 			};
 		}
 
@@ -107,7 +113,7 @@ export default class Analyzer {
 		let lastType = '';
 		result.validations
 			// .toSorted((a, b) => a.type.localeCompare(b.type))
-			// .toSorted(utils.dynamicSort(['level', 'type', 'message']))
+			// .toSorted(utils.sortByProps(['level', 'type', 'message']))
 			?.forEach((validate: Validation) => {
 				const icon = icons[validate.level] || '';
 				const type = `${validate.type} ${icon}`;
@@ -124,7 +130,7 @@ export default class Analyzer {
 		console.log(`\nTempo total de execução: ${result.duration.toFixed(2)} ms`);
 
 		typeCount.forEach((count, type) => {
-			console.log(utils.padStart(count, 3, ' '), ':', type);
+			console.log(String(count).padStart(3, ' '), ':', type);
 		});
 
 		if (result.validations?.length === 0) {

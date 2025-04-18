@@ -19,7 +19,7 @@ type dataType = {
 	keys: string[];
 	statistics?: {
 		duration: number;
-		types: Map<string, number>;
+		types: Map<string, {count: number, level: string}>;
 	};
 	externalFlows: ExternalFlows[];
 };
@@ -40,16 +40,16 @@ export class AnalyzeComponent implements OnInit {
 	selectedData!: dataType;
 
 	hideColumns = ['message', 'level'];
-	filteredType: string | null = null;
+	filteredGroup: { group: string, type: string, level: string } | null = null;
 
 	flowsData: FlowDefinition[] = [];
-	searchData: string[]=[];
+	searchData: string[] = [];
 
 	constructor(
-			protected http: HttpClient,
-			private flowService: FlowService,
-			private toastr: ToastrService,
-		) {}
+		protected http: HttpClient,
+		private flowService: FlowService,
+		private toastr: ToastrService,
+	) { }
 
 	async ngOnInit() {
 		this.flowsData = await this.flowService.loadFlows();
@@ -71,7 +71,7 @@ export class AnalyzeComponent implements OnInit {
 		// flowName = flowName.trim().length > 0 ? flowName.trim() : 'flow';
 
 		this.http.get<JsonType>(`/assets/${flowName}_${flowVersion.trim()}.json`).subscribe(data => {
-		// this.flowService.extractFlow<JsonType>(flow.flowId, Number(flowVersion)).subscribe(data => {
+			// this.flowService.extractFlow<JsonType>(flow.flowId, Number(flowVersion)).subscribe(data => {
 			const analyzer = new Analyzer(data);
 			const report = analyzer.runAnalysis();
 
@@ -124,9 +124,15 @@ export class AnalyzeComponent implements OnInit {
 		}
 	}
 
-	filterByType(group: string) {
+	filterByType(item: [string, { count: number; level: string; }]) {
 		// Atualiza o grupo filtrado
-		this.filteredType = group !== this.filteredType ? group : null;
+		console.log('item', item);
+
+		const group = item[0];
+		const type = group.split(',')[0].substring(2).trim();
+		const level = item[1].level;
+
+		this.filteredGroup = group !== this.filteredGroup?.group ? { group, type, level } : null;
 		this.applyFilter();
 	}
 
@@ -135,10 +141,10 @@ export class AnalyzeComponent implements OnInit {
 			return;
 		}
 
-		if (this.filteredType) {
-			const filterType = this.filteredType.split(',')[0].substring(2).trim();
+		if (this.filteredGroup) {
+			const { type, level } = this.filteredGroup;
 			const clonedData = structuredClone(this.datasets[this.selectedTab!]?.data ?? []);
-			this.selectedData.data = clonedData.filter(item => item['type'] === filterType);
+			this.selectedData.data = clonedData.filter(item => item['type'] === type && item['level'] === level);
 		} else {
 			this.selectedData.data = structuredClone(this.datasets[this.selectedTab!]?.data);
 		}

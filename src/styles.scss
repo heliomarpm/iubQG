@@ -366,6 +366,29 @@ table {
 	transition: all 0.5s ease-in-out;
 }
 
+.count::before {
+  content: attr(data-count);
+  color: #fff;
+  background-color: red;
+  border-radius: 50px;
+  font-size: 0.6rem;
+  line-height: 0.5rem;
+  font-family: sans-serif;
+  min-width: 1.6em;
+  height: 1.6em;
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Condensed', "Trebuchet MS", Arial, Helvetica, sans-serif;
+  padding: 2px;
+  font-weight: 400;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s ease-in-out;
+}
+
 .toast-container {
 	opacity: .85 !important;
 	font-size: .8rem;

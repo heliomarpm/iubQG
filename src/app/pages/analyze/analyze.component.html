@@ -27,11 +27,10 @@
 					@for (item of selectedData.statistics?.types; track $index) {
 						<span
 							class="pill"
-							[ngClass]="{ selected: filteredType === item.toString() }"
-							(click)="filterByType(item.toString())"
+							[ngClass]="{ selected: filteredGroup?.group === item[0] }"
+							(click)="filterByType(item)"
 							aria-hidden="true"
-							>{{ item.toString().replace(',', ' >> ') }}</span
-						>
+							>{{ item[0] }} >> {{ item[1].count }}</span>
 					}
 
 					<span class="separator"></span>

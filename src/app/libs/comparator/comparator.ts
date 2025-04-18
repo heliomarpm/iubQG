@@ -151,7 +151,7 @@ export default class Comparator {
 			}
 
 			if (Array.isArray(oldValue) && Array.isArray(newValue)) {
-				if (!utils.isEqual(oldValue, newValue, true)) {
+				if (!utils.isEquals(oldValue, newValue, true)) {
 					changes.push({
 						propertyName: currentKey,
 						old: oldValue,
@@ -178,7 +178,7 @@ export default class Comparator {
 					new: undefined,
 				});
 			}
-			else if (!utils.isEqual(oldValue, newValue, true)) {
+			else if (!utils.isEquals(oldValue, newValue, true)) {
 				// Valores diferentes
 				changes.push({
 					propertyName: currentKey,
