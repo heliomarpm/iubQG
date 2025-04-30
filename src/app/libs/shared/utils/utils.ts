@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import fs from "fs";
 // import path from "path";
-
 import { JsonType } from "../types";
 
 const utils = {
@@ -18,7 +17,8 @@ const utils = {
 
 			if (definition) {
 				activity.nextActivityId = definition.nextActivityId && JSON.stringify(definition.nextActivityId) !== "{}" ? definition.nextActivityId : undefined;
-				activity.nextDecitionActivityId = definition.nextActivityDecisionList && JSON.stringify(definition.nextActivityDecisionList) !== "{}" ? definition.nextActivityDecisionList : undefined;
+				activity.nextDecitionActivityId =
+					definition.nextActivityDecisionList && JSON.stringify(definition.nextActivityDecisionList) !== "{}" ? definition.nextActivityDecisionList : undefined;
 			}
 		});
 
@@ -70,13 +70,13 @@ const utils = {
 		return false;
 	},
 
-	 /**
-	 * Classifica objetos com base em múltiplas propriedades.
+	/**
+	 * Classifica objetos com base em mÃºltiplas propriedades.
 	 *
-	 * Se o nome da propriedade for prefixado com "-", a classificação será em ordem decrescente.
+	 * Se o nome da propriedade for prefixado com "-", a classificaÃ§Ã£o serÃ¡ em ordem decrescente.
 	 *
 	 * @param {string | string[]} properties - Propriedades para classificar.
-	 * @returns {function} Uma função comparadora para uso com métodos de classificação como Array.prototype.sort.
+	 * @returns {function} Uma funÃ§Ã£o comparadora para uso com mÃ©todos de classificaÃ§Ã£o como Array.prototype.sort.
 	 *
 	 * @example
 	 * const validations = [
@@ -92,7 +92,7 @@ const utils = {
 		const propertyList = Array.isArray(properties) ? properties : [properties];
 
 		const stringifyValue = (value: any): string => {
-			return String(typeof value === 'object' ? JSON.stringify(value || '') : value || '');
+			return String(typeof value === "object" ? JSON.stringify(value || "") : value || "");
 		};
 
 		return (a: any, b: any): number => {

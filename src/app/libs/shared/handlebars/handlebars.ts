@@ -252,7 +252,7 @@ const helpers: Record<string, Handlebars.HelperDelegate> = {
 	},
 	newGuid: () => "00000000-0000-0000-0000-000000000000",
 	getEnvironment: () => {
-		return "dev";
+		return "homolog";
 	},
 	add: (a, b) => toNumber(a) + toNumber(b),
 	subtract: (a, b) => toNumber(a) - toNumber(b),

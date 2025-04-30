@@ -1,29 +1,29 @@
-import { Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
+import { Component, ElementRef, effect, input, output, viewChild } from "@angular/core";
 
 @Component({
-	selector: 'app-check-list',
+	selector: "app-check-list",
 	standalone: true,
 	imports: [],
-	templateUrl: './check-list.component.html',
-	styleUrl: './check-list.component.scss',
+	templateUrl: "./check-list.component.html",
+	styleUrl: "./check-list.component.scss",
 })
 export class CheckListComponent {
-	dialogElement = viewChild<ElementRef<HTMLDialogElement>>('dialog');
+	dialogElement = viewChild<ElementRef<HTMLDialogElement>>("dialog");
 
-	title = input<string>('Lista de verificação');
+	title = input<string>("Lista de verificação");
 	items = input.required<string[]>();
 	uncheckedItems = input<string[]>();
 	closeFromOutside = input<boolean>(true);
 	applyChanges = output<string[]>();
 	cancelChanges = output<void>();
 
-	checkedItems: {label: string, selected: boolean}[] = [];
+	checkedItems: { label: string; selected: boolean }[] = [];
 
 	constructor() {
-    effect(() => {
+		effect(() => {
 			this.checkedItems = this.items().map((item: string) => ({
 				label: item,
-				selected: this.uncheckedItems()?.includes(item)||true,
+				selected: this.uncheckedItems()?.includes(item) || true,
 			}));
 
 			this.uncheckedItems()?.forEach((item: string) => {
@@ -32,10 +32,10 @@ export class CheckListComponent {
 					if (i.label === item) {
 						i.selected = false;
 					}
-				})
+				});
 			});
-    });
-  }
+		});
+	}
 
 	onCloseFromOutside(event: MouseEvent): void {
 		if (!this.closeFromOutside()) {
@@ -63,7 +63,7 @@ export class CheckListComponent {
 		this.checkedItems.forEach((item) => (item.selected = checked));
 	}
 
-	toggleItem(event: Event, item: {label: string, selected: boolean}) {
+	toggleItem(event: Event, item: { label: string; selected: boolean }) {
 		item.selected = (event.target as HTMLInputElement).checked;
 	}
 

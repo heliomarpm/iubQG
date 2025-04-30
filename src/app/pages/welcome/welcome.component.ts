@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-	selector: 'app-welcome',
+	selector: "app-welcome",
 	standalone: true,
 	imports: [],
-	templateUrl: './welcome.component.html',
-	styleUrl: './welcome.component.scss',
+	templateUrl: "./welcome.component.html",
+	styleUrl: "./welcome.component.scss",
 })
 export class WelcomeComponent {
-	title = 'Initial Template';
+	title = "Initial Template";
 }

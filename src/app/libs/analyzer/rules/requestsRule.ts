@@ -110,9 +110,9 @@ export class RequestRule implements Rule {
 
 			if (match) {
 				const value = match[1]
-					.replace(/^"(.*)"$/, "$1") 	// Remove aspas externas, se existirem
-					.replace(/'/g, '"') 				// Substitui aspas simples por aspas duplas
-					.replace(/\\"/g, '"'); 			// Remove escapes de aspas duplas
+					.replace(/^"(.*)"$/, "$1") // Remove aspas externas, se existirem
+					.replace(/'/g, '"') // Substitui aspas simples por aspas duplas
+					.replace(/\\"/g, '"'); // Remove escapes de aspas duplas
 
 				// Caso seja uma string simples, retorne diretamente
 				if (!value.startsWith("{") || !value.endsWith("}")) {
@@ -128,9 +128,7 @@ export class RequestRule implements Rule {
 					const parsed = JSON.parse(value.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3').replace(/'/g, '"'));
 					const firstValue = parsed[Object.keys(parsed)[0]];
 
-					return firstValue !== undefined 
-								? (handlebarsTest.test(firstValue) ? "02" : firstValue) 
-								: null;
+					return firstValue !== undefined ? (handlebarsTest.test(firstValue) ? "02" : firstValue) : null;
 				} catch (e) {
 					try {
 						const jsonValue = value.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3');

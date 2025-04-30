@@ -1,6 +1,6 @@
-import Rule, { Validation } from "../models";
 import { JsonType } from "../../shared/types";
 import { CYAN, RESET_COLOR, YELLOW } from "../../shared/utils";
+import Rule, { Validation } from "../models";
 
 const prefixRules: Record<string, string[]> = {
 	StartFlow: ["start", "start_flow", "inicio"],

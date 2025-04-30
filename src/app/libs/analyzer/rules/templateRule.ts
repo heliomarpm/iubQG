@@ -73,5 +73,4 @@ export class TemplateRule implements Rule {
 
 		return null;
 	}
-
 }

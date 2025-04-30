@@ -1,19 +1,18 @@
 /* eslint-disable no-underscore-dangle */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, input } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, OnInit, Output, input } from "@angular/core";
 
-import { StringfyPipe, TextEllipsisPipe } from '@app/core/pipes';
+import { StringfyPipe, TextEllipsisPipe } from "@app/core/pipes";
 
-import utils from '../../../libs/shared/utils';
+import utils from "../../../libs/shared/utils";
 
 @Component({
-	selector: 'app-table',
+	selector: "app-table",
 	standalone: true,
 	imports: [CommonModule, TextEllipsisPipe, StringfyPipe],
-	templateUrl: './table.component.html',
-	styleUrl: './table.component.scss',
+	templateUrl: "./table.component.html",
+	styleUrl: "./table.component.scss",
 })
 export class TableComponent implements OnInit {
 	@Output() valueSelected = new EventEmitter<{ key: string; value: unknown }>();
@@ -23,7 +22,7 @@ export class TableComponent implements OnInit {
 	caption = input<string>();
 
 	selectedRow: number | null = null; // Armazena o índice da linha selecionada
-	sortProperty = '';
+	sortProperty = "";
 	sortOrder = 1;
 
 	keys: string[] = [];
@@ -40,7 +39,7 @@ export class TableComponent implements OnInit {
 
 	// eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
 	ngOnInit(): void {
-		console.log('OnInit~TableComponent');
+		console.log("OnInit~TableComponent");
 		//throw new Error('Method not implemented.');
 	}
 
@@ -48,7 +47,7 @@ export class TableComponent implements OnInit {
 		this.sortOrder = property === this.sortProperty ? this.sortOrder * -1 : 1;
 		this.sortProperty = property;
 
-		this.data.sort(utils.sortByProps(`${this.sortOrder === 1 ? '' : '-'}${property}`));
+		this.data.sort(utils.sortByProps(`${this.sortOrder === 1 ? "" : "-"}${property}`));
 
 		// this.data = [
 		// 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,9 +66,9 @@ export class TableComponent implements OnInit {
 
 	sortIcon(property: string) {
 		if (property === this.sortProperty) {
-			return this.sortOrder === 1 ? '🔺' : '🔻';
+			return this.sortOrder === 1 ? "🔺" : "🔻";
 		}
-		return ' ';
+		return " ";
 	}
 
 	selectRow(index: number): void {
@@ -78,7 +77,7 @@ export class TableComponent implements OnInit {
 
 	transfomValue(value: unknown, ellipsis: boolean = false): string {
 		const maxLength = this.maxLengthForEllipsed();
-		const text = (typeof value === 'object' ? JSON.stringify(value || '') : value || '') as string;
+		const text = (typeof value === "object" ? JSON.stringify(value || "") : value || "") as string;
 		if (ellipsis && maxLength > 3 && text.length > maxLength) {
 			return `${text.substring(0, maxLength - 3)}...`;
 		}
@@ -86,7 +85,7 @@ export class TableComponent implements OnInit {
 	}
 
 	isValueLimited(value: unknown): boolean {
-		console.log('isValueLimited~TableComponent');
+		console.log("isValueLimited~TableComponent");
 		if (this.maxLengthForEllipsed() <= 3) {
 			return false;
 		}

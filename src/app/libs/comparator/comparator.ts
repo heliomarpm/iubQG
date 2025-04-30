@@ -1,6 +1,6 @@
-import { JsonType } from '../shared/types';
-import utils from '../shared/utils';
-import { BlockMap, Comparison, DiffType } from './models';
+import { JsonType } from "../shared/types";
+import utils from "../shared/utils";
+import { BlockMap, Comparison, DiffType } from "./models";
 
 export default class Comparator {
 	private oldFlow: JsonType;
@@ -8,18 +8,18 @@ export default class Comparator {
 
 	constructor(oldFlow: JsonType, newFlow: JsonType) {
 		if (!oldFlow || !newFlow) {
-			throw new Error('Fluxo não encontrado!');
+			throw new Error("Fluxo não encontrado!");
 		}
 
 		delete oldFlow.desenho_estatico;
 		delete newFlow.desenho_estatico;
 
 		if (oldFlow.definicao_atividade.flowId !== newFlow.definicao_atividade.flowId) {
-			throw new Error('Os fluxos devem ter o mesmo Id');
+			throw new Error("Os fluxos devem ter o mesmo Id");
 		}
 
 		if (oldFlow.definicao_atividade.flowVersionNumber === newFlow.definicao_atividade.flowVersionNumber) {
-			throw new Error('Os fluxos devem ter versões diferentes');
+			throw new Error("Os fluxos devem ter versões diferentes");
 		}
 
 		const oldVersion: number = oldFlow.definicao_atividade.flowVersionNumber;
@@ -47,7 +47,7 @@ export default class Comparator {
 		const newBlockMap = new Map<string, BlockMap>(this.newFlow.configuracao_atividade.map((block: JsonType) => [block.activityId, block]));
 
 		const recreatedIds = new Set<string>(); // Armazena os activityIds de blocos recriados
-		const ignoreKeys = ['activityId', 'version', 'statusFlowDef'];
+		const ignoreKeys = ["activityId", "version", "statusFlowDef"];
 
 		// Processar exclusões e recriações na lista de configuração
 		oldBlockMap.forEach((oldBlock, activityId) => {
@@ -55,10 +55,7 @@ export default class Comparator {
 
 			if (!newBlockMap.has(activityId)) {
 				const recreatedBlock = Array.from(newBlockMap.values()).find(
-					newBlock =>
-						newBlock.activityName === oldBlock.activityName &&
-						newBlock.activityType === oldBlock.activityType &&
-						newBlock.activityId !== activityId,
+					(newBlock) => newBlock.activityName === oldBlock.activityName && newBlock.activityType === oldBlock.activityType && newBlock.activityId !== activityId
 				);
 
 				if (recreatedBlock) {
@@ -72,11 +69,11 @@ export default class Comparator {
 							activityType: recreatedBlock.activityType,
 							diff: [
 								{
-									propertyName: 'activityId',
+									propertyName: "activityId",
 									old: oldBlock.activityId,
 									new: recreatedBlock.activityId,
 								},
-								...changes
+								...changes,
 							],
 						});
 					} else {
@@ -86,7 +83,7 @@ export default class Comparator {
 							activityType: recreatedBlock.activityType,
 							diff: [
 								{
-									propertyName: 'activityId',
+									propertyName: "activityId",
 									old: oldBlock.activityId,
 									new: recreatedBlock.activityId,
 								},
@@ -133,7 +130,7 @@ export default class Comparator {
 		return results;
 	}
 
-	private findDifferences(oldBlock: BlockMap, newBlock: BlockMap, ignoreKeys: string[] = [], parentKey = ''): DiffType[] | null {
+	private findDifferences(oldBlock: BlockMap, newBlock: BlockMap, ignoreKeys: string[] = [], parentKey = ""): DiffType[] | null {
 		const changes: DiffType[] = [];
 		const allKeys = new Set([...Object.keys(oldBlock), ...Object.keys(newBlock)]); // Combinar todas as chaves
 
@@ -158,27 +155,24 @@ export default class Comparator {
 						new: newValue,
 					});
 				}
-			} else if (oldValue && typeof oldValue === 'object' && newValue && typeof newValue === 'object') {
+			} else if (oldValue && typeof oldValue === "object" && newValue && typeof newValue === "object") {
 				const nestedChanges = this.findDifferences(oldValue, newValue, ignoreKeys, currentKey);
 				if (nestedChanges) changes.push(...nestedChanges);
-			}
-			else if (oldValue === undefined) {
+			} else if (oldValue === undefined) {
 				// só existe na nova versão
 				changes.push({
 					propertyName: currentKey,
 					old: undefined,
 					new: newValue,
 				});
-			}
-			else if (newValue === undefined) {
+			} else if (newValue === undefined) {
 				// só existe na versão antiga
 				changes.push({
 					propertyName: currentKey,
 					old: oldValue,
 					new: undefined,
 				});
-			}
-			else if (!utils.isEquals(oldValue, newValue, true)) {
+			} else if (!utils.isEquals(oldValue, newValue, true)) {
 				// Valores diferentes
 				changes.push({
 					propertyName: currentKey,

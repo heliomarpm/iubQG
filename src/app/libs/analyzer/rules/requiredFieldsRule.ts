@@ -1,6 +1,6 @@
-import Rule, { Validation } from "../models";
 import { JsonType } from "../../shared/types";
 import utils, { CYAN, RED, RESET_COLOR } from "../../shared/utils";
+import Rule, { Validation } from "../models";
 
 const requiredFields: Record<string, (string | string[])[]> = {
 	Decision: ["inputDataLoc", "decisionUdt.conditions", "decisionUdt.decisionEngineType"],
@@ -44,12 +44,14 @@ export class RequiredFieldsRule implements Rule {
 
 		// Se houver campos obrigatórios faltando, retorna a validação com erro
 		if (missingFields.length > 0) {
-			const missingFieldsMessage = missingFields.map((field) => {
-				if (Array.isArray(field)) {
-					return field.join(" ou ");
-				}
-				return field;
-			}).join(", ");
+			const missingFieldsMessage = missingFields
+				.map((field) => {
+					if (Array.isArray(field)) {
+						return field.join(" ou ");
+					}
+					return field;
+				})
+				.join(", ");
 
 			return {
 				type: "CAMPO OBRIGATORIO",

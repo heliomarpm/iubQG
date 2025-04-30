@@ -1,6 +1,6 @@
-import Rule, { Validation } from "../models";
 import { JsonType } from "../../shared/types";
 import { CYAN, RED, RESET_COLOR, YELLOW } from "../../shared/utils";
+import Rule, { Validation } from "../models";
 
 export class ReferenceRule implements Rule {
 	private activityList: JsonType[];

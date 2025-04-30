@@ -1,17 +1,16 @@
-import { NgClass } from '@angular/common';
-import { Component, ElementRef, input, output, viewChild } from '@angular/core';
+import { NgClass } from "@angular/common";
+import { Component, ElementRef, input, output, viewChild } from "@angular/core";
 
 @Component({
-	selector: 'app-autocomplete',
+	selector: "app-autocomplete",
 	standalone: true,
 	imports: [NgClass],
-	templateUrl: './autocomplete.component.html',
-	styleUrl: './autocomplete.component.scss'
+	templateUrl: "./autocomplete.component.html",
+	styleUrl: "./autocomplete.component.scss",
 })
 export class AutocompleteComponent {
-
-	data = input<string[]>(['']);
-	placeholder = input<string>('digite para pesquisar');
+	data = input<string[]>([""]);
+	placeholder = input<string>("digite para pesquisar");
 	valueChanged = output<string>();
 
 	searchWrapper = viewChild.required<ElementRef<HTMLDivElement>>("searchWrapper");
@@ -22,33 +21,33 @@ export class AutocompleteComponent {
 	// webLink: string = "";
 
 	suggestions: string[] = [];
-	private initialValue: string = '';
+	private initialValue: string = "";
 
-	constructor() { }
+	constructor() {}
 
 	get value(): string {
 		return this.inputBox()!.nativeElement.value;
 	}
 
 	handleFocus(): void {
-    this.initialValue = this.value;
-  }
+		this.initialValue = this.value;
+	}
 
 	handleKeyUp(event: KeyboardEvent, value: string) {
-    if (event.key === 'Escape') {
-      this.hideSuggestions();
-    } else {
-      this.searchItem(value);
-    }
-  }
+		if (event.key === "Escape") {
+			this.hideSuggestions();
+		} else {
+			this.searchItem(value);
+		}
+	}
 
-  // Método para esconder as sugestões
-  handleBlur(): void {
-    if (this.value !== this.initialValue) {
-      this.valueChanged.emit(this.value);
-    }
-    this.hideSuggestions();
-  }
+	// Método para esconder as sugestões
+	handleBlur(): void {
+		if (this.value !== this.initialValue) {
+			this.valueChanged.emit(this.value);
+		}
+		this.hideSuggestions();
+	}
 
 	searchItem(value: string) {
 		console.log(value, this.suggestions.length, this.data().length);
@@ -110,7 +109,7 @@ export class AutocompleteComponent {
 			const userValue = this.inputBox()!.nativeElement.value;
 			listData = `<li>${userValue}</li>`;
 		} else {
-			listData = list.join('');
+			listData = list.join("");
 		}
 		this.suggBox()!.nativeElement.innerHTML = listData;
 	}

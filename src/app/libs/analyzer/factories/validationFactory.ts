@@ -1,5 +1,5 @@
-import { JsonType } from '../../shared/types';
-import Rule, { ValidationReport } from '../models';
+import { JsonType } from "../../shared/types";
+import { ValidationReport } from "../models";
 import {
 	ConsistencyRule,
 	HandlebarsExpressionRule,
@@ -9,7 +9,7 @@ import {
 	RequiredFieldsRule,
 	TemplateRule,
 	ValidUrlRule,
-} from '../rules';
+} from "../rules";
 
 export class ValidationFactory {
 	private activitys: JsonType[];
@@ -57,7 +57,7 @@ export class ValidationFactory {
 
 		return {
 			duration: results.reduce((sum, report) => sum + report.duration, 0),
-			validations: results.flatMap(report => report.validations).filter(result => result !== null),
+			validations: results.flatMap((report) => report.validations).filter((result) => result !== null),
 		};
 	}
 }

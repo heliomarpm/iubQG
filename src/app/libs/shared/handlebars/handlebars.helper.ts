@@ -133,7 +133,7 @@ class HandlebarsHelper {
 					break;
 
 				case "Hash":
-					node.pairs.forEach((pair: { value: any; }) => parseNode(pair.value, context));
+					node.pairs.forEach((pair: { value: any }) => parseNode(pair.value, context));
 					break;
 
 				case "PathExpression":

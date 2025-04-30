@@ -1,13 +1,14 @@
 {
-	"singleQuote": true,
-	"trailingComma": "all",
+	"singleQuote": false,
+	"trailingComma": "es5",
 	"useTabs": true,
 	"tabWidth": 2,
 	"semi": true,
-	"arrowParens": "avoid",
+	"quoteProps": "as-needed",
+	"arrowParens": "always",
 	"bracketSpacing": true,
 	"bracketSameLine": true,
-	"printWidth": 140,
+	"printWidth": 160,
 	"overrides": [
 		{
 			"files": "*.json",
@@ -19,7 +20,7 @@
 	"embeddedLanguageFormatting": "auto",
 	"htmlWhitespaceSensitivity": "css",
 	"proseWrap": "preserve",
-	"plugins": ["@trivago/prettier-plugin-sort-imports--"],
+	"plugins": ["@trivago/prettier-plugin-sort-imports"],
 	"importOrder": [
 		"^@angular/core/(.*)$",
 		"^@angular/(.*)$",
