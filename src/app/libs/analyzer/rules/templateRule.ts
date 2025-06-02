@@ -46,11 +46,12 @@ export class TemplateRule implements Rule {
 
 						const finalJson = sanitizedJson
 							.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3') // Corrige chaves sem aspas
+							// .replace(/(?<=[:{,]\s*)valor_mock(?=[,\n}])/g, '{}')
 							// .replace(/:\s*valor_mock(?=[,\n}])/g, ': "valor_mock"'); // Corrige valor_mock sem aspas após dois-pontos
 							.replace(/:\s*([^\s",}\]]+)/g, (match, value) => {
 								// Só converte se for exatamente "valor_mock"
 								if (value === "valor_mock") {
-									return `: "valor_mock"`;
+									return `: {}`;
 								}
 								return match;
 							});

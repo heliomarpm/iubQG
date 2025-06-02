@@ -9,6 +9,7 @@ import { Component, ElementRef, input, output, viewChild } from "@angular/core";
 	styleUrl: "./autocomplete.component.scss",
 })
 export class AutocompleteComponent {
+	// initialValue = input<string>("digite para pesquisar");
 	data = input<string[]>([""]);
 	placeholder = input<string>("digite para pesquisar");
 	valueChanged = output<string>();

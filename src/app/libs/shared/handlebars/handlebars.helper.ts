@@ -15,13 +15,14 @@ class HandlebarsHelper {
 		try {
 			validateTemplateBlocks(template);
 
-			let normalized = normalizeTemplate(template);
+			let normalized = normalizeTemplate(template, this.reservedWords);
 
 			//replace ifCond para if
 			normalized = normalized
-				.replace(/{{\s*#ifCond/g, "{{#if")
-				.replace(/{{\s*\/ifCond/g, "{{/if")
-				.replace(/{{\s*this\.([\w.]+)\s*}}/g, "{{$1}}");
+				.replace(/{{\s*#ifCond/gi, "{{#if")
+				.replace(/{{\s*\/ifCond/gi, "{{/if")
+				.replace(/\bthis\./g, "");
+				// .replace(/{{\s*this\.([\w.]+)\s*}}/g, "{{$1}}");
 
 			this.arrayPaths.clear();
 

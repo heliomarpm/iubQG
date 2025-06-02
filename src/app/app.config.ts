@@ -3,7 +3,7 @@ import { provideHighlightOptions } from "ngx-highlightjs";
 
 import { provideToastr } from "ngx-toastr";
 
-import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, enableProdMode, importProvidersFrom, provideZoneChangeDetection } from "@angular/core";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideRouter, withViewTransitions } from "@angular/router";
@@ -35,7 +35,12 @@ export function initializeApp(flowService: FlowService): () => Promise<void> {
 export const appConfig: ApplicationConfig = {
 	providers: [
 		// provideHttpClient(withInterceptors([AuthInterceptor, ErrorInterceptor])),
-		provideHttpClient(),
+		// provideHttpClient(withInterceptorsFromDi()),
+		// provideHttpClient(),
+		// { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+		{ provide: ErrorHandler, useClass: GlobalErrorHandler },
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initializeApp,
@@ -44,10 +49,6 @@ export const appConfig: ApplicationConfig = {
 		},
 		provideZoneChangeDetection({ eventCoalescing: true }),
 		importProvidersFrom(HttpClientModule),
-
-		{ provide: ErrorHandler, useClass: GlobalErrorHandler },
-		{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-		{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
 
 		provideRouter(ROUTES, withViewTransitions()),
 		provideAnimations(), // required animations providers

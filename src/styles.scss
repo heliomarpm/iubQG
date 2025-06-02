@@ -86,8 +86,8 @@
 	scroll-behavior: smooth;
 
 	::-webkit-scrollbar {
-		width: 8px;
-		height: 8px;
+		width: 9px;
+		height: 9px;
 		border: none;
 		border-radius: var(--border-radius);
 		background-color: rgba(0, 0, 0, .02);
@@ -161,6 +161,14 @@ li {
 	list-style: none;
 }
 
+div.center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	width: fit-content;
+	height: 100%;
+}
 
 input:not([type="checkbox"]),
 button,
