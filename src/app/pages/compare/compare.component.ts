@@ -1,38 +1,38 @@
-import { ToastrService } from "ngx-toastr";
-import { forkJoin } from "rxjs";
-import * as XLSX from "xlsx";
+import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
+import * as XLSX from 'xlsx';
 
-import { NgClass } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { Component, OnInit, ViewChild, signal } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, ViewChild, signal } from '@angular/core';
 
-import { FlowService } from "@app/core/services/flow.service";
-import { skipToken } from "@app/core/services/token.service";
-import { AutocompleteComponent } from "@app/shared/components";
-import { FlowDefinition, JsonType } from "@app/shared/types";
+import { FlowService } from '@app/core/services/flow.service';
+import { skipToken } from '@app/core/services/token.service';
+import { AutocompleteComponent } from '@app/shared/components';
+import { FlowDefinition, JsonType } from '@app/shared/types';
 
-import Comparator from "../../libs/comparator/comparator";
-import { CodeModalComponent, CodeModalType } from "../../shared/components/code-modal";
-import { Block, Comparison } from "./compare.model";
+import Comparator from '../../libs/comparator/comparator';
+import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
+import { Block, Comparison } from './compare.model';
 
 // const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
 @Component({
-	selector: "app-compare",
+	selector: 'app-compare',
 	standalone: true,
 	imports: [HttpClientModule, CodeModalComponent, AutocompleteComponent, NgClass],
-	templateUrl: "./compare.component.html",
-	styleUrl: "./compare.component.scss",
+	templateUrl: './compare.component.html',
+	styleUrl: './compare.component.scss',
 })
 export class CompareComponent implements OnInit {
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
 
-	codeModal: CodeModalType = { title: "", data: "" };
+	codeModal: CodeModalType = { title: '', data: '' };
 
 	data: Comparison = {
-		flowName: "",
-		newVersion: "",
-		oldVersion: "",
+		flowName: '',
+		newVersion: '',
+		oldVersion: '',
 		blocks: {
 			deleted: [],
 			recreated: [],
@@ -43,12 +43,12 @@ export class CompareComponent implements OnInit {
 	};
 
 	icons = {
-		flow: "flowsheet",
-		check: "check",
-		error: "error",
+		flow: 'flowsheet',
+		check: 'check',
+		error: 'error',
 	};
 
-	icoFlow = signal<string>("flowsheet");
+	icoFlow = signal<string>('flowsheet');
 
 	flowsData: FlowDefinition[] = [];
 	searchData: string[] = [];
@@ -83,7 +83,7 @@ export class CompareComponent implements OnInit {
 		const nNewVersion = Math.max(Number(oldVersion), Number(newVersion));
 
 		if (nOldVersion === nNewVersion) {
-			this.toastr.info("Os fluxos devem ter versões diferentes");
+			this.toastr.info('Os fluxos devem ter versões diferentes');
 			return;
 		}
 
@@ -99,9 +99,9 @@ export class CompareComponent implements OnInit {
 					this.data = compare.runComparison();
 				} catch (err) {
 					if (err instanceof Error) {
-						this.toastr.error(err.message, "Comparar versões");
+						this.toastr.error(err.message, 'Comparar versões');
 					} else {
-						this.toastr.error("Erro ao comparar versões", "Comparar versões");
+						this.toastr.error('Erro ao comparar versões', 'Comparar versões');
 					}
 				}
 			},
@@ -123,27 +123,27 @@ export class CompareComponent implements OnInit {
 			return JSON.stringify(blocks.map((item) => item.activityName));
 		};
 
-		this.http.get("/assets/diff-change-color.js", { responseType: "text" }).subscribe((template) => {
+		this.http.get('/assets/diff-change-color.js', { responseType: 'text' }).subscribe((template) => {
 			const script = template
-				.replace("{{flowName}}", this.data.flowName)
-				.replace("{{oldVersion}}", this.data.oldVersion)
-				.replace("{{newVersion}}", this.data.newVersion)
-				.replace("{{deletedBlocks}}", blocks(this.data.blocks.deleted))
-				.replace("{{recreatedBlocks}}", blocks(this.data.blocks.recreated))
-				.replace("{{recreatedUpdatedBlocks}}", blocks(this.data.blocks.recreatedUpdated))
-				.replace("{{updatedBlocks}}", blocks(this.data.blocks.updated))
-				.replace("{{addedBlocks}}", blocks(this.data.blocks.added));
+				.replace('{{flowName}}', this.data.flowName)
+				.replace('{{oldVersion}}', this.data.oldVersion)
+				.replace('{{newVersion}}', this.data.newVersion)
+				.replace('{{deletedBlocks}}', blocks(this.data.blocks.deleted))
+				.replace('{{recreatedBlocks}}', blocks(this.data.blocks.recreated))
+				.replace('{{recreatedUpdatedBlocks}}', blocks(this.data.blocks.recreatedUpdated))
+				.replace('{{updatedBlocks}}', blocks(this.data.blocks.updated))
+				.replace('{{addedBlocks}}', blocks(this.data.blocks.added));
 
 			navigator.clipboard
 				.writeText(script)
 				.then(() => {
 					this.icoFlow.set(this.icons.check);
-					this.toastr.success("Abra o IUBot e cole o script no console", "Código copiado");
+					this.toastr.success('Abra o IUBot e cole o script no console', 'Código copiado');
 				})
 				.catch((error) => {
-					console.error("Error copying to clipboard:", error);
+					console.error('Error copying to clipboard:', error);
 					this.icoFlow.set(this.icons.error);
-					this.toastr.error("Erro ao copiar para área de transferência", "Error ao copiar");
+					this.toastr.error('Erro ao copiar para área de transferência', 'Error ao copiar');
 				})
 				.finally(() => setTimeout(() => this.icoFlow.set(this.icons.flow), 2000));
 
@@ -152,7 +152,7 @@ export class CompareComponent implements OnInit {
 	}
 
 	jsonResultDiff() {
-		this.openDiffModal("Resultado Comparação", this.data);
+		this.openDiffModal('Resultado Comparação', this.data);
 	}
 
 	exportToExcel(): void {
@@ -163,7 +163,7 @@ export class CompareComponent implements OnInit {
 				activityId: block.activityId,
 				activityName: block.activityName,
 				group: groupKey,
-				old_activityId: groupKey.includes("recreated") ? block.diff[0].old : null,
+				old_activityId: groupKey.includes('recreated') ? block.diff[0].old : null,
 			}));
 		});
 

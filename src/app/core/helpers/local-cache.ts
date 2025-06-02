@@ -1,5 +1,5 @@
 export enum eCacheKeys {
-	JORNADAS = "jornadas",
+	JORNADAS = 'jornadas',
 }
 
 export interface ICacheOptions {
@@ -37,7 +37,7 @@ export class LocalCache {
 	 */
 	static set(key: eCacheKeys, value: unknown, options?: ICacheOptions): void {
 		const expirationMillis = (options?.expirationMinutes || 0) * 60000 + (options?.expirationDays || 0) * 24 * 60 * 60000;
-		const userId = options?.userId ?? "";
+		const userId = options?.userId ?? '';
 
 		const item: LocalCacheType<typeof value> = {
 			value: value,
@@ -62,7 +62,7 @@ export class LocalCache {
 	 *    console.log(data.value);
 	 *  }
 	 */
-	static get<T>(key: eCacheKeys, userId: string = "", removeExpired: boolean = false): LocalCacheType<T> | null {
+	static get<T>(key: eCacheKeys, userId: string = '', removeExpired: boolean = false): LocalCacheType<T> | null {
 		const keyUser = `${key}:${userId}`;
 		const itemString = localStorage.getItem(keyUser);
 		if (!itemString) return null;
@@ -92,7 +92,7 @@ export class LocalCache {
 	 *
 	 * LocalSettings.unset(eSetKeys.KeyName)
 	 */
-	static unset(key: eCacheKeys, userId: string = ""): void {
+	static unset(key: eCacheKeys, userId: string = ''): void {
 		localStorage.removeItem(`${key}:${userId}`);
 	}
 
@@ -105,7 +105,7 @@ export class LocalCache {
 	 *
 	 * LocalSettings.clearAll();
 	 */
-	static clearAll(userId: string = "") {
+	static clearAll(userId: string = '') {
 		Object.keys(eCacheKeys).forEach((el) => {
 			localStorage.removeItem(`${el}:${userId}`);
 		});

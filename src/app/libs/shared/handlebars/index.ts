@@ -1,6 +1,6 @@
 // import { normalizeTemplate } from "./normalizer";
 // import { validateTemplateStacks } from "./validator";
-import { extractPathsFromTemplate } from "./parser";
+import { extractPathsFromTemplate } from './parser';
 
 // import { generateMockData } from "./mockGenerator";
 

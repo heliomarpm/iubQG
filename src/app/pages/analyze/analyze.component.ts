@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ToastrService } from "ngx-toastr";
+import { ToastrService } from 'ngx-toastr';
 
-import { CommonModule } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { FlowService } from "@app/core/services";
-import { AutocompleteComponent } from "@app/shared/components";
+import { FlowService } from '@app/core/services';
+import { AutocompleteComponent } from '@app/shared/components';
 
-import { Analyzer } from "../../libs/analyzer";
-import { ExternalFlows } from "../../libs/analyzer/models";
-import { CodeModalComponent, CodeModalType } from "../../shared/components/code-modal";
-import { TableComponent } from "../../shared/components/table";
-import { FlowDefinition, JsonType } from "../../shared/types";
+import { Analyzer } from '../../libs/analyzer';
+import { ExternalFlows } from '../../libs/analyzer/models';
+import { CodeModalComponent, CodeModalType } from '../../shared/components/code-modal';
+import { TableComponent } from '../../shared/components/table';
+import { FlowDefinition, JsonType } from '../../shared/types';
 
 type dataType = {
 	name: string;
@@ -27,21 +27,21 @@ type dataType = {
 };
 
 @Component({
-	selector: "app-analyze",
+	selector: 'app-analyze',
 	standalone: true,
 	imports: [HttpClientModule, CodeModalComponent, TableComponent, CommonModule, AutocompleteComponent],
-	templateUrl: "./analyze.component.html",
-	styleUrl: "./analyze.component.scss",
+	templateUrl: './analyze.component.html',
+	styleUrl: './analyze.component.scss',
 })
 export class AnalyzeComponent implements OnInit {
 	@ViewChild(CodeModalComponent) codeModalElement!: CodeModalComponent;
-	codeModal: CodeModalType = { title: "", data: "" };
+	codeModal: CodeModalType = { title: '', data: '' };
 
 	datasets: { [key: string]: dataType } = {};
 	selectedTab: string | null = null;
 	selectedData!: dataType;
 
-	hideColumns = ["message", "level"];
+	hideColumns = ['message', 'level'];
 	filteredGroup: { group: string; type: string; level: string } | null = null;
 
 	flowsData: FlowDefinition[] = [];
@@ -128,10 +128,10 @@ export class AnalyzeComponent implements OnInit {
 
 	filterByType(item: [string, { count: number; level: string }]) {
 		// Atualiza o grupo filtrado
-		console.log("item", item);
+		console.log('item', item);
 
 		const group = item[0];
-		const type = group.split(",")[0].substring(2).trim();
+		const type = group.split(',')[0].substring(2).trim();
 		const level = item[1].level;
 
 		this.filteredGroup = group !== this.filteredGroup?.group ? { group, type, level } : null;
@@ -146,7 +146,7 @@ export class AnalyzeComponent implements OnInit {
 		if (this.filteredGroup) {
 			const { type, level } = this.filteredGroup;
 			const clonedData = structuredClone(this.datasets[this.selectedTab!]?.data ?? []);
-			this.selectedData.data = clonedData.filter((item) => item["type"] === type && item["level"] === level);
+			this.selectedData.data = clonedData.filter((item) => item['type'] === type && item['level'] === level);
 		} else {
 			this.selectedData.data = structuredClone(this.datasets[this.selectedTab!]?.data);
 		}

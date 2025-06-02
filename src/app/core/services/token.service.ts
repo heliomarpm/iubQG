@@ -1,11 +1,11 @@
-import { BehaviorSubject, Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
-import { HttpClient, HttpContext, HttpContextToken } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class TokenService {
 	private tokenSubject = new BehaviorSubject<string | null>(null);
@@ -21,7 +21,7 @@ export class TokenService {
 	}
 
 	private renewToken(): Observable<string> {
-		return this.http.post<{ token: string; expiresIn: number }>("api/obter/token", {}).pipe(
+		return this.http.post<{ token: string; expiresIn: number }>('api/obter/token', {}).pipe(
 			tap((response) => {
 				this.tokenSubject.next(response.token);
 				this.tokenExpirationTime = response.expiresIn; // Date.now() + response.expiresIn * 1000;
@@ -31,7 +31,7 @@ export class TokenService {
 	}
 
 	private isTokenExpired(): boolean {
-		console.log("isTokenExpired", !this.tokenExpirationTime || Date.now() > this.tokenExpirationTime);
+		console.log('isTokenExpired', !this.tokenExpirationTime || Date.now() > this.tokenExpirationTime);
 		return !this.tokenExpirationTime || Date.now() > this.tokenExpirationTime;
 	}
 }

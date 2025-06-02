@@ -1,2 +1,2 @@
-export * from "./analyzer";
-export { default as Analyzer } from "./analyzer";
+export * from './analyzer';
+export { default as Analyzer } from './analyzer';

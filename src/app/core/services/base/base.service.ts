@@ -1,9 +1,9 @@
-import { Observable } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ErrorHandlerService } from "../error";
+import { ErrorHandlerService } from '../error';
 
 export abstract class BaseService<T> {
 	constructor(
@@ -33,10 +33,10 @@ export abstract class BaseService<T> {
 	}
 
 	protected getHeaders(withAuth: boolean = false): HttpHeaders {
-		let headers = new HttpHeaders({ "Content-Type": "application/json" });
+		let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 		if (withAuth) {
-			const token = localStorage.getItem("token");
-			if (token) headers = headers.set("Authorization", `Bearer ${token}`);
+			const token = localStorage.getItem('token');
+			if (token) headers = headers.set('Authorization', `Bearer ${token}`);
 		}
 		return headers;
 	}

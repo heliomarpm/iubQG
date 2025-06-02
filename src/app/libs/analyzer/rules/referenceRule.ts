@@ -1,6 +1,6 @@
-import { JsonType } from "../../shared/types";
-import { CYAN, RED, RESET_COLOR, YELLOW } from "../../shared/utils";
-import Rule, { Validation } from "../models";
+import { JsonType } from '../../shared/types';
+import { CYAN, RED, RESET_COLOR, YELLOW } from '../../shared/utils';
+import Rule, { Validation } from '../models';
 
 export class ReferenceRule implements Rule {
 	private activityList: JsonType[];
@@ -22,18 +22,18 @@ export class ReferenceRule implements Rule {
 
 		inputDataLoc.forEach((input: string) => {
 			try {
-				input = input.includes("|") ? input : `${activity.flowName}|${input}`;
+				input = input.includes('|') ? input : `${activity.flowName}|${input}`;
 
-				const [flow, output] = input.trim().split("|");
+				const [flow, output] = input.trim().split('|');
 
 				if (flow !== activity.flowName) {
 					//referencia externa
 					results.push({
-						type: "REFERENCIA EXTERNA",
-						level: "WARNING",
+						type: 'REFERENCIA EXTERNA',
+						level: 'WARNING',
 						blockType: activityType,
 						blockName: activityName,
-						issue: "input de outro fluxo",
+						issue: 'input de outro fluxo',
 						note: `Assegure-se de que o input exista: ${JSON.stringify(input)}.`,
 						message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} recebe um input de outro fluxo: ${YELLOW}${JSON.stringify(input)}${RESET_COLOR}.`,
 					});
@@ -54,11 +54,11 @@ export class ReferenceRule implements Rule {
 					}
 					if (cacheStatus === 2) {
 						results.push({
-							type: "REFERENCIA INTERNA",
-							level: "ERROR",
+							type: 'REFERENCIA INTERNA',
+							level: 'ERROR',
 							blockType: activityType,
 							blockName: activityName,
-							issue: "input inexistente",
+							issue: 'input inexistente',
 							note: `Substitua o input: ${JSON.stringify(input)}.`,
 							message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} recebe um input inexistente: ${RED}${JSON.stringify(input)}${RESET_COLOR}.`,
 						});
@@ -66,11 +66,11 @@ export class ReferenceRule implements Rule {
 				}
 			} catch (error) {
 				results.push({
-					type: "REFERENCIA INVALIDA",
-					level: "ERROR",
+					type: 'REFERENCIA INVALIDA',
+					level: 'ERROR',
 					blockType: activityType,
 					blockName: activityName,
-					issue: "Referência impossível validar",
+					issue: 'Referência impossível validar',
 					note: `Verifique: "${JSON.stringify(input)}".`,
 					message: `O ${activityType} ${CYAN}"${activityName}"${RESET_COLOR} contém uma referencia que não foi possível validar: ${RED}${JSON.stringify(input)}${RESET_COLOR}. \n\tErro => ${RED}${error}${RESET_COLOR}.`,
 				});

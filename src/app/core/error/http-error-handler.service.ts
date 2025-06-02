@@ -1,10 +1,10 @@
-import { throwError } from "rxjs";
+import { throwError } from 'rxjs';
 
-import { HttpErrorResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class HttpErrorHandlerService {
 	handleError(error: HttpErrorResponse) {
@@ -16,7 +16,7 @@ export class HttpErrorHandlerService {
 		// 	errorMessage = `Erro do servidor: ${error.status}\nMensagem: ${error.message}`;
 		// }
 
-		console.error("HttpErrorHandlerService~handleError:", error);
+		console.error('HttpErrorHandlerService~handleError:', error);
 		return throwError(() => error);
 	}
 

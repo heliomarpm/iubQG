@@ -1,28 +1,28 @@
-import { NgClass } from "@angular/common";
-import { Component, ElementRef, input, output, viewChild } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, ElementRef, input, output, viewChild } from '@angular/core';
 
 @Component({
-	selector: "app-autocomplete",
+	selector: 'app-autocomplete',
 	standalone: true,
 	imports: [NgClass],
-	templateUrl: "./autocomplete.component.html",
-	styleUrl: "./autocomplete.component.scss",
+	templateUrl: './autocomplete.component.html',
+	styleUrl: './autocomplete.component.scss',
 })
 export class AutocompleteComponent {
 	// initialValue = input<string>("digite para pesquisar");
-	data = input<string[]>([""]);
-	placeholder = input<string>("digite para pesquisar");
+	data = input<string[]>(['']);
+	placeholder = input<string>('digite para pesquisar');
 	valueChanged = output<string>();
 
-	searchWrapper = viewChild.required<ElementRef<HTMLDivElement>>("searchWrapper");
-	inputBox = viewChild.required<ElementRef<HTMLInputElement>>("search");
-	suggBox = viewChild.required<ElementRef<HTMLDivElement>>("suggBox");
+	searchWrapper = viewChild.required<ElementRef<HTMLDivElement>>('searchWrapper');
+	inputBox = viewChild.required<ElementRef<HTMLInputElement>>('search');
+	suggBox = viewChild.required<ElementRef<HTMLDivElement>>('suggBox');
 	// icon = viewChild<ElementRef<HTMLDivElement>>("icon");
 	// linkTag = viewChild<ElementRef<HTMLAnchorElement>>("linkTag");
 	// webLink: string = "";
 
 	suggestions: string[] = [];
-	private initialValue: string = "";
+	private initialValue: string = '';
 
 	constructor() {}
 
@@ -35,7 +35,7 @@ export class AutocompleteComponent {
 	}
 
 	handleKeyUp(event: KeyboardEvent, value: string) {
-		if (event.key === "Escape") {
+		if (event.key === 'Escape') {
 			this.hideSuggestions();
 		} else {
 			this.searchItem(value);
@@ -57,7 +57,7 @@ export class AutocompleteComponent {
 		// const suggBox = this.suggBox()!.nativeElement;
 
 		if (!value) {
-			console.log("value is empty", this.data());
+			console.log('value is empty', this.data());
 			this.suggestions = [];
 			// suggBox.style.display = "none";
 			// searchWrapper.classList.remove("active"); //hide autocomplete box
@@ -76,7 +76,7 @@ export class AutocompleteComponent {
 		this.suggestions = structuredClone(this.data()!);
 
 		this.suggestions = this.suggestions.filter((data: string) => {
-			return !data ? "" : data.toLocaleLowerCase().includes(value.toLocaleLowerCase());
+			return !data ? '' : data.toLocaleLowerCase().includes(value.toLocaleLowerCase());
 		});
 
 		if (this.suggestions.length == 0) {
@@ -88,7 +88,7 @@ export class AutocompleteComponent {
 	select(element: any) {
 		const selectData = element.textContent;
 
-		this.inputBox()!.nativeElement.value = selectData || "";
+		this.inputBox()!.nativeElement.value = selectData || '';
 
 		// const icon = this.icon()!.nativeElement;
 		// const linkTag = this.linkTag()!.nativeElement;
@@ -98,7 +98,7 @@ export class AutocompleteComponent {
 		// 	linkTag.setAttribute("href", this.webLink);
 		// 	linkTag.click();
 		// }
-		console.log("selectData", selectData);
+		console.log('selectData', selectData);
 		this.suggestions = [];
 		// this.searchWrapper().nativeElement.classList.remove("active");
 	}
@@ -110,7 +110,7 @@ export class AutocompleteComponent {
 			const userValue = this.inputBox()!.nativeElement.value;
 			listData = `<li>${userValue}</li>`;
 		} else {
-			listData = list.join("");
+			listData = list.join('');
 		}
 		this.suggBox()!.nativeElement.innerHTML = listData;
 	}

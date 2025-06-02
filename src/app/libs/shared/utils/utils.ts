@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import fs from "fs";
 // import path from "path";
-import { JsonType } from "../types";
+import { JsonType } from '../types';
 
 const utils = {
 	// loadJsonFilesFromDirectory(directoryPath: string, extensions = [".json"]): JsonType[] {
@@ -16,9 +16,9 @@ const utils = {
 			const definition = definicao_atividade.activityList.find((def: JsonType) => def.activityId === activity.activityId);
 
 			if (definition) {
-				activity.nextActivityId = definition.nextActivityId && JSON.stringify(definition.nextActivityId) !== "{}" ? definition.nextActivityId : undefined;
+				activity.nextActivityId = definition.nextActivityId && JSON.stringify(definition.nextActivityId) !== '{}' ? definition.nextActivityId : undefined;
 				activity.nextDecitionActivityId =
-					definition.nextActivityDecisionList && JSON.stringify(definition.nextActivityDecisionList) !== "{}" ? definition.nextActivityDecisionList : undefined;
+					definition.nextActivityDecisionList && JSON.stringify(definition.nextActivityDecisionList) !== '{}' ? definition.nextActivityDecisionList : undefined;
 			}
 		});
 
@@ -35,14 +35,14 @@ const utils = {
 	},
 
 	getNestedField(block: JsonType, field: string): string | null | undefined {
-		const result = field.split(".").reduce((obj, key) => (obj ? obj[key] : undefined), block);
+		const result = field.split('.').reduce((obj, key) => (obj ? obj[key] : undefined), block);
 		//return JSON.stringify(result);
 
 		if (result === null || result === undefined) {
 			return result;
 		}
 
-		if (typeof result === "object") {
+		if (typeof result === 'object') {
 			return JSON.stringify(result);
 		}
 		return String(result);
@@ -60,7 +60,7 @@ const utils = {
 			return value1.length === value2.length && value1.every((val, index) => utils.isEquals(val, value2[index]));
 		}
 
-		if (typeof value1 === "object" && typeof value2 === "object" && value1 !== null && value2 !== null) {
+		if (typeof value1 === 'object' && typeof value2 === 'object' && value1 !== null && value2 !== null) {
 			const keys1 = Object.keys(value1);
 			const keys2 = Object.keys(value2);
 
@@ -92,7 +92,7 @@ const utils = {
 		const propertyList = Array.isArray(properties) ? properties : [properties];
 
 		const stringifyValue = (value: any): string => {
-			return String(typeof value === "object" ? JSON.stringify(value || "") : value || "");
+			return String(typeof value === 'object' ? JSON.stringify(value || '') : value || '');
 		};
 
 		return (a: any, b: any): number => {
@@ -100,7 +100,7 @@ const utils = {
 				let sortOrder = 1;
 				let currentProperty = property;
 
-				if (property.startsWith("-")) {
+				if (property.startsWith('-')) {
 					sortOrder = -1;
 					currentProperty = property.substring(1);
 				}

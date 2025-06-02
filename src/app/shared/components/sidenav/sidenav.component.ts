@@ -1,16 +1,16 @@
-import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import menuItems from "./sidenav-items";
-import { SidenavService } from "./sidenav.service";
+import menuItems from './sidenav-items';
+import { SidenavService } from './sidenav.service';
 
 @Component({
-	selector: "app-sidenav",
+	selector: 'app-sidenav',
 	standalone: true,
 	imports: [RouterModule, CommonModule],
-	templateUrl: "./sidenav.component.html",
-	styleUrl: "./sidenav.component.scss",
+	templateUrl: './sidenav.component.html',
+	styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
 	public expanded = this.sidenavService.expanded;

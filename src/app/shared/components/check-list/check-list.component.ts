@@ -1,16 +1,16 @@
-import { Component, ElementRef, effect, input, output, viewChild } from "@angular/core";
+import { Component, ElementRef, effect, input, output, viewChild } from '@angular/core';
 
 @Component({
-	selector: "app-check-list",
+	selector: 'app-check-list',
 	standalone: true,
 	imports: [],
-	templateUrl: "./check-list.component.html",
-	styleUrl: "./check-list.component.scss",
+	templateUrl: './check-list.component.html',
+	styleUrl: './check-list.component.scss',
 })
 export class CheckListComponent {
-	dialogElement = viewChild<ElementRef<HTMLDialogElement>>("dialog");
+	dialogElement = viewChild<ElementRef<HTMLDialogElement>>('dialog');
 
-	title = input<string>("Lista de verificação");
+	title = input<string>('Lista de verificação');
 	items = input.required<string[]>();
 	uncheckedItems = input<string[]>();
 	closeFromOutside = input<boolean>(true);

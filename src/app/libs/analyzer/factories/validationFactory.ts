@@ -1,5 +1,5 @@
-import { JsonType } from "../../shared/types";
-import { ValidationReport } from "../models";
+import { JsonType } from '../../shared/types';
+import { ValidationReport } from '../models';
 import {
 	ConsistencyRule,
 	HandlebarsExpressionRule,
@@ -9,7 +9,7 @@ import {
 	RequiredFieldsRule,
 	TemplateRule,
 	ValidUrlRule,
-} from "../rules";
+} from '../rules';
 
 export class ValidationFactory {
 	private activitys: JsonType[];

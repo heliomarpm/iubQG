@@ -1,14 +1,14 @@
 // src/app/core/auth/auth.service.ts
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class AuthService {
-	private authUrl = "https://api.example.com/auth";
+	private authUrl = 'https://api.example.com/auth';
 	private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
 	private _isLoggedIn$ = this.isLoggedIn$.asObservable();
 
@@ -24,19 +24,19 @@ export class AuthService {
 	}
 
 	getToken(): string | null {
-		return localStorage.getItem("access_token");
+		return localStorage.getItem('access_token');
 	}
 
 	private setToken(token: string): void {
-		localStorage.setItem("access_token", token);
+		localStorage.setItem('access_token', token);
 		this.isLoggedIn$.next(true);
 	}
 
 	private removeToken(): void {
-		localStorage.removeItem("access_token");
+		localStorage.removeItem('access_token');
 	}
 
 	private hasToken(): boolean {
-		return !!localStorage.getItem("access_token");
+		return !!localStorage.getItem('access_token');
 	}
 }

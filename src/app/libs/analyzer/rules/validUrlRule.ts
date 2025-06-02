@@ -1,9 +1,9 @@
-import { JsonType } from "../../shared/types";
-import utils, { CYAN, RED, RESET_COLOR } from "../../shared/utils";
-import Rule, { Validation } from "../models";
+import { JsonType } from '../../shared/types';
+import utils, { CYAN, RED, RESET_COLOR } from '../../shared/utils';
+import Rule, { Validation } from '../models';
 
 const urlFields: Record<string, string[]> = {
-	CallApi: ["callApiUdt.hom.url", "callApiUdt.hom.authentication.authenticationUri", "callApiUdt.prod.url", "callApiUdt.prod.authentication.authenticationUri"],
+	CallApi: ['callApiUdt.hom.url', 'callApiUdt.hom.authentication.authenticationUri', 'callApiUdt.prod.url', 'callApiUdt.prod.authentication.authenticationUri'],
 };
 
 export class ValidUrlRule implements Rule {
@@ -14,12 +14,12 @@ export class ValidUrlRule implements Rule {
 
 		fields.forEach((field) => {
 			let url = utils.getNestedField(activity, field);
-			const originalUrl = url || "";
+			const originalUrl = url || '';
 
 			let isUrl = false;
 			if (url) {
 				url = this.removeHandlebarsExpressions(url!);
-				if (url === "" && originalUrl.includes("{{")) {
+				if (url === '' && originalUrl.includes('{{')) {
 					return; // Ignorar URLs vazias se foi removido expressoes de handlebars
 				}
 
@@ -28,8 +28,8 @@ export class ValidUrlRule implements Rule {
 
 			if (!isUrl) {
 				results.push({
-					type: "URL INVÁLIDA",
-					level: "ERROR",
+					type: 'URL INVÁLIDA',
+					level: 'ERROR',
 					blockType: activityType,
 					blockName: activityName,
 					issue: `URL inválida no campo "${field}"`,
@@ -39,8 +39,8 @@ export class ValidUrlRule implements Rule {
 			} else {
 				if (!this.isValidProtocolUrl(url!)) {
 					results.push({
-						type: "URL INVÁLIDA",
-						level: "ERROR",
+						type: 'URL INVÁLIDA',
+						level: 'ERROR',
 						blockType: activityType,
 						blockName: activityName,
 						issue: `Protocolo HTTPS ausente no campo "${field}"`,
@@ -55,7 +55,7 @@ export class ValidUrlRule implements Rule {
 	}
 
 	private removeHandlebarsExpressions(url: string): string {
-		return url.replace(/{{{?.*?}}}?/g, "").trim();
+		return url.replace(/{{{?.*?}}}?/g, '').trim();
 	}
 
 	private isValidUrl(url: string): boolean {
@@ -70,7 +70,7 @@ export class ValidUrlRule implements Rule {
 	private isValidProtocolUrl(url: string): boolean {
 		try {
 			const parsedUrl = new URL(url);
-			return parsedUrl.protocol === "https:";
+			return parsedUrl.protocol === 'https:';
 		} catch (e) {
 			return false;
 		}

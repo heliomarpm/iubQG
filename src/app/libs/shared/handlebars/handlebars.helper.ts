@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Handlebars, { normalizeTemplate, validateTemplateBlocks } from "./handlebars";
+import Handlebars, { normalizeTemplate, validateTemplateBlocks } from './handlebars';
 
 type MockData = Record<string, any>;
 
 class HandlebarsHelper {
-	private reservedWords = new Set(["null", "else", "this", "@root", "@key", "@index", "@first", "@last", "@level", ...Object.keys(Handlebars.helpers)]);
+	private reservedWords = new Set(['null', 'else', 'this', '@root', '@key', '@index', '@first', '@last', '@level', ...Object.keys(Handlebars.helpers)]);
 	private arrayPaths = new Set<string>();
 
 	public processTemplate(template: string): {
@@ -19,10 +19,10 @@ class HandlebarsHelper {
 
 			//replace ifCond para if
 			normalized = normalized
-				.replace(/{{\s*#ifCond/gi, "{{#if")
-				.replace(/{{\s*\/ifCond/gi, "{{/if")
-				.replace(/\bthis\./g, "");
-				// .replace(/{{\s*this\.([\w.]+)\s*}}/g, "{{$1}}");
+				.replace(/{{\s*#ifCond/gi, '{{#if')
+				.replace(/{{\s*\/ifCond/gi, '{{/if')
+				.replace(/\bthis\./g, '');
+			// .replace(/{{\s*this\.([\w.]+)\s*}}/g, "{{$1}}");
 
 			this.arrayPaths.clear();
 
@@ -41,7 +41,7 @@ class HandlebarsHelper {
 			return { success: true, result, mockData };
 		} catch (error) {
 			let message = (error as Error).message;
-			const idx = message.indexOf("\n-----------------------^\nExpecting ");
+			const idx = message.indexOf('\n-----------------------^\nExpecting ');
 			if (idx !== -1) {
 				message = `${message.substring(0, idx).trim()}...`;
 			}
@@ -61,13 +61,13 @@ class HandlebarsHelper {
 	}
 
 	private resolveRelativePath(context: string[], path: string): string[] {
-		const parts = path.split("/");
+		const parts = path.split('/');
 		const newContext = [...context];
 
 		for (const part of parts) {
-			if (part === "..") {
+			if (part === '..') {
 				newContext.pop(); // Sobe um nível
-			} else if (part !== ".") {
+			} else if (part !== '.') {
 				newContext.push(part); // Caminho relativo válido
 			}
 		}
@@ -81,17 +81,17 @@ class HandlebarsHelper {
 			if (!node) return;
 
 			switch (node.type) {
-				case "Program":
+				case 'Program':
 					node.body.forEach((childNode: any) => parseNode(childNode, context));
 					break;
 
-				case "MustacheStatement":
-				case "SubExpression":
-					if (node.path?.original === "lookup" && node.params?.length >= 2) {
+				case 'MustacheStatement':
+				case 'SubExpression':
+					if (node.path?.original === 'lookup' && node.params?.length >= 2) {
 						const [target] = node.params;
-						if (target?.type === "PathExpression" && !this.isReservedWord(target.original)) {
+						if (target?.type === 'PathExpression' && !this.isReservedWord(target.original)) {
 							const resolvedPath = this.resolveRelativePath(context, target.original);
-							const pathString = resolvedPath.join(".");
+							const pathString = resolvedPath.join('.');
 
 							// Marcar como array (sufixar com [])
 							pathSet.add(`${pathString}[]`);
@@ -103,22 +103,22 @@ class HandlebarsHelper {
 						if (node.hash) {
 							parseNode(node.hash, context);
 						}
-						if (node.path?.type === "PathExpression" && !this.isReservedWord(node.path.original)) {
+						if (node.path?.type === 'PathExpression' && !this.isReservedWord(node.path.original)) {
 							const resolvedPath = this.resolveRelativePath(context, node.path.original);
-							pathSet.add(resolvedPath.join("."));
+							pathSet.add(resolvedPath.join('.'));
 						}
 					}
 					break;
 
-				case "BlockStatement":
-					if (node.path?.original === "with" || node.path?.original === "each") {
+				case 'BlockStatement':
+					if (node.path?.original === 'with' || node.path?.original === 'each') {
 						const param = node.params?.[0];
-						if (param?.type === "PathExpression") {
+						if (param?.type === 'PathExpression') {
 							const newContext = [...context, param.original];
 
 							// Marcar caminho como array se for "each"
-							if (node.path.original === "each") {
-								this.arrayPaths.add(newContext.join("."));
+							if (node.path.original === 'each') {
+								this.arrayPaths.add(newContext.join('.'));
 							}
 
 							parseNode(node.program, newContext);
@@ -133,14 +133,14 @@ class HandlebarsHelper {
 					}
 					break;
 
-				case "Hash":
+				case 'Hash':
 					node.pairs.forEach((pair: { value: any }) => parseNode(pair.value, context));
 					break;
 
-				case "PathExpression":
+				case 'PathExpression':
 					if (!this.isReservedWord(node.original)) {
 						const resolvedPath = this.resolveRelativePath(context, node.original);
-						pathSet.add(resolvedPath.join("."));
+						pathSet.add(resolvedPath.join('.'));
 					}
 					break;
 
@@ -161,30 +161,30 @@ class HandlebarsHelper {
 
 		for (const fullPath of paths) {
 			// Trata casos como: "items.@root.globalName"
-			if (fullPath.includes("@root.")) {
+			if (fullPath.includes('@root.')) {
 				// Extrai o path real removendo a parte do contexto anterior
-				const parts = fullPath.split(".");
-				const rootIndex = parts.indexOf("@root");
+				const parts = fullPath.split('.');
+				const rootIndex = parts.indexOf('@root');
 
 				// Exemplo: ["items", "@root", "globalName"] → ["items"] e ["globalName"]
 				const beforeRoot = parts.slice(0, rootIndex); // ["items"]
 				const afterRoot = parts.slice(rootIndex + 1); // ["globalName"]
 
 				// Reprocessa como dois caminhos separados
-				paths.push(beforeRoot.join("."));
-				paths.push(afterRoot.join("."));
+				paths.push(beforeRoot.join('.'));
+				paths.push(afterRoot.join('.'));
 				continue;
 			}
-			if (fullPath.startsWith("@")) continue; // ignora paths especiais como @root, @index etc.
+			if (fullPath.startsWith('@')) continue; // ignora paths especiais como @root, @index etc.
 
-			const isMarkedAsArray = fullPath.endsWith("[]");
+			const isMarkedAsArray = fullPath.endsWith('[]');
 			const cleanPath = isMarkedAsArray ? fullPath.slice(0, -2) : fullPath;
-			const parts = cleanPath.split(".");
+			const parts = cleanPath.split('.');
 			let current = context;
 
 			for (let index = 0; index < parts.length; index++) {
 				const part = parts[index];
-				const pathSoFar = parts.slice(0, index + 1).join(".");
+				const pathSoFar = parts.slice(0, index + 1).join('.');
 				const isLeaf = index === parts.length - 1;
 
 				const isArray = this.arrayPaths.has(pathSoFar) || (isLeaf && isMarkedAsArray);
@@ -209,14 +209,14 @@ class HandlebarsHelper {
 	private generateMockValue(keyName: string): any {
 		const key = keyName.toLowerCase();
 
-		if (["id", "codigo", "index", "qtd", "quantity", "count", "num", "numero", "value"].some((k) => key.includes(k))) return 1;
-		if (["valor", "currency", "amount"].some((k) => key.includes(k))) return 1234.56;
-		if (["date", "data"].some((k) => key.includes(k))) return new Date().toISOString();
-		if (["age", "idade"].some((k) => key.includes(k))) return 21;
-		if (["active", "ativo", "enabled", "disabled"].some((k) => key.includes(k))) return Math.random() > 0.5;
-		if (key.includes("email")) return "exemplo@mock.com";
+		if (['id', 'codigo', 'index', 'qtd', 'quantity', 'count', 'num', 'numero', 'value'].some((k) => key.includes(k))) return 1;
+		if (['valor', 'currency', 'amount'].some((k) => key.includes(k))) return 1234.56;
+		if (['date', 'data'].some((k) => key.includes(k))) return new Date().toISOString();
+		if (['age', 'idade'].some((k) => key.includes(k))) return 21;
+		if (['active', 'ativo', 'enabled', 'disabled'].some((k) => key.includes(k))) return Math.random() > 0.5;
+		if (key.includes('email')) return 'exemplo@mock.com';
 
-		return "valor_mock";
+		return 'valor_mock';
 	}
 }
 

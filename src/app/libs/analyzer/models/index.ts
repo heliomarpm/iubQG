@@ -1,4 +1,4 @@
-import Rule from "./rule";
+import Rule from './rule';
 
 export default Rule;
-export * from "./interfaces";
+export * from './interfaces';

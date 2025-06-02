@@ -1,2 +1,2 @@
-export * from "./code-modal.component";
-export * from "./code-modal.type";
+export * from './code-modal.component';
+export * from './code-modal.type';

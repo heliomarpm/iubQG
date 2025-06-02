@@ -1,6 +1,6 @@
-import { AsyncPipe } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { Component, OnInit, input } from "@angular/core";
+import { AsyncPipe } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, input } from '@angular/core';
 
 export type FavoriteType = {
 	title: string;
@@ -9,11 +9,11 @@ export type FavoriteType = {
 };
 
 @Component({
-	selector: "app-favorite",
+	selector: 'app-favorite',
 	standalone: true,
 	imports: [HttpClientModule, AsyncPipe],
-	templateUrl: "./favorite.component.html",
-	styleUrl: "./favorite.component.scss",
+	templateUrl: './favorite.component.html',
+	styleUrl: './favorite.component.scss',
 })
 export class FavoriteComponent implements OnInit {
 	item = input.required<FavoriteType>();

@@ -1,9 +1,9 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { SKIP_TOKEN, TokenService } from "../services/token.service";
+import { SKIP_TOKEN, TokenService } from '../services/token.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -18,9 +18,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
 		// exemplo de uso:
 		// this.http.get('/api/public', {headers: new HttpHeaders().set('X-Skip-Token', 'true')})
-		if (req.headers.has("X-Skip-Token")) {
+		if (req.headers.has('X-Skip-Token')) {
 			const modifiedReq = req.clone({
-				headers: req.headers.delete("X-Skip-Token"),
+				headers: req.headers.delete('X-Skip-Token'),
 			});
 			return next.handle(modifiedReq);
 		}

@@ -1,23 +1,23 @@
-import { provideHighlightOptions } from "ngx-highlightjs";
+import { provideHighlightOptions } from 'ngx-highlightjs';
 // import { provideClientHydration } from '@angular/platform-browser';
 
-import { provideToastr } from "ngx-toastr";
+import { provideToastr } from 'ngx-toastr';
 
-import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, enableProdMode, importProvidersFrom, provideZoneChangeDetection } from "@angular/core";
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { provideRouter, withViewTransitions } from "@angular/router";
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter, withViewTransitions } from '@angular/router';
 
-import { environment } from "@env/environment";
+import { environment } from '@env/environment';
 
-import { ROUTES } from "./app.routes";
-import { GlobalErrorHandler } from "./core/error";
-import { HttpErrorInterceptor } from "./core/error/http-error.interceptor";
-import { LoadingInterceptor } from "./core/interceptors/loading.interceptor";
-import { FlowService } from "./core/services";
+import { ROUTES } from './app.routes';
+import { GlobalErrorHandler } from './core/error';
+import { HttpErrorInterceptor } from './core/error/http-error.interceptor';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
+import { FlowService } from './core/services';
 
 if (environment.production) {
-	console.log("Production");
+	console.log('Production');
 	enableProdMode();
 }
 
@@ -26,7 +26,7 @@ export function initializeApp(flowService: FlowService): () => Promise<void> {
 		try {
 			await flowService.loadFlows();
 		} catch (error) {
-			console.error("Error loading flows", error);
+			console.error('Error loading flows', error);
 		}
 	};
 }
@@ -59,9 +59,9 @@ export const appConfig: ApplicationConfig = {
 			preventDuplicates: true,
 		}),
 		provideHighlightOptions({
-			coreLibraryLoader: () => import("highlight.js/lib/core"),
+			coreLibraryLoader: () => import('highlight.js/lib/core'),
 			languages: {
-				json: () => import("highlight.js/lib/languages/json"),
+				json: () => import('highlight.js/lib/languages/json'),
 			},
 		}),
 	],

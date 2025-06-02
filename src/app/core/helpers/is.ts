@@ -4,14 +4,14 @@ const Is = {
 		//if (!/^[\d.-]+$/.test(value)) return false;
 		if (!/^\d{11}$|^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value)) return false;
 
-		const cpf = value.replace(/\D/g, "");
+		const cpf = value.replace(/\D/g, '');
 
 		if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
 
 		const digito = (base: number): number => {
 			const sum = cpf
 				.slice(0, base)
-				.split("")
+				.split('')
 				.reduce((acc, value, index) => acc + parseInt(value) * (base + 1 - index), 0);
 			return ((sum * 10) % 11) % 10;
 		};
@@ -22,7 +22,7 @@ const Is = {
 		// if (!/^[\d.-]+$/.test(value)) return false;
 		if (!/^\d{14}$|^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(value)) return false;
 
-		const cnpj = value.replace(/\D/g, "");
+		const cnpj = value.replace(/\D/g, '');
 
 		if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) return false;
 
@@ -31,7 +31,7 @@ const Is = {
 
 			const sum = cnpj
 				.slice(0, base)
-				.split("")
+				.split('')
 				.reduce((acc, value, index) => acc + parseInt(value) * pesos[index], 0);
 			return sum % 11 < 2 ? 0 : 11 - (sum % 11);
 		};

@@ -1,4 +1,4 @@
-import { BlockContent } from "@app/libs/comparator";
+import { BlockContent } from '@app/libs/comparator';
 
 export type DiffType = {
 	propertyName: string;

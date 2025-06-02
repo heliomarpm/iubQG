@@ -1,4 +1,4 @@
-import { DiffType } from "./types";
+import { DiffType } from './types';
 
 interface Block {
 	activityId: string;

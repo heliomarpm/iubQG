@@ -1,7 +1,7 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class SidenavService {
 	public expanded = signal(this.localExpanded);
@@ -14,11 +14,11 @@ export class SidenavService {
 	// }
 
 	private get localExpanded() {
-		return localStorage.getItem("sidenavExpanded") !== "false";
+		return localStorage.getItem('sidenavExpanded') !== 'false';
 	}
 
 	private set localExpanded(value) {
-		localStorage.setItem("sidenavExpanded", String(value));
+		localStorage.setItem('sidenavExpanded', String(value));
 	}
 
 	public toggleExpand() {

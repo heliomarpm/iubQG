@@ -1,20 +1,20 @@
-import "highlight.js/styles/stackoverflow-light.min.css";
-import { Highlight } from "ngx-highlightjs";
+import 'highlight.js/styles/stackoverflow-light.min.css';
+import { Highlight } from 'ngx-highlightjs';
 
-import { JsonPipe } from "@angular/common";
-import { Component, ElementRef, input, viewChild } from "@angular/core";
+import { JsonPipe } from '@angular/common';
+import { Component, ElementRef, input, viewChild } from '@angular/core';
 
 @Component({
-	selector: "app-code-modal",
+	selector: 'app-code-modal',
 	standalone: true,
 	imports: [JsonPipe, Highlight],
-	templateUrl: "./code-modal.component.html",
-	styleUrl: "./code-modal.component.scss",
+	templateUrl: './code-modal.component.html',
+	styleUrl: './code-modal.component.scss',
 })
 export class CodeModalComponent {
-	dialogElement = viewChild<ElementRef<HTMLDialogElement>>("dialog");
+	dialogElement = viewChild<ElementRef<HTMLDialogElement>>('dialog');
 
-	title = input<string>("Conteúdo");
+	title = input<string>('Conteúdo');
 	data = input.required<string | unknown>();
 	closeFromOutside = input<boolean>(true);
 	copySuccess: boolean = false;
@@ -55,7 +55,7 @@ export class CodeModalComponent {
 				setTimeout(() => (this.copySuccess = false), 2000); // Mensagem de sucesso temporária
 			})
 			.catch((error) => {
-				console.error("Error copying to clipboard:", error);
+				console.error('Error copying to clipboard:', error);
 				throw error;
 			});
 	}
